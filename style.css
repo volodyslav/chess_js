@@ -26,6 +26,15 @@ body {
 #board{
     background-color: burlywood;
     display: grid;
-    /*grid-template-columns: repeat(8, 50px); grid to represent squares */
+    position: relative;
+    
+    
 }
 
+.square{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    
+}
