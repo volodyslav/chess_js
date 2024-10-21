@@ -38,6 +38,10 @@ body {
 
 /* Figures */
 .image-figure:hover{
-    opacity: 0.5;
-    
+    opacity: 0.9;
+}
+/*Choose image*/
+.check-image{
+    background-color: gold;
+    border: 2px solid rgb(222, 222, 222);
 }

@@ -80,26 +80,15 @@ function drawFigures(){
 }
 
 function actions(img){
-    const imgLeft = img.style.left;
-    const imgTop = img.style.top;
-    // Parse coordinates
-    const left = parseInt(imgLeft);
-    const top = parseInt(imgTop);
-    document.addEventListener('mousedown', (event) => {
-        const x = event.clientX;
+    img.addEventListener('mousedown', (event) => {
+        const images = document.querySelectorAll('.check-image');
+        images.forEach((i) => i.classList.remove("check-image")); // Remove the check image class if exists (change the figure to be choosen later)
+        const x = event.clientX; // Mouse coordinates
         const y = event.clientY;
-        const distanceX = x - left;
-        const distanceY = y - top;
-        console.log(`Mouse X: ${x}, Mouse Y: ${y}`);
-        console.log(`Mouse dis X: ${distanceX}, Mouse dis Y: ${distanceY}`);
-        if (range(left + distanceX, left + squareWidth + distanceX).includes(x) && range(top + distanceY, top + distanceY + squareHeight).includes(y)){
-            
-           
-            
-            // Calculate new position
-            // Find distance between figure and left-top screen coordinates
-            img.style.backgroundColor = 'red'
-            
+        const rect = img.getBoundingClientRect(); // Get the bounds of the image
+        if (x >= rect.left && x <= rect.right &&
+            y >= rect.top && y <= rect.bottom){ // Check if mouse inside the image
+            img.classList.add("check-image"); // Change color in choosen figure
         }
         
     });
