@@ -34,6 +34,7 @@ function drawSquares(){
         square.classList.add("square");
         square.style.width = squareWidth + "px";
         square.style.height = squareHeight + "px";
+        
         if (i % 8 === 0){index++;} // Check square with different color (change counting and start with a new color if new row)
         // Add color based on module index
         square.style.backgroundColor = (index % 2 === 0)? "white" : "rgb(49, 48, 48)";
@@ -48,7 +49,7 @@ function drawFigures(){
             const img = document.createElement("img");
             switch (boardPosition[i][j]) {
                 case 1: img.src = blackPawn; break;
-                case 2: img.src = blackKnight; break;
+                case 2: img.src = blackKnight;  break;
                 case 3: img.src = blackBishop; break;
                 case 4: img.src = blackRook; break;
                 case 5: img.src = blackQueen; break;
@@ -59,16 +60,58 @@ function drawFigures(){
                 case 14: img.src = whiteRook; break;
                 case 15: img.src = whiteQueen; break;
                 case 16: img.src = whiteKing; break;
+                case 0: continue; // Skip over 0 squares
                 default: break;
             }
-            
-            img.style.left = squareWidth * j - squareWidth / 10 + "px";
-            img.style.top = squareHeight * i - squareHeight / 10 + "px";
+            img.style.width = squareWidth + "px"; // Figures' size
+            img.style.height = squareHeight + "px";
+            img.classList.add("image-figure");
+
+            img.style.left = squareWidth * j  + "px";
+            img.style.top = squareHeight * i  + "px";
+
             img.style.position = "absolute";
+            
+            actions(img);
+
             board.appendChild(img); // Add a figure to the board
         }
     }
 }
 
-drawSquares();
-drawFigures();
+function actions(img){
+    const imgLeft = img.style.left;
+    const imgTop = img.style.top;
+    // Parse coordinates
+    const left = parseInt(imgLeft);
+    const top = parseInt(imgTop);
+    document.addEventListener('mousedown', (event) => {
+        const x = event.clientX;
+        const y = event.clientY;
+        const distanceX = x - left;
+        const distanceY = y - top;
+        console.log(`Mouse X: ${x}, Mouse Y: ${y}`);
+        console.log(`Mouse dis X: ${distanceX}, Mouse dis Y: ${distanceY}`);
+        if (range(left + distanceX, left + squareWidth + distanceX).includes(x) && range(top + distanceY, top + distanceY + squareHeight).includes(y)){
+            
+           
+            
+            // Calculate new position
+            // Find distance between figure and left-top screen coordinates
+            img.style.backgroundColor = 'red'
+            
+        }
+        
+    });
+}
+
+
+
+
+function main(){
+    // Main function, calls all code
+    drawSquares();
+    drawFigures();
+}
+
+main(); // Start the game when the page loads.
