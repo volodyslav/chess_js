@@ -26,3 +26,7 @@ const whiteKnight = "./img/white/knight.png";
 const whitePawn = "./img/white/pawn.png";
 const whiteQueen = "./img/white/queen.png";
 const whiteRook = "./img/white/rook.png";
+
+// Figures color in number (for future check if black or white can move)
+const whiteFigures = [11, 12, 13, 14, 15, 16];
+const blackFigures = [1, 2, 3, 4, 5, 6];
