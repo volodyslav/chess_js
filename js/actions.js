@@ -37,37 +37,34 @@ function moveFigure(img){
     const canMove = canMoveCheck(img);
     if ((img.classList.contains("check-image")) && canMove){
         // Check if this figure is checked
-        const imgLeft = parseInt(img.style.left);
+        const imgLeft = parseInt(img.style.left)
         const imgTop = parseInt(img.style.top);
-        console.log(`Image left: ${imgLeft} top: ${imgTop}`)
+        //console.log(`Image left: ${imgLeft} top: ${imgTop}`)
         const imgPositionLeft = imgLeft / squareWidth; // Get the position of the figure in array structure (0, 0) or (1, 4)
         const imgPositionTop = imgTop / squareHeight;
         console.log(`Image position: ${imgPositionLeft} ${imgPositionTop} `);
-        console.log(`Figure ${boardPosition[imgPositionTop][imgPositionLeft]}`)
-
+        //console.log(`Figure ${boardPosition[imgPositionTop][imgPositionLeft]}`)
         const rect = img.getBoundingClientRect();
-        
         
         switch (boardPosition[imgPositionTop][imgPositionLeft]){
             case 11:
                 // Move pawn
-                if (((boardPosition[imgPositionTop - 1][imgPositionLeft]) === 0) ){
+                if (((boardPosition[imgPositionTop - 1][imgPositionLeft]) === 0)){
+                    console.log(`top: ${rect.top} bottom: ${rect.bottom}`)
                     // Move forward
-                    board.addEventListener("mousedown", (event) => {
-                        const x = event.clientX; // Mouse coordinates
-                        const y = event.clientY;
-                        console.log(`x: ${x} y: ${y}`);  
-                        console.log(`left: ${rect.left} top: ${rect.top}`)
-                        if (x >= rect.left && x <= rect.right &&
-                            y >= rect.top - squareHeight && y <= rect.bottom - squareHeight){  
-                                img.style.top = (imgTop - squareHeight) + 'px';
-                                boardPosition[imgPositionTop - 1][imgPositionLeft] = 11;
-                                boardPosition[imgPositionTop][imgPositionLeft] = 0;
-                                
-                                console.log(`Board after ${boardPosition}`);
+                    board.addEventListener("mousedown", function handleMouseMove (event) {
+                        const mov_x = event.clientX; // Mouse coordinates
+                        const mov_y = event.clientY;
+                        console.log(`x: ${mov_x} y: ${mov_y}`);  
+                        //console.log(`left: ${rect.left} top: ${rect.top}`)
+                        if (mov_x > rect.left && mov_x < rect.right && mov_y < rect.top ){ // Check it between left and right side and move y --  
+                            img.style.top = (imgTop - squareHeight) + 'px'; 
+                            boardPosition[imgPositionTop - 1][imgPositionLeft] = 11; // Move forward
+                            boardPosition[imgPositionTop][imgPositionLeft] = 0; // Replace the position
+                            console.log(boardPosition);
+                            board.removeEventListener("mousedown", handleMouseMove);
                         }
                     })
-                    
                 }
                 break;
             default:
