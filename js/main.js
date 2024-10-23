@@ -27,6 +27,7 @@ let boardPosition = [
 let moveColorNow = 0; // Check which color to move now (default: white)
 let currentColorArray = whiteFigures;
 
+
 function changeCurrentMoveColor(){
     currentColorArray = (moveColorNow === 1)? blackFigures : whiteFigures; // Set the current color array
     console.log(`Color now ${moveColorNow}; array ${currentColorArray}`);

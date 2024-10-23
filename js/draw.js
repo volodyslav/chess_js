@@ -22,13 +22,19 @@ function drawFigures(){
         for (let j = 0; j < boardPosition[i].length; j++) {
             const img = document.createElement("img");
             switch (boardPosition[i][j]) {
-                case 1: img.src = blackPawn; break;
+                case 1: 
+                    img.src = blackPawn;
+                    img.classList.add("first-move"); // Check fisrt move class
+                    break;
                 case 2: img.src = blackKnight;  break;
                 case 3: img.src = blackBishop; break;
                 case 4: img.src = blackRook; break;
                 case 5: img.src = blackQueen; break;
                 case 6: img.src = blackKing; break;
-                case 11: img.src = whitePawn; break;
+                case 11: 
+                    img.src = whitePawn; 
+                    img.classList.add("first-move"); // Check fisrt move class
+                    break;
                 case 12: img.src = whiteKnight; break;
                 case 13: img.src = whiteBishop; break;
                 case 14: img.src = whiteRook; break;

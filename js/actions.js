@@ -57,11 +57,30 @@ function moveFigure(img){
                         const mov_y = event.clientY;
                         console.log(`x: ${mov_x} y: ${mov_y}`);  
                         //console.log(`left: ${rect.left} top: ${rect.top}`)
-                        if (mov_x > rect.left && mov_x < rect.right && mov_y < rect.top ){ // Check it between left and right side and move y --  
+                        if (mov_x > rect.left && mov_x < rect.right && mov_y < rect.top && mov_y > rect.top - squareHeight){ // Check it between left and right side and move y --  
                             img.style.top = (imgTop - squareHeight) + 'px'; 
                             boardPosition[imgPositionTop - 1][imgPositionLeft] = 11; // Move forward
                             boardPosition[imgPositionTop][imgPositionLeft] = 0; // Replace the position
                             console.log(boardPosition);
+                            img.classList.remove("first-move"); // Remove the first move (i made a fisrt move)
+                            board.removeEventListener("mousedown", handleMouseMove);
+                        }
+                    })
+                }
+                if (((boardPosition[imgPositionTop - 2][imgPositionLeft]) === 0) && (img.classList.contains("first-move"))){
+                    console.log(`top: ${rect.top} bottom: ${rect.bottom}`)
+                    // Move forward
+                    board.addEventListener("mousedown", function handleMouseMove (event) {
+                        const mov_x = event.clientX; // Mouse coordinates
+                        const mov_y = event.clientY;
+                        console.log(`x: ${mov_x} y: ${mov_y}`);  
+                        //console.log(`left: ${rect.left} top: ${rect.top}`)
+                        if (mov_x > rect.left && mov_x < rect.right && mov_y < rect.top - squareHeight && mov_y > rect.top - squareHeight * 2 ){ // Check it between left and right side and move y --  
+                            img.style.top = (imgTop - squareHeight * 2) + 'px'; 
+                            boardPosition[imgPositionTop - 2][imgPositionLeft] = 11; // Move forward
+                            boardPosition[imgPositionTop][imgPositionLeft] = 0; // Replace the position
+                            console.log(boardPosition);
+                            img.classList.remove("first-move"); // Remove the first move (i made a fisrt move)
                             board.removeEventListener("mousedown", handleMouseMove);
                         }
                     })
