@@ -1,44 +1,28 @@
-function pawnMovement(imgPositionTop, imgPositionLeft, imgTop, rect, img){
-    if (((boardPosition[imgPositionTop - 1][imgPositionLeft]) === 0)){
-        //console.log(`top: ${rect.top} bottom: ${rect.bottom}`)
-        // Move forward
-        board.addEventListener("mousedown", function handleMouseMove (event) {
-            const mov_x = event.clientX; // Mouse coordinates
-            const mov_y = event.clientY;
-            //console.log(`x: ${mov_x} y: ${mov_y}`);  
-            //console.log(`left: ${rect.left} top: ${rect.top}`)
-            if (mov_x > rect.left && mov_x < rect.right && mov_y < rect.top  && mov_y > rect.top - squareHeight && (img.classList.contains("check-image"))){ // Check it between left and right side and move y --  
-                img.style.top = (imgTop - squareHeight) + 'px'; 
-                boardPosition[imgPositionTop - 1][imgPositionLeft] = 11; // Move forward
-                boardPosition[imgPositionTop][imgPositionLeft] = 0; // Replace the position
-                console.log(boardPosition);
-                img.classList.remove("first-move"); // Remove the first move (i made a fisrt move)
-                img.classList.remove("check-image"); // Remove the check image
-                imgPositionTop --; // Reduce the position in order to prevent ([11, 11], [11, 11])
-                board.removeEventListener("mousedown", handleMouseMove);
-                
-            }
-        })
-    }
-    else if (((boardPosition[imgPositionTop - 1][imgPositionLeft]) === 0) && ((boardPosition[imgPositionTop - 2][imgPositionLeft]) === 0) && img.classList.contains("first-move")){
-        //console.log(`top: ${rect.top} bottom: ${rect.bottom}`)
-        // Move forward
-        board.addEventListener("mousedown", function handleMouseMove (event) {
-            const mov_x = event.clientX; // Mouse coordinates
-            const mov_y = event.clientY;
-            //console.log(`x: ${mov_x} y: ${mov_y}`);  
-            //console.log(`left: ${rect.left} top: ${rect.top}`)
-            if (mov_x > rect.left && mov_x < rect.right && mov_y < rect.top - squareHeight  && mov_y > rect.top - squareHeight * 2 && (img.classList.contains("check-image"))){ // Check it between left and right side and move y --  
-                img.style.top = (imgTop - squareHeight * 2) + 'px'; 
-                boardPosition[imgPositionTop - 2][imgPositionLeft] = 11; // Move forward
-                boardPosition[imgPositionTop][imgPositionLeft] = 0; // Replace the position
-                console.log(boardPosition);
-                img.classList.remove("first-move"); // Remove the first move (i made a fisrt move)
-                img.classList.remove("check-image"); // Remove the check image
-                imgPositionTop --; // Reduce the position in order to prevent ([11, 11], [11, 11])
-                board.removeEventListener("mousedown", handleMouseMove);
-               
-            }
-        })
-    }
+function pawnMovement(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img){
+    // Move forward
+    board.addEventListener("mousedown", function handleMouseMove (event) {
+        const movX = event.clientX - board.getBoundingClientRect().left; // Get offset of the board from the mouse position
+        const movY = event.clientY - board.getBoundingClientRect().top;
+        console.log(`x: ${movX} y: ${movY}`);  
+        const conditionX = movX > imgOffsetX && movX < imgOffsetX + squareWidth; // Check on X position
+        const conditionCheckImg = (img.classList.contains("check-image")); // Chekc if the image is covered by check
+        if (conditionX && movY < imgOffsetY  && movY > (imgOffsetY - squareHeight) && conditionCheckImg && boardPosition[imgPositionTop - 1][imgPositionLeft] === 0){ // Check it between left and right side and move y --  
+            img.style.top = (imgOffsetY - squareHeight) + 'px'; 
+            boardPosition[imgPositionTop - 1][imgPositionLeft] = 11; // Move forward
+            boardPosition[imgPositionTop][imgPositionLeft] = 0; // Replace the position
+            console.log(boardPosition);
+            img.classList.remove("first-move"); // Remove the first move (i made a fisrt move)
+            img.classList.remove("check-image"); // Remove the check image
+            board.removeEventListener("mousedown", handleMouseMove);  
+        }else if ( conditionX  && movY < (imgOffsetY - squareHeight)  && movY > (imgOffsetY - squareHeight * 2) && conditionCheckImg && (img.classList.contains("first-move")) && boardPosition[imgPositionTop - 2][imgPositionLeft] === 0){ // Check it between left and right side and move y --  
+            img.style.top = (imgOffsetY - squareHeight * 2) + 'px'; 
+            boardPosition[imgPositionTop - 2][imgPositionLeft] = 11; // Move forward
+            boardPosition[imgPositionTop][imgPositionLeft] = 0; // Replace the position
+            console.log(boardPosition);
+            img.classList.remove("first-move"); // Remove the first move (i made a fisrt move)
+            img.classList.remove("check-image"); // Remove the check image
+            board.removeEventListener("mousedown", handleMouseMove);
+                        
+        }
+    })
 }
