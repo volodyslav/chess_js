@@ -51,46 +51,10 @@ function moveFigure(img){
         switch (boardPosition[imgPositionTop][imgPositionLeft]){
             case 11:
                 // Move pawn
-                pawnMovement(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY,  img)    
+                movePawn(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY,  img)    ;
                 break;
             case 14:
-                // Move forward
-                board.addEventListener("mousedown", function handleMouseMove (event) {
-                    const movX = event.clientX - board.getBoundingClientRect().left; // Get offset of the board from the mouse position
-                    const movY = event.clientY - board.getBoundingClientRect().top;
-                    
-                    console.log(`x: ${movX} y: ${movY}`);  
-                    const movePositionY = Math.floor(movY / squareHeight); // Get position on the board from the mouse position
-                    let allowedMovement = true; // Whether movement should be allowed
-                    // Check direction of movement
-                    const direction = movePositionY > imgPositionTop ? 1 : -1; // Get direction of movement -1 - up;  1 - down
-                
-                    for (let startPos = imgPositionTop + direction; direction === -1 ? startPos >= movePositionY : startPos < movePositionY; startPos += direction){
-                        // Check if current position - 1 and until mouse position is empty if not cant move forward (example: from 7 to 5)
-                        if (boardPosition[startPos][imgPositionLeft] !== 0){
-                            console.log("Cannot move forward because of a figure");
-                            allowedMovement = false
-                            break;
-                        }else{
-                            console.log("Can move forward because of empty space");
-                        }
-                    }
-                    const conditionByX = movX > imgOffsetX && movX < imgOffsetX + squareWidth // Condition if x == x_new -> means we mobe vertically
-                    const conditionVertical = direction === -1 ? movY < imgOffsetY : movY > imgOffsetY + squareHeight // Condition based on direction
-                    const conditionStyleTop = direction === -1 ? (imgPositionTop - movePositionY) : (movePositionY - imgPositionTop) // Condition based on direction, move on the screen position
-
-                    console.log(`New pos ${movePositionY}`); 
-                    if (conditionByX && conditionVertical && (img.classList.contains("check-image")) 
-                        && allowedMovement){ // Check it between left and right side and move y --  
-                        img.style.top = (imgOffsetY + direction * squareHeight * conditionStyleTop) + 'px';  // Example offset 350 -  top = 7 - new_top = 5 = 2 * 50px = 250px 
-                        boardPosition[imgPositionTop + direction * conditionStyleTop][imgPositionLeft] = 14; // Move forward (example 5 - (5 - 2) = 3 -> exact position on the board)
-                        boardPosition[imgPositionTop][imgPositionLeft] = 0; // Replace the position
-                        console.log(boardPosition);
-                        img.classList.remove("check-image"); // Remove the check image
-                        board.removeEventListener("mousedown", handleMouseMove);  
-                    }
-                })
-                
+                moveRook(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img);
                 break;
             default:
                 break;
