@@ -22,6 +22,8 @@ let boardPosition = [
     [14, 12, 13, 15, 16, 13, 12, 14],
 ]
 
+const boardLength = boardPosition.length; // Get length of the board
+
 // Movements setting
 // Black - 1; white - 0
 let moveColorNow = 0; // Check which color to move now (default: white)
