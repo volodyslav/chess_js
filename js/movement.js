@@ -3,11 +3,15 @@ function movePawn(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img, 
     const directionY = colorImgNumber === 11 ? -1 : 1; // If white pawn then up -1
     const circlesAmount = img.classList.contains("first-move") ? 3 : 2;
     for (let i = 1; i < circlesAmount; i++) {
-        const circle = document.createElement("div");
-        circle.classList.add("circle");
-        circle.style.left = imgOffsetX + squareWidth / 2 + 'px';
-        circle.style.top = (imgOffsetY + directionY * (squareHeight * i) + squareHeight / 2) + 'px'; // center the circle
-        board.appendChild(circle);
+        if (boardPosition[imgPositionTop + i * directionY][imgPositionLeft] === 0){
+            const circle = document.createElement("div");
+            circle.classList.add("circle");
+            circle.style.left = imgOffsetX + squareWidth / 2 + 'px';
+            circle.style.top = (imgOffsetY + directionY * (squareHeight * i) + squareHeight / 2) + 'px'; // center the circle
+            board.appendChild(circle);
+        }else{
+            break;
+        }
     }
     
     // Move forward
@@ -49,7 +53,44 @@ function movePawn(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img, 
 
 
 function moveRook(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img, colorImgNumber){
-     // Move forward
+    // Draw the circles where rook can move 
+
+    const directionMove = colorImgNumber === 14 || colorImgNumber === 15 ? -1 : 1; // can add or for queen
+
+    // Check vertical circles up
+    for (let i = imgPositionTop + 1; i < 8; i++) {
+        if (boardPosition[imgPositionTop + (imgPositionTop - i) * directionMove][imgPositionLeft] === 0){
+            drawCirclesRookY(imgOffsetX, imgOffsetY, imgPositionTop, i, directionMove)
+        }else{
+            break;
+        }
+    }
+    // Check vertical circles down
+    for (let i = imgPositionTop - 1; i >= 0; i--) {
+        if (boardPosition[imgPositionTop + (imgPositionTop - i) * directionMove][imgPositionLeft] === 0){
+            drawCirclesRookY(imgOffsetX, imgOffsetY, imgPositionTop, i, directionMove)
+        }else{
+            break;
+        }
+    }
+    // Check horizontal circles left
+    for (let i = imgPositionLeft - 1; i >= 0; i--) {
+        if (boardPosition[imgPositionTop][imgPositionLeft + (imgPositionLeft - i) * directionMove] === 0){
+            drawCirclesRookX(imgOffsetX, imgOffsetY, imgPositionLeft, i, directionMove)
+        }else{
+            break;
+        }
+    }
+    // Check horizontal circles right
+    for (let i = imgPositionLeft + 1; i < 8; i++) {
+        if (boardPosition[imgPositionTop][imgPositionLeft + (imgPositionLeft - i) * directionMove] === 0){
+            drawCirclesRookX(imgOffsetX, imgOffsetY, imgPositionLeft, i, directionMove)
+        }else{
+            break;
+        }
+    }
+
+    // Move forward
      board.addEventListener("mousedown", function handleMouseMove (event) {
         const movX = event.clientX - board.getBoundingClientRect().left; // Get offset of the board from the mouse position
         const movY = event.clientY - board.getBoundingClientRect().top;
@@ -103,6 +144,7 @@ function moveRook(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img, 
             console.log(boardPosition);
            
             img.classList.remove("check-image"); // Remove the check image
+            deleteCircles()
             setTimeout(() => {
                 img.classList.remove("chess-piece-animation-top"); // remove top animation 
             }, 300)
@@ -116,6 +158,7 @@ function moveRook(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img, 
             boardPosition[imgPositionTop][imgPositionLeft] = 0; // Replace the position
             console.log(boardPosition);
             img.classList.remove("check-image"); // Remove the check image
+            deleteCircles()
             setTimeout(() => {
                 img.classList.remove("chess-piece-animation-left"); // remove the animation left on order to let to move to the top after 300ms 
             }, 300)
