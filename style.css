@@ -55,3 +55,14 @@ body {
     background-color: gold;
     border: 2px solid rgb(222, 222, 222);
 }
+
+
+/*Circles for movement*/
+.circle{
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: rgba(25, 202, 5, 0.496);
+    transform: translate(-50%, -50%);
+    position: absolute;
+}

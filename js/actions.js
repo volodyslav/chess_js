@@ -3,6 +3,7 @@ function chooseFigure(img){
     img.addEventListener('mousedown', (event) => {
         const images = document.querySelectorAll('.check-image');
         images.forEach((i) => i.classList.remove("check-image")); // Remove the check image class if exists (change the figure to be choosen later)
+        
 
         const x = event.clientX; // Mouse coordinates
         const y = event.clientY;
@@ -37,6 +38,7 @@ function moveFigure(img){
     // Check if the figure can move
     const canMove = canMoveCheck(img);
     if ((img.classList.contains("check-image")) && canMove){
+        deleteCircles()
         // Check if this figure is checked
         const imgOffsetX = img.offsetLeft; // Get the position Offset of the figure 
         const imgOffsetY = img.offsetTop; // Get the position Offset of the figure
@@ -52,13 +54,14 @@ function moveFigure(img){
         switch (boardPosition[imgPositionTop][imgPositionLeft]){
             case 11:
                 // Move pawn
-                movePawn(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY,  img)    ;
+                movePawn(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img, 11)    ;
                 break;
             case 14:
-                moveRook(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img);
+                moveRook(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img, 14);
                 break;
             default:
                 break;
         }
     }
+    
 }
