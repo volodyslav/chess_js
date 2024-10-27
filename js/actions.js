@@ -3,6 +3,7 @@ function chooseFigure(img){
     img.addEventListener('mousedown', (event) => {
         const images = document.querySelectorAll('.check-image');
         images.forEach((i) => i.classList.remove("check-image")); // Remove the check image class if exists (change the figure to be choosen later)
+
         const x = event.clientX; // Mouse coordinates
         const y = event.clientY;
         const rect = img.getBoundingClientRect(); // Get the bounds of the image

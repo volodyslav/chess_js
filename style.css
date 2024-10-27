@@ -40,6 +40,16 @@ body {
 .image-figure:hover{
     opacity: 0.9;
 }
+
+.chess-piece-animation-top{
+    transition: top 0.3s ease-in-out;
+    position: absolute;
+}
+.chess-piece-animation-left{
+    transition: left 0.3s ease-in-out;
+    position: absolute;
+}
+
 /*Choose image*/
 .check-image{
     background-color: gold;

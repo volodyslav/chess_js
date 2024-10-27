@@ -31,6 +31,8 @@ function movePawn(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img){
 
 
 function moveRook(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img){
+    
+    
      // Move forward
      board.addEventListener("mousedown", function handleMouseMove (event) {
         const movX = event.clientX - board.getBoundingClientRect().left; // Get offset of the board from the mouse position
@@ -78,20 +80,29 @@ function moveRook(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img){
         console.log(`New pos X = ${movePositionX} Y = ${movePositionY}`); 
         if (conditionByX && !conditionByY && conditionVertical && (img.classList.contains("check-image")) 
             && allowedMovementY){ // Check it between left and right side and move y --  
-            img.style.top = (imgOffsetY + directionY * squareHeight * conditionStyleTop) + 'px';  // Example offset 350 -  top = 7 - new_top = 5 = 2 * 50px = 250px 
+            img.classList.add("chess-piece-animation-top"); // Move top animation piece
+            img.style.top = `${imgOffsetY + directionY * squareHeight * conditionStyleTop}px`;  // Example offset 350 -  top = 7 - new_top = 5 = 2 * 50px = 250px 
             boardPosition[imgPositionTop + directionY * conditionStyleTop][imgPositionLeft] = 14; // Move forward (example 5 - (5 - 2) = 3 -> exact position on the board)
             boardPosition[imgPositionTop][imgPositionLeft] = 0; // Replace the position
             console.log(boardPosition);
+           
             img.classList.remove("check-image"); // Remove the check image
-            board.removeEventListener("mousedown", handleMouseMove);  
+            setTimeout(() => {
+                img.classList.remove("chess-piece-animation-top"); // remove top animation 
+            }, 300)
+            board.removeEventListener("mousedown", handleMouseMove); // Let do only one move
         }
         else if (conditionByY && !conditionByX && conditionHorizontal && (img.classList.contains("check-image")) 
             && allowedMovementX){ // Check it between left and right side and move y --  
-            img.style.left = (imgOffsetX + directionX * squareWidth * conditionStyleLeft) + 'px';  // Example offset 350 -  top = 7 - new_top = 5 = 2 * 50px = 250px 
+            img.classList.add("chess-piece-animation-left"); // Move left animation piece
+            img.style.left = `${imgOffsetX + directionX * squareWidth * conditionStyleLeft}px`;  // Example offset 350 -  top = 7 - new_top = 5 = 2 * 50px = 250px 
             boardPosition[imgPositionTop][imgPositionLeft + directionX * conditionStyleLeft] = 14; // Move forward (example 5 - (5 - 2) = 3 -> exact position on the board)
             boardPosition[imgPositionTop][imgPositionLeft] = 0; // Replace the position
             console.log(boardPosition);
             img.classList.remove("check-image"); // Remove the check image
+            setTimeout(() => {
+                img.classList.remove("chess-piece-animation-left"); // remove the animation left on order to let to move to the top after 300ms 
+            }, 300)
             board.removeEventListener("mousedown", handleMouseMove);  
         }
     })
