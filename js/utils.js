@@ -1,7 +1,3 @@
-function range(start, end, step = 1) {
-    const length = Math.ceil((end - start) / step);
-    return Array.from({ length }, (_, i) => start + i * step);
-}
 
 function deleteCircles(){
     // Delete all circles on the board
@@ -25,4 +21,12 @@ function drawCirclesRookY(imgOffsetX, imgOffsetY, imgPositionTop, i, directionMo
     circle.style.left = imgOffsetX + squareWidth / 2 + 'px';
     circle.style.top = (imgOffsetY + directionMove * (squareHeight * (imgPositionTop - i)) + squareHeight / 2) + 'px'; // center the circle
     board.appendChild(circle);
+}
+
+
+// Movements setting
+let currentColorArray = whiteFigures;
+function changeCurrentMoveColor(){
+    currentColorArray = currentColorArray === whiteFigures ? blackFigures : whiteFigures; // Set the current color array
+    console.log(`Color now  array ${currentColorArray}`);
 }

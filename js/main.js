@@ -24,17 +24,6 @@ let boardPosition = [
 
 const boardLength = boardPosition.length; // Get length of the board
 
-// Movements setting
-// Black - 1; white - 0
-let moveColorNow = 0; // Check which color to move now (default: white)
-let currentColorArray = whiteFigures;
-
-
-function changeCurrentMoveColor(){
-    currentColorArray = (moveColorNow === 1)? blackFigures : whiteFigures; // Set the current color array
-    console.log(`Color now ${moveColorNow}; array ${currentColorArray}`);
-}
-
 console.log(boardPosition)
 
 function actions(img){
@@ -43,9 +32,10 @@ function actions(img){
 
 function main(){
     // Main function, calls all code
-    changeCurrentMoveColor();
+    
     drawSquares();
     drawFigures();
+    
 }
 
 main(); // Start the game when the page loads.
