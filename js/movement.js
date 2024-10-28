@@ -175,6 +175,17 @@ function moveRook(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img, 
 }
 
 function moveKnight(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img, colorImgNumber){
+    // Draw circles
+    drawCirclesKnight(-2, 1, imgPositionLeft, imgPositionTop, imgOffsetX, imgOffsetY);
+    drawCirclesKnight(-2, -1, imgPositionLeft, imgPositionTop, imgOffsetX, imgOffsetY);
+    drawCirclesKnight(2, -1, imgPositionLeft, imgPositionTop, imgOffsetX, imgOffsetY);
+    drawCirclesKnight(2, 1, imgPositionLeft, imgPositionTop, imgOffsetX, imgOffsetY);
+    drawCirclesKnight(1, -2, imgPositionLeft, imgPositionTop, imgOffsetX, imgOffsetY);
+    drawCirclesKnight(1, 2, imgPositionLeft, imgPositionTop, imgOffsetX, imgOffsetY);
+    drawCirclesKnight(-1, 2, imgPositionLeft, imgPositionTop, imgOffsetX, imgOffsetY);
+    drawCirclesKnight(-1, -2, imgPositionLeft, imgPositionTop, imgOffsetX, imgOffsetY);
+    
+    
     board.addEventListener("mousedown", function handleMouseMove (event) {
         const movX = event.clientX - board.getBoundingClientRect().left; // Get offset of the board from the mouse position
         const movY = event.clientY - board.getBoundingClientRect().top;

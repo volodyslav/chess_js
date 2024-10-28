@@ -24,6 +24,58 @@ function drawCirclesRookY(imgOffsetX, i){
 }
 
 
+function drawCirclesKnight(top, left, imgPositionLeft, imgPositionTop, imgOffsetX, imgOffsetY){
+    // Draw the circles on the board for knight
+    let topCondition = 0; // Condition to draw the circles on the board
+    let leftCondition = 0;
+    // Check possible positions of the circles
+    switch (top) {
+        case -2:
+            topCondition = (imgOffsetY - squareHeight * 2 + squareHeight / 2)
+            break;
+        case 2:
+            topCondition = (imgOffsetY + squareHeight * 2 + squareHeight / 2)
+            break;
+        case 1:
+            topCondition = (imgOffsetY + squareHeight + squareHeight / 2)
+            break;
+        case -1:
+            topCondition = (imgOffsetY - squareHeight + squareHeight / 2)
+            break;
+        default:
+            break;
+    }
+
+    switch (left) {
+        case 1:
+            leftCondition = (imgOffsetX + squareWidth  + squareWidth / 2);
+            break;
+        case -1:
+            leftCondition = (imgOffsetX - squareWidth / 2);
+            break;
+        case -2:
+            leftCondition = (imgOffsetX + squareWidth * 2 + squareWidth / 2);
+            break;
+        case 2:
+            leftCondition = (imgOffsetX - squareWidth * 2 + squareWidth / 2);
+            break;
+        default:
+            break;
+    }
+
+
+    const conditionBoardSize = (imgPositionTop + top >= 0 && imgPositionTop + top < 8) && (imgPositionLeft + left >= 0 && imgPositionLeft + left < 8);
+    if (conditionBoardSize && boardPosition[imgPositionTop + top][imgPositionLeft + left] === 0){
+        console.log(boardPosition[imgPositionTop + top][imgPositionLeft + left])
+        const circle = document.createElement("div");
+        circle.classList.add("circle");
+        circle.style.left = leftCondition + 'px';
+        circle.style.top = topCondition + 'px'; // center the circle
+        board.appendChild(circle);
+    }
+}
+
+
 // Movements setting
 let currentColorArray = whiteFigures;
 function changeCurrentMoveColor(){
