@@ -64,32 +64,32 @@ function moveRook(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img, 
 
     // Check vertical circles up
     for (let i = imgPositionTop + 1; i < 8; i++) {
-        if (boardPosition[imgPositionTop + (imgPositionTop - i) * directionMove][imgPositionLeft] === 0){
-            drawCirclesRookY(imgOffsetX, imgOffsetY, imgPositionTop, i, directionMove)
+        if (boardPosition[i][imgPositionLeft] === 0){
+            drawCirclesRookY(imgOffsetX, i)
         }else{
             break;
         }
     }
     // Check vertical circles down
     for (let i = imgPositionTop - 1; i >= 0; i--) {
-        if (boardPosition[imgPositionTop + (imgPositionTop - i) * directionMove][imgPositionLeft] === 0){
-            drawCirclesRookY(imgOffsetX, imgOffsetY, imgPositionTop, i, directionMove)
+        if (boardPosition[i][imgPositionLeft] === 0){
+            drawCirclesRookY(imgOffsetX, i)
         }else{
             break;
         }
     }
     // Check horizontal circles left
     for (let i = imgPositionLeft - 1; i >= 0; i--) {
-        if (boardPosition[imgPositionTop][imgPositionLeft + (imgPositionLeft - i) * directionMove] === 0){
-            drawCirclesRookX(imgOffsetX, imgOffsetY, imgPositionLeft, i, directionMove)
+        if (boardPosition[imgPositionTop][i] === 0){
+            drawCirclesRookX(imgOffsetY, i)
         }else{
             break;
         }
     }
     // Check horizontal circles right
     for (let i = imgPositionLeft + 1; i < 8; i++) {
-        if (boardPosition[imgPositionTop][imgPositionLeft + (imgPositionLeft - i) * directionMove] === 0){
-            drawCirclesRookX(imgOffsetX, imgOffsetY, imgPositionLeft, i, directionMove)
+        if (boardPosition[imgPositionTop][i] === 0){
+            drawCirclesRookX(imgOffsetY, i)
         }else{
             break;
         }
