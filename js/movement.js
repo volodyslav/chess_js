@@ -60,7 +60,7 @@ function movePawn(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img, 
 function moveRook(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img, colorImgNumber){
     // Draw the circles where rook can move 
 
-    const directionMove = colorImgNumber === 14 || colorImgNumber === 15 ? -1 : 1; // can add or for queen
+    //const directionMove = colorImgNumber === 14 || colorImgNumber === 15 ? -1 : 1; // can add or for queen
 
     // Check vertical circles up
     for (let i = imgPositionTop + 1; i < 8; i++) {
@@ -168,6 +168,66 @@ function moveRook(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img, 
             changeCurrentMoveColor();
             setTimeout(() => {
                 img.classList.remove("chess-piece-animation-left"); // remove the animation left on order to let to move to the top after 300ms 
+            }, 300)
+            board.removeEventListener("mousedown", handleMouseMove);  
+        }
+    })
+}
+
+function moveKnight(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img, colorImgNumber){
+    board.addEventListener("mousedown", function handleMouseMove (event) {
+        const movX = event.clientX - board.getBoundingClientRect().left; // Get offset of the board from the mouse position
+        const movY = event.clientY - board.getBoundingClientRect().top;
+        
+        console.log(`x: ${movX} y: ${movY}`);  
+        const movePositionY = Math.floor(movY / squareHeight); // Get position on the board from the mouse position
+        const movePositionX = Math.floor(movX / squareWidth); // Get position on the board from the mouse position
+
+        const directionY = movePositionY > imgPositionTop ? 1 : -1; // Get directionY of movement -1 - up;  1 - down
+        const directionX = movePositionX > imgPositionLeft ? 1 : -1; // Get directionY of movement -1 - up;  1 - down
+
+        // Check can move up and down
+        const conditionXVertically = directionX === 1 ? (movX > imgOffsetX + squareWidth && movX < imgOffsetX + squareWidth * 2) : (movX < imgOffsetX && movX > imgOffsetX - squareWidth ) ;
+        const conditionYVertically = directionY === 1 ? (movY > imgOffsetY + squareHeight * 2 && movY < imgOffsetY + (squareHeight * 3)) : (movY < imgOffsetY - squareHeight && movY > imgOffsetY - (squareHeight * 2));
+        
+        // Check can move left and right
+        const conditionXHorizontally = directionX === 1 ? (movX > imgOffsetX + squareWidth * 2 && movX < imgOffsetX + squareWidth * 3) : (movX < imgOffsetX - squareWidth && movX > imgOffsetX - squareWidth * 2) ;
+        const conditionYHorizontally = directionY === 1 ? (movY > imgOffsetY + squareHeight && movY < imgOffsetY + squareHeight * 2 ) : (movY < imgOffsetY && movY > imgOffsetY - squareHeight);
+
+        console.log(`${conditionXVertically} ${conditionYVertically}`);
+        if ((conditionXVertically && !conditionXHorizontally) && (conditionYVertically && !conditionYHorizontally) && boardPosition[movePositionY][movePositionX] === 0 && (img.classList.contains("check-image"))){
+            img.classList.add("chess-knight-animation"); // Move left animation piece
+
+            img.style.left = `${imgOffsetX + squareWidth * directionX}px`;  // Example offset 350 -  top = 7 - new_top = 5 = 2 * 50px = 250px 
+            img.style.top = `${imgOffsetY + (squareHeight * 2) * directionY}px`;  // Example offset 350 -  top = 7 - new_top = 5 = 2 * 50px = 250px 
+            boardPosition[movePositionY][movePositionX] = colorImgNumber; // Move forward (example 5 - (5 - 2) = 3 -> exact position on the board)
+            boardPosition[imgPositionTop][imgPositionLeft] = 0;
+
+
+            console.log(boardPosition);
+            img.classList.remove("check-image"); // Remove the check image
+            deleteCircles();
+            changeCurrentMoveColor();
+            setTimeout(() => {
+                img.classList.remove("chess-knight-animation"); // remove the animation left on order to let to move to the top after 300ms 
+            }, 300)
+            board.removeEventListener("mousedown", handleMouseMove);  
+        }
+        else if ((!conditionXVertically && conditionXHorizontally) && (!conditionYVertically && conditionYHorizontally) && boardPosition[movePositionY][movePositionX] === 0 && (img.classList.contains("check-image"))){
+            img.classList.add("chess-knight-animation"); // Move left animation piece
+
+            img.style.left = `${imgOffsetX + (squareWidth * 2) * directionX}px`;  // Example offset 350 -  top = 7 - new_top = 5 = 2 * 50px = 250px 
+            img.style.top = `${imgOffsetY + squareHeight * directionY}px`;  // Example offset 350 -  top = 7 - new_top = 5 = 2 * 50px = 250px 
+            boardPosition[movePositionY][movePositionX] = colorImgNumber; // Move forward (example 5 - (5 - 2) = 3 -> exact position on the board)
+            boardPosition[imgPositionTop][imgPositionLeft] = 0;
+
+
+            console.log(boardPosition);
+            img.classList.remove("check-image"); // Remove the check image
+            deleteCircles();
+            changeCurrentMoveColor();
+            setTimeout(() => {
+                img.classList.remove("chess-knight-animation"); // remove the animation left on order to let to move to the top after 300ms 
             }, 300)
             board.removeEventListener("mousedown", handleMouseMove);  
         }

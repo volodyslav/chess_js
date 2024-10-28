@@ -52,13 +52,22 @@ function moveFigure(img){
         
         switch (boardPosition[imgPositionTop][imgPositionLeft]){
             case 1:
-                movePawn(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img, 1)    ;
+                movePawn(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img, 1);
+                break;
+            case 2:
+                moveKnight(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img, 2);
                 break;
             case 4:
                 moveRook(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img, 4);
                 break;
+            case 5:
+                moveRook(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img, 5);
+                break;
             case 11:
-                movePawn(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img, 11)    ;
+                movePawn(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img, 11) ;
+                break;
+            case 12:
+                moveKnight(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img, 12);
                 break;
             case 14:
                 moveRook(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img, 14);
