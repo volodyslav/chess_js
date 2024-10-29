@@ -70,3 +70,13 @@ body {
     transform: translate(-50%, -50%);
     position: absolute;
 }
+
+/* Enemy circles*/
+.circle-enemy{
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: rgba(196, 9, 9, 0.496);
+    transform: translate(-50%, -50%);
+    position: absolute;
+}

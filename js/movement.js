@@ -65,32 +65,48 @@ function moveRook(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img, 
     // Check vertical circles up
     for (let i = imgPositionTop + 1; i < 8; i++) {
         if (boardPosition[i][imgPositionLeft] === 0){
-            drawCirclesRookY(imgOffsetX, i)
-        }else{
+            drawCirclesRookY(imgOffsetX, i, 0)
+        }else if(!currentColorArray.includes(boardPosition[i][imgPositionLeft]) && boardPosition[i][imgPositionLeft] > 0){
+            drawCirclesRookY(imgOffsetX, i, 1) // 0 - draw movement circlel; 1 - enemy
+            break;
+        }
+        else{
             break;
         }
     }
     // Check vertical circles down
     for (let i = imgPositionTop - 1; i >= 0; i--) {
         if (boardPosition[i][imgPositionLeft] === 0){
-            drawCirclesRookY(imgOffsetX, i)
-        }else{
+            drawCirclesRookY(imgOffsetX, i, 0) // 0 - draw movement circlel; 1 - enemy
+        }else if(!currentColorArray.includes(boardPosition[i][imgPositionLeft]) && boardPosition[i][imgPositionLeft] > 0){
+            drawCirclesRookY(imgOffsetX, i, 1) // 0 - draw movement circlel; 1 - enemy
+            break;
+        }
+        else{
             break;
         }
     }
     // Check horizontal circles left
     for (let i = imgPositionLeft - 1; i >= 0; i--) {
         if (boardPosition[imgPositionTop][i] === 0){
-            drawCirclesRookX(imgOffsetY, i)
-        }else{
+            drawCirclesRookX(imgOffsetY, i, 0)
+        }else if(!currentColorArray.includes(boardPosition[imgPositionTop][i]) && boardPosition[imgPositionTop][i] > 0){
+            drawCirclesRookX(imgOffsetY, i, 1) // 0 - draw movement circlel; 1 - enemy
+            break;
+        }
+        else{
             break;
         }
     }
     // Check horizontal circles right
     for (let i = imgPositionLeft + 1; i < 8; i++) {
         if (boardPosition[imgPositionTop][i] === 0){
-            drawCirclesRookX(imgOffsetY, i)
-        }else{
+            drawCirclesRookX(imgOffsetY, i, 0)
+        }else if(!currentColorArray.includes(boardPosition[imgPositionTop][i]) && boardPosition[imgPositionTop][i] > 0){
+            drawCirclesRookX(imgOffsetY, i, 1) // 0 - draw movement circlel; 1 - enemy
+            break;
+        }
+        else{
             break;
         }
     }
@@ -176,6 +192,7 @@ function moveRook(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img, 
 
 function moveKnight(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img, colorImgNumber){
     // Draw circles
+
     drawCirclesKnight(-2, 1, imgPositionLeft, imgPositionTop, imgOffsetX, imgOffsetY);
     drawCirclesKnight(-2, -1, imgPositionLeft, imgPositionTop, imgOffsetX, imgOffsetY);
     drawCirclesKnight(2, -1, imgPositionLeft, imgPositionTop, imgOffsetX, imgOffsetY);
