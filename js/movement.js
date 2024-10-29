@@ -10,8 +10,20 @@ function movePawn(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img, 
             circle.style.left = imgOffsetX + squareWidth / 2 + 'px';
             circle.style.top = (imgOffsetY + directionY * (squareHeight * i) + squareHeight / 2) + 'px'; // center the circle
             board.appendChild(circle);
-        }else{
+        }
+        else{
             break;
+        }
+    }
+    
+    // Check if there is an enemy piece on the right side
+    for (let i = -1; i < 2; i+=2) {
+        if(boardPosition[imgPositionTop + 1 * directionY][imgPositionLeft + 1 * i] > 0 && !currentColorArray.includes(boardPosition[imgPositionTop + 1 * directionY][imgPositionLeft + 1 * i])){
+            const circle = document.createElement("div");
+            circle.classList.add("circle-enemy");
+            circle.style.left = imgOffsetX + squareWidth * i + squareWidth / 2 + 'px';
+            circle.style.top = (imgOffsetY + directionY * squareHeight  + squareHeight / 2) + 'px'; // 
+            board.appendChild(circle);
         }
     }
     

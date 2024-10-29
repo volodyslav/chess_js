@@ -1,5 +1,4 @@
-// Movements setting
-let currentColorArray = whiteFigures;
+
 function changeCurrentMoveColor(){
     currentColorArray = currentColorArray === whiteFigures ? blackFigures : whiteFigures; // Set the current color array
     console.log(`Color now  array ${currentColorArray}`);
@@ -78,7 +77,7 @@ function drawCirclesKnight(top, left, imgPositionLeft, imgPositionTop, imgOffset
             break;
     }
 
-    const conditionBoardSize = (imgPositionTop + top >= 0 && imgPositionTop + top < 8) && (imgPositionLeft + left >= 0 && imgPositionLeft + left < 8);
+    const conditionBoardSize = (imgPositionTop + top >= 0 && imgPositionTop + top < 8) && (imgPositionLeft + left >= 0 && imgPositionLeft + left < 8); // 0 < x < 8
     
     if (conditionBoardSize && boardPosition[imgPositionTop + top][imgPositionLeft + left] === 0){
         console.log(imgPositionLeft + left)
