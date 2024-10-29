@@ -9,8 +9,6 @@ container.style.height = containerHeight + "px";
 board.style.width = boardWidth + "px";
 board.style.height = boardHeight + "px";
 
-
-
 const boardLength = boardPosition.length; // Get length of the board
 
 console.log(boardPosition)
@@ -21,10 +19,8 @@ function actions(img){
 
 function main(){
     // Main function, calls all code
-    
     drawSquares();
     drawFigures();
-    
 }
 
 main(); // Start the game when the page loads.

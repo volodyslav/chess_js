@@ -16,7 +16,7 @@ function movePawn(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img, 
         }
     }
     
-    // Check if there is an enemy piece on the right side
+    // Check if there is an enemy piece on the right and left sides
     for (let i = -1; i < 2; i+=2) {
         if(boardPosition[imgPositionTop + 1 * directionY][imgPositionLeft + 1 * i] > 0 && !currentColorArray.includes(boardPosition[imgPositionTop + 1 * directionY][imgPositionLeft + 1 * i])){
             const circle = document.createElement("div");
@@ -204,17 +204,13 @@ function moveRook(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img, 
 
 function moveKnight(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img, colorImgNumber){
     // Draw circles
+    for (let i = -1; i < 2; i+=2){
+        for (let j = -2; j < 3; j+=4){
+            drawCirclesKnight(i, j, imgPositionLeft, imgPositionTop, imgOffsetX, imgOffsetY);
+            drawCirclesKnight(j, i, imgPositionLeft, imgPositionTop, imgOffsetX, imgOffsetY);
+        }
+    }
 
-    drawCirclesKnight(-2, 1, imgPositionLeft, imgPositionTop, imgOffsetX, imgOffsetY);
-    drawCirclesKnight(-2, -1, imgPositionLeft, imgPositionTop, imgOffsetX, imgOffsetY);
-    drawCirclesKnight(2, -1, imgPositionLeft, imgPositionTop, imgOffsetX, imgOffsetY);
-    drawCirclesKnight(2, 1, imgPositionLeft, imgPositionTop, imgOffsetX, imgOffsetY);
-    drawCirclesKnight(1, -2, imgPositionLeft, imgPositionTop, imgOffsetX, imgOffsetY);
-    drawCirclesKnight(1, 2, imgPositionLeft, imgPositionTop, imgOffsetX, imgOffsetY);
-    drawCirclesKnight(-1, 2, imgPositionLeft, imgPositionTop, imgOffsetX, imgOffsetY);
-    drawCirclesKnight(-1, -2, imgPositionLeft, imgPositionTop, imgOffsetX, imgOffsetY);
-    
-    
     board.addEventListener("mousedown", function handleMouseMove (event) {
         const movX = event.clientX - board.getBoundingClientRect().left; // Get offset of the board from the mouse position
         const movY = event.clientY - board.getBoundingClientRect().top;
@@ -260,8 +256,7 @@ function moveKnight(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img
             img.style.top = `${imgOffsetY + squareHeight * directionY}px`;  // Example offset 350 -  top = 7 - new_top = 5 = 2 * 50px = 250px 
             boardPosition[movePositionY][movePositionX] = colorImgNumber; // Move forward (example 5 - (5 - 2) = 3 -> exact position on the board)
             boardPosition[imgPositionTop][imgPositionLeft] = 0;
-
-
+            
             console.log(boardPosition);
             img.classList.remove("check-image"); // Remove the check image
             deleteCircles();
