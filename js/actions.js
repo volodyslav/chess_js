@@ -57,6 +57,9 @@ function moveFigure(img){
             case 2:
                 moveKnight(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img, 2);
                 break;
+            case 3:
+                moveBishop(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img, 3);
+                break;
             case 4:
                 moveRook(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img, 4);
                 break;
@@ -68,6 +71,9 @@ function moveFigure(img){
                 break;
             case 12:
                 moveKnight(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img, 12);
+                break;
+            case 13:
+                moveBishop(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img, 13)
                 break;
             case 14:
                 moveRook(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img, 14);
