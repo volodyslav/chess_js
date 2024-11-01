@@ -96,4 +96,24 @@ function drawCirclesKnight(top, left, imgPositionLeft, imgPositionTop, imgOffset
     }
 }
 
+function drawCirclesBishop(top, left, imgPositionTop, imgPositionLeft){
+    let imgTop = imgPositionTop + 1 * top; // get left position (change it all iterations)
+    let imgLeft = imgPositionLeft + 1 * left; // get right position (change it all iterations)
+    while(imgTop >= 0 && imgTop < 8 && imgTop >= 0 && imgLeft < 8){
+        console.log(`Top = ${top}, left = ${left}; ${boardPosition[imgTop][imgLeft] === 0}`)
+        console.log(imgTop, imgLeft)
+        if (boardPosition[imgTop][imgLeft] === 0){
+            const circle = document.createElement("div");
+            circle.classList.add("circle");
+            circle.style.left = (imgLeft * squareWidth + squareWidth / 2) + 'px';
+            circle.style.top = (imgTop * squareHeight + squareHeight / 2) + 'px'; // center the circle
+            board.appendChild(circle);
+        }else{
+            break;
+        }
+        imgLeft = imgLeft + 1 * left;
+        imgTop = imgTop + 1 * top;
+    }
+}
+
 

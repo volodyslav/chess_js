@@ -234,11 +234,10 @@ function moveKnight(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img
         if ((conditionXVertically && !conditionXHorizontally) && (conditionYVertically && !conditionYHorizontally) && boardPosition[movePositionY][movePositionX] === 0 && (img.classList.contains("check-image"))){
             img.classList.add("chess-knight-animation"); // Move left animation piece
 
-            img.style.left = `${imgOffsetX + squareWidth * directionX}px`;  // Example offset 350 -  top = 7 - new_top = 5 = 2 * 50px = 250px 
-            img.style.top = `${imgOffsetY + (squareHeight * 2) * directionY}px`;  // Example offset 350 -  top = 7 - new_top = 5 = 2 * 50px = 250px 
+            img.style.left = `${movePositionX * squareWidth}px`;  // Example offset 350 -  top = 7 - new_top = 5 = 2 * 50px = 250px 
+            img.style.top = `${movePositionY * squareHeight}px`; 
             boardPosition[movePositionY][movePositionX] = colorImgNumber; // Move forward (example 5 - (5 - 2) = 3 -> exact position on the board)
             boardPosition[imgPositionTop][imgPositionLeft] = 0;
-
 
             console.log(boardPosition);
             img.classList.remove("check-image"); // Remove the check image
@@ -252,8 +251,8 @@ function moveKnight(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img
         else if ((!conditionXVertically && conditionXHorizontally) && (!conditionYVertically && conditionYHorizontally) && boardPosition[movePositionY][movePositionX] === 0 && (img.classList.contains("check-image"))){
             img.classList.add("chess-knight-animation"); // Move left animation piece
 
-            img.style.left = `${imgOffsetX + (squareWidth * 2) * directionX}px`;  // Example offset 350 -  top = 7 - new_top = 5 = 2 * 50px = 250px 
-            img.style.top = `${imgOffsetY + squareHeight * directionY}px`;  // Example offset 350 -  top = 7 - new_top = 5 = 2 * 50px = 250px 
+            img.style.left = `${movePositionX * squareWidth}px`;  // Example offset 350 -  top = 7 - new_top = 5 = 2 * 50px = 250px 
+            img.style.top = `${movePositionY * squareHeight}px`;  // Example offset 350 -  top = 7 - new_top = 5 = 2 * 50px = 250px 
             boardPosition[movePositionY][movePositionX] = colorImgNumber; // Move forward (example 5 - (5 - 2) = 3 -> exact position on the board)
             boardPosition[imgPositionTop][imgPositionLeft] = 0;
 
@@ -270,7 +269,13 @@ function moveKnight(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img
 }
 
 
-function moveBishop(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img, colorImgNumber){
+function moveBishop(imgPositionTop, imgPositionLeft, img, colorImgNumber){
+    for (let i = -1; i <= 1; i+=2){
+        for (let j = -1; j <= 1; j +=2){
+            drawCirclesBishop(j, i, imgPositionTop, imgPositionLeft)
+        }
+    }
+
     board.addEventListener("mousedown", function handleMouseMove (event) {
         const movX = event.clientX - board.getBoundingClientRect().left; // Get offset of the board from the mouse position
         const movY = event.clientY - board.getBoundingClientRect().top;
