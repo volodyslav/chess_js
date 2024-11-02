@@ -442,3 +442,39 @@ function moveQueen(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img,
         }
     })
 }
+
+function moveKing(imgPositionTop, imgPositionLeft, img, colorImgNumber){
+    
+
+    board.addEventListener("mousedown", function handleMouseMove (event) {
+        const movX = event.clientX - board.getBoundingClientRect().left; // Get offset of the board from the mouse position
+        const movY = event.clientY - board.getBoundingClientRect().top;
+        
+        console.log(`x: ${movX} y: ${movY}`);  
+        const movePositionY = Math.floor(movY / squareHeight); // Get position on the board from the mouse position
+        const movePositionX = Math.floor(movX / squareWidth); // Get position on the board from the mouse position
+       
+        const conditionX = Math.abs(movePositionX - imgPositionLeft) === 1 && imgPositionTop === movePositionY;
+        const conditionY = Math.abs(movePositionY - imgPositionTop) === 1  && imgPositionLeft === movePositionX;
+        const conditionDiagonal = (Math.abs(movePositionX - imgPositionLeft) === 1 && Math.abs(movePositionY - imgPositionTop) === 1) && (imgPositionTop !== movePositionY && imgPositionLeft !== movePositionX); // Check diagonal movement
+
+        console.log(`can x: ${conditionX} can y: ${conditionY}`); 
+
+        if ((conditionX || conditionY || conditionDiagonal) && boardPosition[movePositionY][movePositionX] === 0) {
+            img.classList.add("chess-king-animation"); // Move left animation piece
+            img.style.left = `${movePositionX * squareWidth}px`;  // Example offset 350 -  top = 7 - new_top = 5 = 2 * 50px = 250px 
+            img.style.top = `${movePositionY * squareHeight}px`;  // Example offset 350 -  top = 7 - new_top = 5 = 2 * 50px = 250px 
+            boardPosition[movePositionY][movePositionX] = colorImgNumber; // Move forward (example 5 - (5 - 2) = 3 -> exact position on the board)
+            boardPosition[imgPositionTop][imgPositionLeft] = 0; // Replace the position
+            console.log(boardPosition);
+            img.classList.remove("check-image"); // Remove the check image
+            img.classList.remove("first-move-king"); // Remove the first move
+            deleteCircles();
+            changeCurrentMoveColor();
+            setTimeout(() => {
+                img.classList.remove("chess-king-animation"); // remove the animation left on order to let to move to the top after 300ms 
+            }, 300)
+            board.removeEventListener("mousedown", handleMouseMove);  
+        }
+    });
+}

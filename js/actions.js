@@ -66,6 +66,9 @@ function moveFigure(img){
             case 5:
                 moveQueen(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img, 5);
                 break;
+            case 6:
+                moveKing(imgPositionTop, imgPositionLeft, img, 6);
+                break;
             case 11:
                 movePawn(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img, 11) ;
                 break;
@@ -80,6 +83,9 @@ function moveFigure(img){
                 break;
             case 15:
                 moveQueen(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img, 15);
+                break;
+            case 16:
+                moveKing(imgPositionTop, imgPositionLeft, img, 16);
                 break;
             default:
                 break;

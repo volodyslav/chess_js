@@ -57,6 +57,10 @@ body {
     transition: top 0.3s ease-in-out, left 0.3s ease-in-out;
     position: absolute;
 }
+.chess-king-animation{
+    transition: top 0.3s ease-in-out, left 0.3s ease-in-out;
+    position: absolute;
+}
 
 /*Choose image*/
 .check-image{
