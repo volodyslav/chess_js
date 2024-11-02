@@ -64,7 +64,7 @@ function moveFigure(img){
                 moveRook(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img, 4);
                 break;
             case 5:
-                moveRook(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img, 5);
+                moveQueen(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img, 5);
                 break;
             case 11:
                 movePawn(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img, 11) ;
@@ -79,7 +79,7 @@ function moveFigure(img){
                 moveRook(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img, 14);
                 break;
             case 15:
-                moveRook(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img, 15);
+                moveQueen(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img, 15);
                 break;
             default:
                 break;

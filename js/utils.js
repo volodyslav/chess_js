@@ -108,7 +108,15 @@ function drawCirclesBishop(top, left, imgPositionTop, imgPositionLeft){
             circle.style.left = (imgLeft * squareWidth + squareWidth / 2) + 'px';
             circle.style.top = (imgTop * squareHeight + squareHeight / 2) + 'px'; // center the circle
             board.appendChild(circle);
-        }else{
+        }else if (!currentColorArray.includes(boardPosition[imgTop][imgLeft]) && boardPosition[imgTop][imgLeft] > 0){
+            const circle = document.createElement("div");
+            circle.classList.add("circle-enemy");
+            circle.style.left = (imgLeft * squareWidth + squareWidth / 2) + 'px';
+            circle.style.top = (imgTop * squareHeight + squareHeight / 2) + 'px'; // center the circle
+            board.appendChild(circle);
+            break;
+        }
+        else{
             break;
         }
         imgLeft = imgLeft + 1 * left;
