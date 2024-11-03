@@ -50,7 +50,7 @@ body {
     position: absolute;
 }
 
-.chech-piece-animation{
+.chess-piece-animation{
     transition: top 0.3s ease-in-out, left 0.3s ease-in-out;
     position: absolute; 
 

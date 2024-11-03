@@ -71,7 +71,7 @@ function movePawn(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img, 
                 img.classList.remove("chess-piece-animation-top"); // remove the animation left in order to let to move to the top after 300ms 
             }, 300)
         }else if(conditionCheckImg && canBeat){ // Beat another piece
-            img.classList.add("chech-piece-animation"); // Move top animation piece
+            img.classList.add("chess-piece-animation"); // Move top animation piece
             const image = document.querySelector(
                 `#board img[style*="top: ${movePositionY * squareHeight}px;"][style*="left: ${movePositionX * squareWidth}px;"]` // Finds coordinates of the image on div
             );
@@ -90,7 +90,7 @@ function movePawn(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img, 
             changeCurrentMoveColor();
             board.removeEventListener("mousedown", handleMouseMove);  
             setTimeout(() => {
-                img.classList.remove("chech-piece-animation"); // remove the animation left in order to let to move to the top after 300ms 
+                img.classList.remove("chess-piece-animation"); // remove the animation left in order to let to move to the top after 300ms 
             }, 300)
         }
     })
