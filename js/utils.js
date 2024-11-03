@@ -124,4 +124,26 @@ function drawCirclesBishop(top, left, imgPositionTop, imgPositionLeft){
     }
 }
 
+function drawCirclesKing(top, left, imgPositionTop, imgPositionLeft){
+    const imgTop = imgPositionTop + 1 * top; // position to draw on the board
+    const imgLeft = imgPositionLeft + 1 * left;
+    
+    if (0 <= imgTop && imgTop < 8 && 0 <= imgLeft && imgLeft < 8){
+        if (boardPosition[imgTop][imgLeft] === 0){
+            console.log(imgLeft, imgTop)
+            const circle = document.createElement("div");
+            circle.classList.add("circle");
+            circle.style.left = (imgLeft * squareWidth + squareWidth / 2) + 'px';
+            circle.style.top = (imgTop * squareHeight + squareHeight / 2) + 'px'; // center the circle
+            board.appendChild(circle);
+        }else if (!currentColorArray.includes(boardPosition[imgTop][imgLeft]) && boardPosition[imgTop][imgLeft] > 0){
+            const circle = document.createElement("div");
+            circle.classList.add("circle-enemy");
+            circle.style.left = (imgLeft * squareWidth + squareWidth / 2) + 'px';
+            circle.style.top = (imgTop * squareHeight + squareHeight / 2) + 'px'; // center the circle
+            board.appendChild(circle);
+        }
+    }
+}
+
 

@@ -444,7 +444,17 @@ function moveQueen(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img,
 }
 
 function moveKing(imgPositionTop, imgPositionLeft, img, colorImgNumber){
-    
+    // Horizontal and vertical circles
+    for (let i = -1; i <= 1; i += 2){
+        drawCirclesKing(0, i, imgPositionTop, imgPositionLeft);
+        drawCirclesKing(i, 0, imgPositionTop, imgPositionLeft);
+    }
+    // Diagonal circles
+    for (let i = -1; i <= 1; i += 2){
+        for (let j = -1; j <= 1; j += 2){
+            drawCirclesKing(i, j, imgPositionTop, imgPositionLeft);
+        }
+    }
 
     board.addEventListener("mousedown", function handleMouseMove (event) {
         const movX = event.clientX - board.getBoundingClientRect().left; // Get offset of the board from the mouse position
