@@ -48,6 +48,14 @@ function movePawn(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img, 
             canMoveForward = false;
         }
 
+        const directionX = movePositionX > imgPositionLeft ? 1 : -1; // Direction to beat enemy 
+        let canBeat = false; // Can move and beat enemy
+        if (movePositionY === imgPositionTop + 1 * directionY && movePositionX === imgPositionLeft + 1 * directionX && boardPosition[movePositionY][movePositionX] !== 0 && !currentColorArray.includes(boardPosition[movePositionY][movePositionX])){
+            canBeat = true;
+        }else{
+            canBeat = false;
+        }
+
         if (conditionX && canMoveForward && conditionCheckImg){ // Check it between left and right side and move y --  
             img.classList.add("chess-piece-animation-top"); // Move top animation piece
             img.style.top = movePositionY  * squareHeight + 'px'; 
@@ -59,14 +67,33 @@ function movePawn(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img, 
             deleteCircles()
             changeCurrentMoveColor();
             board.removeEventListener("mousedown", handleMouseMove);  
+            setTimeout(() => {
+                img.classList.remove("chess-piece-animation-top"); // remove the animation left in order to let to move to the top after 300ms 
+            }, 300)
+        }else if(conditionCheckImg && canBeat){ // Beat another piece
+            img.classList.add("chech-piece-animation"); // Move top animation piece
+            const image = document.querySelector(
+                `#board img[style*="top: ${movePositionY * squareHeight}px;"][style*="left: ${movePositionX * squareWidth}px;"]` // Finds coordinates of the image on div
+            );
+            console.log(image)
+            if (image) {
+                image.remove(); // remove image when it's on meat postion
+            }
+            img.style.top = movePositionY * squareHeight + 'px'; 
+            img.style.left = movePositionX * squareWidth + 'px'; 
+            boardPosition[movePositionY][movePositionX] = colorImgNumber; // Move forward
+            boardPosition[imgPositionTop][imgPositionLeft] = 0; // Replace the position
+            console.log(boardPosition);
+            img.classList.remove("first-move"); // Remove the first move (i made a fisrt move)
+            img.classList.remove("check-image"); // Remove the check image
+            deleteCircles()
+            changeCurrentMoveColor();
+            board.removeEventListener("mousedown", handleMouseMove);  
+            setTimeout(() => {
+                img.classList.remove("chech-piece-animation"); // remove the animation left in order to let to move to the top after 300ms 
+            }, 300)
         }
-        
-        setTimeout(() => {
-            img.classList.remove("chess-piece-animation-left"); // remove the animation left in order to let to move to the top after 300ms 
-        }, 300)
-        
     })
-    
 }
 
 function moveKnight(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img, colorImgNumber){

@@ -49,6 +49,12 @@ body {
     transition: left 0.3s ease-in-out;
     position: absolute;
 }
+
+.chech-piece-animation{
+    transition: top 0.3s ease-in-out, left 0.3s ease-in-out;
+    position: absolute; 
+
+}/* Delete */
 .chess-knight-animation{
     transition: top 0.3s ease-in-out, left 0.3s ease-in-out;
     position: absolute;
@@ -71,20 +77,19 @@ body {
 
 /*Circles for movement*/
 .circle{
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background-color: rgba(25, 202, 5, 0.496);
+    width: 50px;
+    height: 50px;
+    
+    background-color: rgba(25, 202, 5, 0.5);
     transform: translate(-50%, -50%);
     position: absolute;
 }
 
 /* Enemy circles*/
 .circle-enemy{
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background-color: rgba(196, 9, 9, 0.496);
+    width: 50px;
+    height: 50px;
+    background-color: rgba(196, 9, 9, 0.5);
     transform: translate(-50%, -50%);
     position: absolute;
 }
