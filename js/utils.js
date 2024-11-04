@@ -175,3 +175,73 @@ function moveKnightPosition(img, movePositionX, movePositionY, imgPositionTop, i
         img.classList.remove("chess-piece-animation"); // remove the animation left on order to let to move to the top after 300ms 
     }, 300)
 }
+
+
+function drawCirclesLine(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY){
+    // Check vertical circles up
+    for (let i = imgPositionTop + 1; i < 8; i++) {
+        if (boardPosition[i][imgPositionLeft] === 0){
+            drawCirclesRookY(imgOffsetX, i, 0)
+        }else if(!currentColorArray.includes(boardPosition[i][imgPositionLeft]) && boardPosition[i][imgPositionLeft] > 0){
+            drawCirclesRookY(imgOffsetX, i, 1) // 0 - draw movement circlel; 1 - enemy
+            break;
+        }
+        else{
+            break;
+        }
+    }
+    // Check vertical circles down
+    for (let i = imgPositionTop - 1; i >= 0; i--) {
+        if (boardPosition[i][imgPositionLeft] === 0){
+            drawCirclesRookY(imgOffsetX, i, 0) // 0 - draw movement circlel; 1 - enemy
+        }else if(!currentColorArray.includes(boardPosition[i][imgPositionLeft]) && boardPosition[i][imgPositionLeft] > 0){
+            drawCirclesRookY(imgOffsetX, i, 1) // 0 - draw movement circlel; 1 - enemy
+            break;
+        }
+        else{
+            break;
+        }
+    }
+    // Check horizontal circles left
+    for (let i = imgPositionLeft - 1; i >= 0; i--) {
+        if (boardPosition[imgPositionTop][i] === 0){
+            drawCirclesRookX(imgOffsetY, i, 0)
+        }else if(!currentColorArray.includes(boardPosition[imgPositionTop][i]) && boardPosition[imgPositionTop][i] > 0){
+            drawCirclesRookX(imgOffsetY, i, 1) // 0 - draw movement circlel; 1 - enemy
+            break;
+        }
+        else{
+            break;
+        }
+    }
+    // Check horizontal circles right
+    for (let i = imgPositionLeft + 1; i < 8; i++) {
+        if (boardPosition[imgPositionTop][i] === 0){
+            drawCirclesRookX(imgOffsetY, i, 0)
+        }else if(!currentColorArray.includes(boardPosition[imgPositionTop][i]) && boardPosition[imgPositionTop][i] > 0){
+            drawCirclesRookX(imgOffsetY, i, 1) // 0 - draw movement circlel; 1 - enemy
+            break;
+        }
+        else{
+            break;
+        }
+    }
+
+}
+
+function moveRookPosition(img, movePositionX, movePositionY, imgPositionTop, imgPositionLeft, colorImgNumber){
+    // Move the rook and kills its enemy
+    img.style.top = `${movePositionY * squareHeight}px`;  // Example offset 350 -  top = 7 - new_top = 5 = 2 * 50px = 250px 
+    img.style.left = `${movePositionX * squareWidth}px`;  // Example offset 350 -  top = 7 - new_top = 5 = 2 * 50px = 250px 
+    boardPosition[movePositionY][movePositionX] = colorImgNumber; // Move forward (example 5 - (5 - 2) = 3 -> exact position on the board)
+    boardPosition[imgPositionTop][imgPositionLeft] = 0; // Replace the position
+    console.log(boardPosition);
+    
+    img.classList.remove("check-image"); // Remove the check image
+    deleteCircles()
+    changeCurrentMoveColor();
+    setTimeout(() => {
+        img.classList.remove("chess-piece-animation-top"); // remove top animation 
+        img.classList.remove("chess-piece-animation-left"); // remove the animation left on order to let to move to the top 
+    }, 300) 
+}
