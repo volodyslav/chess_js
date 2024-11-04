@@ -27,23 +27,26 @@ function moveKnight(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img
 
         // Move left and right, top and bottom
         if ((conditionXVertically && !conditionXHorizontally) && (conditionYVertically && !conditionYHorizontally) && boardPosition[movePositionY][movePositionX] === 0 && (img.classList.contains("check-image"))){
-            moveKnightPosition(img, movePositionX, movePositionY, imgPositionTop, imgPositionLeft, colorImgNumber);
+            img.classList.add("chess-piece-animation"); // Move left animation piece
+            movePosition(img, movePositionX, movePositionY, imgPositionTop, imgPositionLeft, colorImgNumber);
             board.removeEventListener("mousedown", handleMouseMove);  
         }
         else if ((!conditionXVertically && conditionXHorizontally) && (!conditionYVertically && conditionYHorizontally) && boardPosition[movePositionY][movePositionX] === 0 && (img.classList.contains("check-image"))){
-            moveKnightPosition(img, movePositionX, movePositionY, imgPositionTop, imgPositionLeft, colorImgNumber);
+            img.classList.add("chess-piece-animation"); // Move left animation piece
+            movePosition(img, movePositionX, movePositionY, imgPositionTop, imgPositionLeft, colorImgNumber);
             board.removeEventListener("mousedown", handleMouseMove);  
         }
         // Delete the enemy image
         else if ((conditionXVertically && !conditionXHorizontally) && (conditionYVertically && !conditionYHorizontally) && boardPosition[movePositionY][movePositionX] !== 0 && !currentColorArray.includes(boardPosition[movePositionY][movePositionX]) && (img.classList.contains("check-image"))){
-            
+            img.classList.add("chess-piece-animation"); // Move left animation piece
             deleteImage(movePositionY, movePositionX);
-            moveKnightPosition(img, movePositionX, movePositionY, imgPositionTop, imgPositionLeft, colorImgNumber);
+            movePosition(img, movePositionX, movePositionY, imgPositionTop, imgPositionLeft, colorImgNumber);
             board.removeEventListener("mousedown", handleMouseMove);  
         }
         else if ((!conditionXVertically && conditionXHorizontally) && (!conditionYVertically && conditionYHorizontally) && boardPosition[movePositionY][movePositionX] !== 0 && !currentColorArray.includes(boardPosition[movePositionY][movePositionX]) && (img.classList.contains("check-image"))){
+            img.classList.add("chess-piece-animation"); // Move left animation piece
             deleteImage(movePositionY, movePositionX);
-            moveKnightPosition(img, movePositionX, movePositionY, imgPositionTop, imgPositionLeft, colorImgNumber);
+            movePosition(img, movePositionX, movePositionY, imgPositionTop, imgPositionLeft, colorImgNumber);
             board.removeEventListener("mousedown", handleMouseMove);  
         }
     })

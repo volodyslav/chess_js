@@ -4,6 +4,13 @@ function changeCurrentMoveColor(){
     console.log(`Color now  array ${currentColorArray}`);
 }
 
+function removeMoveClasses(img){
+    // Remove all classes for movement
+    img.classList.remove("chess-piece-animation-top"); // remove top animation 
+    img.classList.remove("chess-piece-animation-left"); // remove the animation left on order to let to move to the top 
+    img.classList.remove("chess-piece-animation"); // remove the animation 
+}
+
 function deleteCircles(){
     // Delete all circles on the board
     circleDiv = document.querySelectorAll("div");
@@ -158,25 +165,6 @@ function deleteImage(movePositionY, movePositionX){
 }
 
 
-function moveKnightPosition(img, movePositionX, movePositionY, imgPositionTop, imgPositionLeft, colorImgNumber){
-    // Move the knight and kills its enemy
-    img.classList.add("chess-piece-animation"); // Move left animation piece
-
-    img.style.left = `${movePositionX * squareWidth}px`;  // Example offset 350 -  top = 7 - new_top = 5 = 2 * 50px = 250px 
-    img.style.top = `${movePositionY * squareHeight}px`; 
-    boardPosition[movePositionY][movePositionX] = colorImgNumber; // Move forward (example 5 - (5 - 2) = 3 -> exact position on the board)
-    boardPosition[imgPositionTop][imgPositionLeft] = 0;
-
-    console.log(boardPosition);
-    img.classList.remove("check-image"); // Remove the check image
-    deleteCircles();
-    changeCurrentMoveColor();
-    setTimeout(() => {
-        img.classList.remove("chess-piece-animation"); // remove the animation left on order to let to move to the top after 300ms 
-    }, 300)
-}
-
-
 function drawCirclesLine(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY){
     // Check vertical circles up
     for (let i = imgPositionTop + 1; i < 8; i++) {
@@ -226,11 +214,19 @@ function drawCirclesLine(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY
             break;
         }
     }
-
 }
 
-function moveRookPosition(img, movePositionX, movePositionY, imgPositionTop, imgPositionLeft, colorImgNumber){
-    // Move the rook and kills its enemy
+function drawCirclesDiagonal(imgPositionTop, imgPositionLeft){
+    // Check diagonal circles up-left and down for bishop and queen
+    for (let i = -1; i <= 1; i+=2){
+        for (let j = -1; j <= 1; j +=2){
+            drawCirclesBishop(j, i, imgPositionTop, imgPositionLeft)
+        }
+    }
+}
+
+function movePosition(img, movePositionX, movePositionY, imgPositionTop, imgPositionLeft, colorImgNumber){
+    // Move the rook, king, queen and kills its enemy
     img.style.top = `${movePositionY * squareHeight}px`;  // Example offset 350 -  top = 7 - new_top = 5 = 2 * 50px = 250px 
     img.style.left = `${movePositionX * squareWidth}px`;  // Example offset 350 -  top = 7 - new_top = 5 = 2 * 50px = 250px 
     boardPosition[movePositionY][movePositionX] = colorImgNumber; // Move forward (example 5 - (5 - 2) = 3 -> exact position on the board)
@@ -241,7 +237,6 @@ function moveRookPosition(img, movePositionX, movePositionY, imgPositionTop, img
     deleteCircles()
     changeCurrentMoveColor();
     setTimeout(() => {
-        img.classList.remove("chess-piece-animation-top"); // remove top animation 
-        img.classList.remove("chess-piece-animation-left"); // remove the animation left on order to let to move to the top 
+        removeMoveClasses(img); 
     }, 300) 
 }
