@@ -17,7 +17,7 @@ function moveQueen(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img,
     
         const differenceX = imgPositionLeft - movePositionX; //
         const differenceY = imgPositionTop - movePositionY;
-        console.log("Differences: ", differenceX, differenceY)
+        
         const conditionXEqualY = Math.abs(differenceX) === Math.abs(differenceY); // Check if the difference between x and y is the same absolute value
         
         let canMove = false; // Can move on the board if the board pos = 0
@@ -25,17 +25,20 @@ function moveQueen(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img,
         const conditionHorizontal = movePositionY === imgPositionTop // Condition based on directionX
         const conditionVertical = movePositionX === imgPositionLeft // Condition based on directionY
 
-        const condition =  boardPosition[movePositionY][movePositionX] === 0; // Check if the difference between y and x is the same absolute value;
-
-        if (conditionXEqualY && condition){ // Needs check !!!
+        const condition = (0 <= movePositionY < 8) && (0 <= movePositionX < 8) && boardPosition[movePositionY][movePositionX] !== colorImgNumber && conditionXEqualY; // Check if the difference between y and x is the same absolute value;
+        
+        if (condition){ // Needs check !!!
             for (let i = 1, j = 1; i <= Math.abs(differenceY); i++, j++) {
-                if(boardPosition[imgPositionTop + i * directionY][imgPositionLeft + j * directionX] === 0){
+                if(boardPosition[movePositionY][movePositionX] === 0 && boardPosition[imgPositionTop + i * directionY][imgPositionLeft + j * directionX] === 0){
                    canMove = true;
-                }else{
+                }else if(boardPosition[movePositionY][movePositionX] !== 0 && !currentColorArray.includes(boardPosition[movePositionY][movePositionX] && boardPosition[imgPositionTop + i * directionY][imgPositionLeft + j * directionX] === 0)){ // If there is an enemy on that position
+                    canMove = true
+                    break;
+                }
+                else{
                     canMove = false;
                     break;
                 }
-                console.log(`posible move ${imgPositionLeft + j * directionX} ${imgPositionTop + i * directionY}`);
             }
         }
 
@@ -56,19 +59,15 @@ function moveQueen(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img,
                 }
             }
         }
-        
         if (!conditionVertical && !conditionHorizontal && canMove && condition  && boardPosition[movePositionY][movePositionX] === 0 && (img.classList.contains("check-image"))){
-            img.classList.add("chess-bishop-animation"); // Move left animation piece
-            img.style.left = `${movePositionX * squareWidth}px`;  
-            img.style.top = `${movePositionY * squareHeight}px`;  
-            boardPosition[movePositionY][movePositionX] = colorImgNumber; 
-            boardPosition[imgPositionTop][imgPositionLeft] = 0;
-            img.classList.remove("check-image"); // Remove the check image
-            deleteCircles()
-            changeCurrentMoveColor();
-            setTimeout(() => {
-                img.classList.remove("chess-bishop-animation"); // remove the animation left on order to let to move to the top after 300ms 
-            }, 300)
+            img.classList.add("chess-piece-animation"); // Move left animation piece
+            movePosition(img, movePositionX, movePositionY, imgPositionTop, imgPositionLeft, colorImgNumber);
+            board.removeEventListener("mousedown", handleMouseMove);    
+        }
+        else if (!conditionVertical && !conditionHorizontal && canMove && boardPosition[movePositionY][movePositionX] !== 0 && (img.classList.contains("check-image")) && !currentColorArray.includes(boardPosition[movePositionY][movePositionX])){
+            img.classList.add("chess-piece-animation"); // Move left animation piece
+            deleteImage(movePositionY, movePositionX); // utils.js
+            movePosition(img, movePositionX, movePositionY, imgPositionTop, imgPositionLeft, colorImgNumber);
             board.removeEventListener("mousedown", handleMouseMove);    
         }
         else if (conditionVertical && !conditionHorizontal && (img.classList.contains("check-image")) && allowedMovementY && boardPosition[movePositionY][movePositionX] === 0){ // Check it between left and right side and move y --  

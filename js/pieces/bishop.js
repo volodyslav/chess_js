@@ -35,7 +35,6 @@ function moveBishop(imgPositionTop, imgPositionLeft, img, colorImgNumber){
             }
         }
 
-
         if (canMove && condition && conditionXEqualY && boardPosition[movePositionY][movePositionX] === 0 && (img.classList.contains("check-image"))){
             img.classList.add("chess-piece-animation"); // Move left animation piece
             movePosition(img, movePositionX, movePositionY, imgPositionTop, imgPositionLeft, colorImgNumber); // utils.js
