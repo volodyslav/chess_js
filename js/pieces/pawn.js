@@ -31,7 +31,6 @@ function movePawn(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img, 
     board.addEventListener("mousedown", function handleMouseMove (event) {
         const movX = event.clientX - board.getBoundingClientRect().left; // Get offset of the board from the mouse position
         const movY = event.clientY - board.getBoundingClientRect().top;
-        console.log(`x: ${movX} y: ${movY}`); 
 
         const movePositionY = Math.floor(movY / squareHeight); // Get position on the board from the mouse position
         const movePositionX = Math.floor(movX / squareWidth); // Get position on the board from the mouse position
@@ -57,41 +56,15 @@ function movePawn(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img, 
         }
 
         if (conditionX && canMoveForward && conditionCheckImg){ // Check it between left and right side and move y --  
-            img.classList.add("chess-piece-animation-top"); // Move top animation piece
-            img.style.top = movePositionY  * squareHeight + 'px'; 
-            boardPosition[movePositionY][imgPositionLeft] = colorImgNumber; // Move forward
-            boardPosition[imgPositionTop][imgPositionLeft] = 0; // Replace the position
-            console.log(boardPosition);
-            img.classList.remove("first-move"); // Remove the first move (i made a fisrt move)
-            img.classList.remove("check-image"); // Remove the check image
-            deleteCircles()
-            changeCurrentMoveColor();
+            deleteImage(movePositionY, movePositionX);
+            movePosition(img, movePositionX, movePositionY, imgPositionTop, imgPositionLeft, colorImgNumber);
             board.removeEventListener("mousedown", handleMouseMove);  
-            setTimeout(() => {
-                img.classList.remove("chess-piece-animation-top"); // remove the animation left in order to let to move to the top after 300ms 
-            }, 300)
         }else if(conditionCheckImg && canBeat){ // Beat another piece
-            img.classList.add("chess-piece-animation"); // Move top animation piece
-            const image = document.querySelector(
-                `#board img[style*="top: ${movePositionY * squareHeight}px;"][style*="left: ${movePositionX * squareWidth}px;"]` // Finds coordinates of the image on div
-            );
-            console.log(image)
-            if (image) {
-                image.remove(); // remove image when it's on meat postion
-            }
-            img.style.top = movePositionY * squareHeight + 'px'; 
-            img.style.left = movePositionX * squareWidth + 'px'; 
-            boardPosition[movePositionY][movePositionX] = colorImgNumber; // Move forward
-            boardPosition[imgPositionTop][imgPositionLeft] = 0; // Replace the position
-            console.log(boardPosition);
-            img.classList.remove("first-move"); // Remove the first move (i made a fisrt move)
-            img.classList.remove("check-image"); // Remove the check image
-            deleteCircles()
-            changeCurrentMoveColor();
-            board.removeEventListener("mousedown", handleMouseMove);  
-            setTimeout(() => {
-                img.classList.remove("chess-piece-animation"); // remove the animation left in order to let to move to the top after 300ms 
-            }, 300)
+            deleteImage(movePositionY, movePositionX);
+            movePosition(img, movePositionX, movePositionY, imgPositionTop, imgPositionLeft, colorImgNumber);
+            board.removeEventListener("mousedown", handleMouseMove);   
         }
+
+
     })
 }

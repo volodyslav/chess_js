@@ -8,7 +8,7 @@ function chooseFigure(img){
         const rect = img.getBoundingClientRect(); // Get the bounds of the image
         const canCheck = canMoveCheck(img); // Check if the figure can be checked
         if (canCheck && (x >= rect.left && x <= rect.right &&
-            y >= rect.top && y <= rect.bottom)){ // Check if mouse inside the image
+            y >= rect.top && y <= rect.bottom) && canChooseNewPiece){ // Check if mouse inside the image
             img.classList.add("check-image"); // Change color in choosen figure
             moveFigure(img);
         }   
@@ -35,7 +35,7 @@ function canMoveCheck(img){
 function moveFigure(img){
     // Check if the figure can move
     const canMove = canMoveCheck(img);
-    if ((img.classList.contains("check-image")) && canMove){
+    if ((img.classList.contains("check-image")) && canMove && canChooseNewPiece){
         deleteCircles()
         
         // Check if this figure is checked

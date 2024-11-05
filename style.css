@@ -21,6 +21,7 @@ body {
     align-items: center;
     margin: auto;
     border-radius: 10px;
+    position: relative;
 }
 
 #board{
@@ -53,20 +54,8 @@ body {
 .chess-piece-animation{
     transition: top 0.3s ease-in-out, left 0.3s ease-in-out;
     position: absolute; 
+}
 
-}/* Delete */
-.chess-knight-animation{
-    transition: top 0.3s ease-in-out, left 0.3s ease-in-out;
-    position: absolute;
-}
-.chess-bishop-animation{
-    transition: top 0.3s ease-in-out, left 0.3s ease-in-out;
-    position: absolute;
-}
-.chess-king-animation{
-    transition: top 0.3s ease-in-out, left 0.3s ease-in-out;
-    position: absolute;
-}
 
 /*Choose image*/
 .check-image{
@@ -79,7 +68,6 @@ body {
 .circle{
     width: 50px;
     height: 50px;
-    
     background-color: rgba(25, 202, 5, 0.5);
     transform: translate(-50%, -50%);
     position: absolute;
@@ -92,4 +80,13 @@ body {
     background-color: rgba(196, 9, 9, 0.5);
     transform: translate(-50%, -50%);
     position: absolute;
+}
+
+
+/* When pawn last move*/
+#choose-pawn-div{
+    position: absolute;
+    display: none;
+    z-index: 10;
+
 }

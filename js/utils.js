@@ -226,17 +226,62 @@ function drawCirclesDiagonal(imgPositionTop, imgPositionLeft){
 }
 
 function movePosition(img, movePositionX, movePositionY, imgPositionTop, imgPositionLeft, colorImgNumber){
-    // Move the rook, king, queen and kills its enemy
+    // Move the rook, king, queen, bishow , pawn and kills its enemy
+    const positionToChangePiece = colorImgNumber === 11 ? 0 : 7; // Position where a pawn changes its image
+
+    img.classList.add("chess-piece-animation"); // Move top animation piece
     img.style.top = `${movePositionY * squareHeight}px`;  // Example offset 350 -  top = 7 - new_top = 5 = 2 * 50px = 250px 
     img.style.left = `${movePositionX * squareWidth}px`;  // Example offset 350 -  top = 7 - new_top = 5 = 2 * 50px = 250px 
     boardPosition[movePositionY][movePositionX] = colorImgNumber; // Move forward (example 5 - (5 - 2) = 3 -> exact position on the board)
     boardPosition[imgPositionTop][imgPositionLeft] = 0; // Replace the position
+    if ((colorImgNumber === 11 || colorImgNumber === 1) && positionToChangePiece === movePositionY){ // If pawn reached the end of the board
+        changeImagePawn(img, movePositionX, movePositionY, colorImgNumber);
+    }
     console.log(boardPosition);
-    
+    img.classList.remove("first-move"); // Remove the first move (i made a fisrt move)
     img.classList.remove("check-image"); // Remove the check image
     deleteCircles()
     changeCurrentMoveColor();
     setTimeout(() => {
         removeMoveClasses(img); 
     }, 300) 
+}
+
+function changeImagePawn(img, movePositionX, movePositionY, color){
+    // Change pawn image when it made its last move
+    
+    const imgPawnQueen = color === 11 ? whiteQueen : blackQueen;
+    const imgPawnKnight = color === 11 ? whiteKnight : blackKnight;
+    const imgPawnRook = color === 11 ? whiteRook : blackRook;
+    const imgPawnBishop = color === 11 ? whiteBishop : blackBishop;
+
+    const queenColorNumber = imgPawnQueen === whiteQueen ? 15 : 5;
+    const rookColorNumber = imgPawnRook === whiteRook? 14 : 4;
+    const bishopColorNumber = imgPawnBishop === whiteBishop? 13 : 3;
+    const knightColorNumber = imgPawnKnight === whiteKnight? 12 : 2;
+
+    const pieces = [{ name: "Queen", src: imgPawnQueen, colorNumber: queenColorNumber}, { name: "Rook", src: imgPawnRook, colorNumber: rookColorNumber }, 
+        { name: "Bishop", src: imgPawnBishop, colorNumber: bishopColorNumber }, { name: "Knight", src: imgPawnKnight, colorNumber: knightColorNumber }];
+
+    canChooseNewPiece = false; //others Can't move 
+    choosePawnDiv.style.display = "block";
+    // Clear previous options if they exist
+    choosePawnDiv.innerHTML = ""; 
+
+    pieces.forEach(piece => {
+        const button = document.createElement("button");
+        const imgPawn = document.createElement("img");
+        imgPawn.src = piece.src;
+        imgPawn.alt = piece.name;
+
+        button.append(imgPawn);
+        button.addEventListener("click", () => {
+            img.src = piece.src;
+            boardPosition[movePositionY][movePositionX] = piece.colorNumber; // Change on the board position 1 -> queen 5
+            choosePawnDiv.style.display = "none";
+            canChooseNewPiece = true; // Make I can choose next piece, change color of the current player
+        });
+
+        choosePawnDiv.append(button);
+    });
 }
