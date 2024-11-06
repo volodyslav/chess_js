@@ -31,9 +31,9 @@ function movePawn(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img, 
     board.addEventListener("mousedown", function handleMouseMove (event) {
         const movX = event.clientX - board.getBoundingClientRect().left; // Get offset of the board from the mouse position
         const movY = event.clientY - board.getBoundingClientRect().top;
-
+        
         const movePositionY = Math.floor(movY / squareHeight); // Get position on the board from the mouse position
-        const movePositionX = Math.floor(movX / squareWidth); // Get position on the board from the mouse position
+        const movePositionX = Math.floor(movX / squareWidth); 
 
         const conditionX = movePositionX === imgPositionLeft; // Check on X position
         const conditionCheckImg = (img.classList.contains("check-image")); // Chekc if the image is covered by check

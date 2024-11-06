@@ -146,7 +146,8 @@ function drawCirclesKing(top, left, imgPositionTop, imgPositionLeft){
             circle.style.left = (imgLeft * squareWidth + squareWidth / 2) + 'px';
             circle.style.top = (imgTop * squareHeight + squareHeight / 2) + 'px'; // center the circle
             board.appendChild(circle);
-        }else if (!currentColorArray.includes(boardPosition[imgTop][imgLeft]) && boardPosition[imgTop][imgLeft] > 0){
+        }
+        else if (!currentColorArray.includes(boardPosition[imgTop][imgLeft]) && boardPosition[imgTop][imgLeft] > 0){
             const circle = document.createElement("div");
             circle.classList.add("circle-enemy");
             circle.style.left = (imgLeft * squareWidth + squareWidth / 2) + 'px';
@@ -155,6 +156,17 @@ function drawCirclesKing(top, left, imgPositionTop, imgPositionLeft){
         }
     }
 }
+
+function drawCirclesKingRook(imgLeft, imgPositionTop){
+    // Draw circles from king to rook
+    const circle = document.createElement("div");
+    circle.classList.add("circle");
+    circle.style.left = (imgLeft * squareWidth + squareWidth / 2) + 'px';
+    circle.style.top = (imgPositionTop * squareHeight + squareHeight / 2) + 'px'; // center the circle
+    board.appendChild(circle);
+}
+
+
 
 function deleteImage(movePositionY, movePositionX){
     // deletes images which were previously killed by the enemy
@@ -227,6 +239,8 @@ function drawCirclesDiagonal(imgPositionTop, imgPositionLeft){
         }
     }
 }
+
+
 
 function movePosition(img, movePositionX, movePositionY, imgPositionTop, imgPositionLeft, colorImgNumber){
     // Move the rook, king, queen, bishow , pawn and kills its enemy

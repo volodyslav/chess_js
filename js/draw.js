@@ -28,11 +28,14 @@ function drawFigures(){
                     break;
                 case 2: img.src = blackKnight;  break;
                 case 3: img.src = blackBishop; break;
-                case 4: img.src = blackRook; break;
+                case 4: 
+                    img.src = blackRook; 
+                    img.classList.add("first-move");
+                    break;
                 case 5: img.src = blackQueen; break;
                 case 6: 
                     img.src = blackKing; 
-                    img.classList.add("first-move-king");
+                    img.classList.add("first-move");
                     break;
                 case 11: 
                     img.src = whitePawn; 
@@ -40,11 +43,14 @@ function drawFigures(){
                     break;
                 case 12: img.src = whiteKnight; break;
                 case 13: img.src = whiteBishop; break;
-                case 14: img.src = whiteRook; break;
+                case 14: 
+                    img.src = whiteRook; 
+                    img.classList.add("first-move");
+                    break;
                 case 15: img.src = whiteQueen; break;
                 case 16: 
                     img.src = whiteKing; 
-                    img.classList.add("first-move-king");
+                    img.classList.add("first-move");
                     break;
                 case 0: continue; // Skip over 0 squares
                 default: break;
