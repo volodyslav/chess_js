@@ -1,6 +1,9 @@
 
 function changeCurrentMoveColor(){
     currentColorArray = currentColorArray === whiteFigures ? blackFigures : whiteFigures; // Set the current color array
+    // Keep and change current move color
+    const currentTurn = currentColorArray === whiteFigures ? "White" : "Black";
+    textTurn.textContent = `${currentTurn} moves now` // Set the current move color
     console.log(`Color now  array ${currentColorArray}`);
 }
 
@@ -264,7 +267,7 @@ function changeImagePawn(img, movePositionX, movePositionY, color){
         { name: "Bishop", src: imgPawnBishop, colorNumber: bishopColorNumber }, { name: "Knight", src: imgPawnKnight, colorNumber: knightColorNumber }];
 
     canChooseNewPiece = false; //others Can't move 
-    choosePawnDiv.style.display = "block";
+    choosePawnDiv.style.display = "flex";
     // Clear previous options if they exist
     choosePawnDiv.innerHTML = ""; 
 
@@ -273,6 +276,7 @@ function changeImagePawn(img, movePositionX, movePositionY, color){
         const imgPawn = document.createElement("img");
         imgPawn.src = piece.src;
         imgPawn.alt = piece.name;
+        button.classList.add("img-piece-pawn");
 
         button.append(imgPawn);
         button.addEventListener("click", () => {

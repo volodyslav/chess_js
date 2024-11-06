@@ -2,12 +2,12 @@
 const container = document.querySelector("#container");
 const board = document.querySelector("#board");
 
+// Text turn
+const textTurn = document.querySelector("#turn-text");
+textTurn.textContent = `White moves now`
+
 // Buttons and div to change pawn's image
 const choosePawnDiv = document.querySelector("#choose-pawn-div");
-// const pawnQueenButton = document.querySelector(".pawn-queen");
-// const pawnKnightButton = document.querySelector(".pawn-knight");
-// const pawnBishopButton = document.querySelector(".pawn-bishop");
-// const pawnRookButton = document.querySelector(".pawn-rook");
 
 let canChooseNewPiece = true; // Whether you can choose a new piece
 
