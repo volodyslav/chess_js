@@ -7,8 +7,11 @@ function movePawn(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img, 
         if (boardPosition[imgPositionTop + i * directionY][imgPositionLeft] === 0){
             const circle = document.createElement("div");
             circle.classList.add("circle");
-            circle.style.left = imgOffsetX + squareWidth / 2 + 'px';
-            circle.style.top = (imgOffsetY + directionY * (squareHeight * i) + squareHeight / 2) + 'px'; // center the circle
+            circle.style.left = imgPositionLeft * squareWidth + 'px';
+            circle.style.top = (imgPositionTop + i *  directionY) * squareHeight + 'px'; // center the circle
+            circle.style.width = squareWidth + 'px';
+            circle.style.height = squareHeight + 'px'; // Set the size of the circle
+            console.log(circle.style.left);
             board.appendChild(circle);
         }
         else{
@@ -21,50 +24,32 @@ function movePawn(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img, 
         if(boardPosition[imgPositionTop + 1 * directionY][imgPositionLeft + 1 * i] > 0 && !currentColorArray.includes(boardPosition[imgPositionTop + 1 * directionY][imgPositionLeft + 1 * i])){
             const circle = document.createElement("div");
             circle.classList.add("circle-enemy");
-            circle.style.left = imgOffsetX + squareWidth * i + squareWidth / 2 + 'px';
-            circle.style.top = (imgOffsetY + directionY * squareHeight  + squareHeight / 2) + 'px'; // 
+            circle.style.left = (imgPositionLeft + i) * squareWidth + 'px';
+            circle.style.top = (imgPositionTop + directionY) * squareHeight + 'px'; // 
+            circle.style.width = squareWidth + 'px';
+            circle.style.height = squareHeight + 'px'; // Set the size of the circle
             board.appendChild(circle);
         }
     }
     
     // Move forward
     board.addEventListener("mousedown", function handleMouseMove (event) {
-        const movX = event.clientX - board.getBoundingClientRect().left; // Get offset of the board from the mouse position
-        const movY = event.clientY - board.getBoundingClientRect().top;
-        
-        const movePositionY = Math.floor(movY / squareHeight); // Get position on the board from the mouse position
-        const movePositionX = Math.floor(movX / squareWidth); 
-
+        const {movePositionY, movePositionX} = getPositions(event, board); // utils.js
         const conditionX = movePositionX === imgPositionLeft; // Check on X position
-        const conditionCheckImg = (img.classList.contains("check-image")); // Chekc if the image is covered by check
+        const conditionCheckImg = img.classList.contains("check-image"); // Chekc if the image is covered by check
 
-        let canMoveForward = false; // Check if the image cam move forward
-        if (movePositionY === imgPositionTop + 1 * directionY && boardPosition[movePositionY][imgPositionLeft] === 0){
-            canMoveForward = true;
-        }else if (movePositionY === imgPositionTop + 2 * directionY && img.classList.contains("first-move") && boardPosition[movePositionY][imgPositionLeft] === 0 && boardPosition[imgPositionTop + 1 * directionY][imgPositionLeft] === 0){
-            canMoveForward = true;
-        }else{
-            canMoveForward = false;
-        }
-
-        const directionX = movePositionX > imgPositionLeft ? 1 : -1; // Direction to beat enemy 
-        let canBeat = false; // Can move and beat enemy
-        if (movePositionY === imgPositionTop + 1 * directionY && movePositionX === imgPositionLeft + 1 * directionX && boardPosition[movePositionY][movePositionX] !== 0 && !currentColorArray.includes(boardPosition[movePositionY][movePositionX])){
-            canBeat = true;
-        }else{
-            canBeat = false;
-        }
-
-        if (conditionX && canMoveForward && conditionCheckImg){ // Check it between left and right side and move y --  
+        const canMoveForwardDiv = document.querySelector(`#board .circle[style*="top: ${movePositionY * squareHeight}px;"][style*="left: ${movePositionX * squareWidth}px;"]`)  // Check if pos equals the circles on the field
+        const canBeatDiv = document.querySelector(`#board .circle-enemy[style*="top: ${movePositionY * squareHeight}px;"][style*="left: ${movePositionX * squareWidth}px;"]`) 
+        console.log("can move", canMoveForwardDiv)
+        
+        if (conditionX && canMoveForwardDiv && conditionCheckImg){ // Check it between left and right side and move y --  
             deleteImage(movePositionY, movePositionX);
             movePosition(img, movePositionX, movePositionY, imgPositionTop, imgPositionLeft, colorImgNumber);
             board.removeEventListener("mousedown", handleMouseMove);  
-        }else if(conditionCheckImg && canBeat){ // Beat another piece
+        }else if(conditionCheckImg && canBeatDiv){ // Beat another piece
             deleteImage(movePositionY, movePositionX);
             movePosition(img, movePositionX, movePositionY, imgPositionTop, imgPositionLeft, colorImgNumber);
             board.removeEventListener("mousedown", handleMouseMove);   
         }
-
-
     })
 }
