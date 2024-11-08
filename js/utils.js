@@ -9,8 +9,6 @@ function changeCurrentMoveColor(){
 
 function removeMoveClasses(img){
     // Remove all classes for movement
-    img.classList.remove("chess-piece-animation-top"); // remove top animation 
-    img.classList.remove("chess-piece-animation-left"); // remove the animation left on order to let to move to the top 
     img.classList.remove("chess-piece-animation"); // remove the animation 
 }
 
@@ -20,63 +18,41 @@ function deleteCircles(){
     circleDiv.forEach(circle => circle.remove());
 }
 
-function drawCirclesRookX(imgPositionTop, i, color){
-    // Draw the circles on the board horizontally
+function drawCirclesOnBoard(top, left, circleType){
+    // Draw the circles on the board (0 - circle; 1 -enemy-circle)
     const circle = document.createElement("div");
-    if (color === 0){
+    if (circleType === 0){
         circle.classList.add("circle");
     }else{
         circle.classList.add("circle-enemy");
     }
-    circle.style.left = squareWidth * i  + 'px';
-    circle.style.top = imgPositionTop * squareHeight + 'px'; // center the circle
+    circle.style.left = left * squareWidth  + 'px';
+    circle.style.top = top * squareHeight  + 'px'; // center the circle
     circle.style.height = squareHeight + "px";
     circle.style.width = squareWidth + "px";
-
     board.appendChild(circle);
+}
+
+function drawCirclesRookX(imgPositionTop, i, color){
+    // Draw the circles on the board horizontally
+    drawCirclesOnBoard(imgPositionTop, i, color); 
 }
 
 function drawCirclesRookY(imgPositionLeft, i, color){
     // Draw the circles on the board vertically
-    const circle = document.createElement("div");
-    if (color === 0){
-        circle.classList.add("circle");
-    }else{
-        circle.classList.add("circle-enemy");
-    }
-    circle.style.left = imgPositionLeft * squareWidth + 'px';
-    circle.style.top = i * squareHeight  + 'px'; // center the circle
-    circle.style.height = squareHeight + "px";
-    circle.style.width = squareWidth + "px";
-    board.appendChild(circle);
+    drawCirclesOnBoard(i, imgPositionLeft, color); 
 }
 
 
 function drawCirclesKnight(top, left, imgPositionLeft, imgPositionTop){
     // Draw the circles on the board for knight
-    let topCondition = ((imgPositionTop + 1 * top) * squareHeight)
-    let leftCondition = ((imgPositionLeft + 1 * left) * squareWidth)
-    
     const conditionBoardSize = (imgPositionTop + top >= 0 && imgPositionTop + top < 8) && (imgPositionLeft + left >= 0 && imgPositionLeft + left < 8); // 0 < x < 8
-    
     if (conditionBoardSize && boardPosition[imgPositionTop + top][imgPositionLeft + left] === 0){
         console.log(imgPositionLeft + left)
-        const circle = document.createElement("div");
-        circle.classList.add("circle");
-        circle.style.left = leftCondition + 'px';
-        circle.style.top = topCondition + 'px'; // center the circle
-        circle.style.height = squareHeight + "px";
-        circle.style.width = squareWidth + "px";
-        board.appendChild(circle);
+        drawCirclesOnBoard((imgPositionTop + 1 * top), (imgPositionLeft + 1 * left), 0); 
     }else if(conditionBoardSize && !currentColorArray.includes( boardPosition[imgPositionTop + top][imgPositionLeft + left]) && boardPosition[imgPositionTop + top][imgPositionLeft + left] > 0){
         console.log(imgPositionLeft + left)
-        const circle = document.createElement("div");
-        circle.classList.add("circle-enemy");
-        circle.style.left = leftCondition + 'px';
-        circle.style.top = topCondition + 'px'; // center the circle
-        circle.style.height = squareHeight + "px";
-        circle.style.width = squareWidth + "px";
-        board.appendChild(circle);
+        drawCirclesOnBoard((imgPositionTop + 1 * top), (imgPositionLeft + 1 * left), 1); 
     }
 }
 
@@ -87,21 +63,9 @@ function drawCirclesBishop(top, left, imgPositionTop, imgPositionLeft){
         console.log(`Top = ${top}, left = ${left}; ${boardPosition[imgTop][imgLeft] === 0}`)
         console.log(imgTop, imgLeft)
         if (boardPosition[imgTop][imgLeft] === 0){
-            const circle = document.createElement("div");
-            circle.classList.add("circle");
-            circle.style.left = imgLeft * squareWidth + 'px';
-            circle.style.top = imgTop * squareHeight  + 'px'; // center the circle
-            circle.style.width = squareWidth + 'px';
-            circle.style.height = squareHeight + 'px';
-            board.appendChild(circle);
+            drawCirclesOnBoard(imgTop, imgLeft, 0); 
         }else if (!currentColorArray.includes(boardPosition[imgTop][imgLeft]) && boardPosition[imgTop][imgLeft] > 0){
-            const circle = document.createElement("div");
-            circle.classList.add("circle-enemy");
-            circle.style.left = imgLeft * squareWidth + 'px';
-            circle.style.top = imgTop * squareHeight  + 'px'; // center the circle
-            circle.style.width = squareWidth + 'px';
-            circle.style.height = squareHeight + 'px';
-            board.appendChild(circle);
+            drawCirclesOnBoard(imgTop, imgLeft, 1); 
             break;
         }
         else{
@@ -119,35 +83,17 @@ function drawCirclesKing(top, left, imgPositionTop, imgPositionLeft){
     if (0 <= imgTop && imgTop < 8 && 0 <= imgLeft && imgLeft < 8){
         if (boardPosition[imgTop][imgLeft] === 0){
             console.log(imgLeft, imgTop)
-            const circle = document.createElement("div");
-            circle.classList.add("circle");
-            circle.style.left = imgLeft * squareWidth + 'px';
-            circle.style.top = imgTop * squareHeight + 'px'; // center the circle
-            circle.style.width = squareWidth + 'px';
-            circle.style.height = squareHeight + 'px';
-            board.appendChild(circle);
+            drawCirclesOnBoard(imgTop, imgLeft, 0); 
         }
         else if (!currentColorArray.includes(boardPosition[imgTop][imgLeft]) && boardPosition[imgTop][imgLeft] > 0){
-            const circle = document.createElement("div");
-            circle.classList.add("circle-enemy");
-            circle.style.left = imgLeft * squareWidth + 'px';
-            circle.style.top = imgTop * squareHeight + 'px'; // center the circle
-            circle.style.width = squareWidth + 'px';
-            circle.style.height = squareHeight + 'px';
-            board.appendChild(circle);
+            drawCirclesOnBoard(imgTop, imgLeft, 1); 
         }
     }
 }
 
 function drawCirclesKingRook(imgLeft, imgPositionTop){
     // Draw circles from king to rook
-    const circle = document.createElement("div");
-    circle.classList.add("circle");
-    circle.style.left = imgLeft * squareWidth + 'px';
-    circle.style.top = imgPositionTop * squareHeight + 'px'; // center the circle
-    circle.style.width = squareWidth + 'px';
-    circle.style.height = squareHeight + 'px';
-    board.appendChild(circle);
+    drawCirclesOnBoard(imgPositionTop, imgLeft, 0); 
 }
 
 function deleteImage(movePositionY, movePositionX){
@@ -224,7 +170,7 @@ function drawCirclesDiagonal(imgPositionTop, imgPositionLeft){
 function movePosition(img, movePositionX, movePositionY, imgPositionTop, imgPositionLeft, colorImgNumber){
     // Move the rook, king, queen, bishow , pawn and kills its enemy
     const positionToChangePiece = colorImgNumber === 11 ? 0 : 7; // Position where a pawn changes its image
-
+    
     img.classList.add("chess-piece-animation"); // Move top animation piece
     img.style.top = `${movePositionY * squareHeight}px`;  // Example offset 350 -  top = 7 - new_top = 5 = 2 * 50px = 250px 
     img.style.left = `${movePositionX * squareWidth}px`;  // Example offset 350 -  top = 7 - new_top = 5 = 2 * 50px = 250px 
