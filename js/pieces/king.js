@@ -7,7 +7,7 @@ function moveKing(imgPositionTop, imgPositionLeft, img, colorImgNumber){
     const rookColorImagePath = colorImgNumber === 16 ? whiteRook : blackRook; // Color of rook image
 
     const imageRightRook = document.querySelector(
-        `#board img[style*="top: ${imgPositionTop * squareHeight}px;"][style*="left: ${(imgPositionLeft + moveKingToRook + drawCirclesAmountRight) * squareWidth}px;"]` // Finds coordinates of rook image on board
+        `#board img[style*="top: ${imgPositionTop * squareHeight}px;"][style*="left: ${(imgPositionLeft + (moveKingToRook + drawCirclesAmountRight)) * squareWidth}px;"]` // Finds coordinates of rook image on board
     );
     const imageLeftRook = document.querySelector(
         `#board img[style*="top: ${imgPositionTop * squareHeight}px;"][style*="left: ${(imgPositionLeft - (moveKingToRook + drawCirclesAmountLeft)) * squareWidth}px;"]` // Finds coordinates of rook image on board
@@ -23,7 +23,7 @@ function moveKing(imgPositionTop, imgPositionLeft, img, colorImgNumber){
                         drawCirclesKingRook(imgLeft, imgPositionTop); // utils.js
                     }else if (boardPosition[imgPositionTop][imgLeft] > 0){
                         break;
-                    }else if (boardPosition[imgPositionTop][6] !== 0){
+                    }else if (boardPosition[imgPositionTop][7 - drawCirclesAmountRight] !== 0){
                         break;
                     }
                 }
@@ -39,7 +39,7 @@ function moveKing(imgPositionTop, imgPositionLeft, img, colorImgNumber){
                         drawCirclesKingRook(imgLeft, imgPositionTop); // utils.js
                     }else if (boardPosition[imgPositionTop][imgLeft] > 0){
                         break;
-                    }else if (boardPosition[imgPositionTop][1] !== 0){
+                    }else if (boardPosition[imgPositionTop][drawCirclesAmountLeft] !== 0){
                         break;
                     }
                 }

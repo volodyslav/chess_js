@@ -52,45 +52,11 @@ function drawCirclesRookY(imgPositionLeft, i, color){
 }
 
 
-function drawCirclesKnight(top, left, imgPositionLeft, imgPositionTop, imgOffsetX, imgOffsetY){
+function drawCirclesKnight(top, left, imgPositionLeft, imgPositionTop){
     // Draw the circles on the board for knight
-    let topCondition = 0; // Condition to draw the circles on the board
-    let leftCondition = 0;
-    // Check possible positions of the circles
-    switch (top) {
-        case -2:
-            topCondition = (imgOffsetY - squareHeight * 2 + squareHeight / 2)
-            break;
-        case 2:
-            topCondition = (imgOffsetY + squareHeight * 2 + squareHeight / 2)
-            break;
-        case 1:
-            topCondition = (imgOffsetY + squareHeight + squareHeight / 2)
-            break;
-        case -1:
-            topCondition = (imgOffsetY - squareHeight + squareHeight / 2)
-            break;
-        default:
-            break;
-    }
-
-    switch (left) {
-        case 1:
-            leftCondition = (imgOffsetX + squareWidth  + squareWidth / 2);
-            break;
-        case -1:
-            leftCondition = (imgOffsetX - squareWidth / 2);
-            break;
-        case -2:
-            leftCondition = (imgOffsetX - squareWidth * 2 + squareWidth / 2);
-            break;
-        case 2:
-            leftCondition = (imgOffsetX + squareWidth * 2 + squareWidth / 2);
-            break;
-        default:
-            break;
-    }
-
+    let topCondition = ((imgPositionTop + 1 * top) * squareHeight)
+    let leftCondition = ((imgPositionLeft + 1 * left) * squareWidth)
+    
     const conditionBoardSize = (imgPositionTop + top >= 0 && imgPositionTop + top < 8) && (imgPositionLeft + left >= 0 && imgPositionLeft + left < 8); // 0 < x < 8
     
     if (conditionBoardSize && boardPosition[imgPositionTop + top][imgPositionLeft + left] === 0){
@@ -99,6 +65,8 @@ function drawCirclesKnight(top, left, imgPositionLeft, imgPositionTop, imgOffset
         circle.classList.add("circle");
         circle.style.left = leftCondition + 'px';
         circle.style.top = topCondition + 'px'; // center the circle
+        circle.style.height = squareHeight + "px";
+        circle.style.width = squareWidth + "px";
         board.appendChild(circle);
     }else if(conditionBoardSize && !currentColorArray.includes( boardPosition[imgPositionTop + top][imgPositionLeft + left]) && boardPosition[imgPositionTop + top][imgPositionLeft + left] > 0){
         console.log(imgPositionLeft + left)
@@ -106,6 +74,8 @@ function drawCirclesKnight(top, left, imgPositionLeft, imgPositionTop, imgOffset
         circle.classList.add("circle-enemy");
         circle.style.left = leftCondition + 'px';
         circle.style.top = topCondition + 'px'; // center the circle
+        circle.style.height = squareHeight + "px";
+        circle.style.width = squareWidth + "px";
         board.appendChild(circle);
     }
 }
