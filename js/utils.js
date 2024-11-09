@@ -5,6 +5,12 @@ function changeCurrentMoveColor(){
     const currentTurn = currentColorArray === whiteFigures ? "White" : "Black";
     textTurn.textContent = `${currentTurn} moves now` // Set the current move color
     console.log(`Color now  array ${currentColorArray}`);
+
+    const imgKingCircleCheck = document.querySelector(".red"); // Check if we have red circle -> king checked
+    if (imgKingCircleCheck){
+        imgKingCircleCheck.classList.remove("red");
+    }
+    checkColorCheck()
 }
 
 function removeMoveClasses(img){
@@ -54,10 +60,10 @@ function drawCirclesKnight(top, left, imgPositionLeft, imgPositionTop){
     // Draw the circles on the board for knight
     const conditionBoardSize = (imgPositionTop + top >= 0 && imgPositionTop + top < 8) && (imgPositionLeft + left >= 0 && imgPositionLeft + left < 8); // 0 < x < 8
     if (conditionBoardSize && boardPosition[imgPositionTop + top][imgPositionLeft + left] === 0){
-        console.log(imgPositionLeft + left)
+        //console.log(imgPositionLeft + left)
         drawCirclesOnBoard((imgPositionTop + 1 * top), (imgPositionLeft + 1 * left), 0); 
     }else if(conditionBoardSize && !currentColorArray.includes( boardPosition[imgPositionTop + top][imgPositionLeft + left]) && boardPosition[imgPositionTop + top][imgPositionLeft + left] > 0){
-        console.log(imgPositionLeft + left)
+        //console.log(imgPositionLeft + left)
         drawCirclesOnBoard((imgPositionTop + 1 * top), (imgPositionLeft + 1 * left), 1); 
     }
 }
@@ -66,8 +72,8 @@ function drawCirclesBishop(top, left, imgPositionTop, imgPositionLeft){
     let imgTop = imgPositionTop + 1 * top; // get left position (change it all iterations)
     let imgLeft = imgPositionLeft + 1 * left; // get right position (change it all iterations)
     while(imgTop >= 0 && imgTop < 8 && imgTop >= 0 && imgLeft < 8){
-        console.log(`Top = ${top}, left = ${left}; ${boardPosition[imgTop][imgLeft] === 0}`)
-        console.log(imgTop, imgLeft)
+        //console.log(`Top = ${top}, left = ${left}; ${boardPosition[imgTop][imgLeft] === 0}`)
+        //console.log(imgTop, imgLeft)
         if (boardPosition[imgTop][imgLeft] === 0){
             drawCirclesOnBoard(imgTop, imgLeft, 0); 
         }else if (!currentColorArray.includes(boardPosition[imgTop][imgLeft]) && boardPosition[imgTop][imgLeft] > 0){
@@ -88,7 +94,7 @@ function drawCirclesKing(top, left, imgPositionTop, imgPositionLeft){
     
     if (0 <= imgTop && imgTop < 8 && 0 <= imgLeft && imgLeft < 8){
         if (boardPosition[imgTop][imgLeft] === 0){
-            console.log(imgLeft, imgTop)
+            //console.log(imgLeft, imgTop)
             drawCirclesOnBoard(imgTop, imgLeft, 0); 
         }
         else if (!currentColorArray.includes(boardPosition[imgTop][imgLeft]) && boardPosition[imgTop][imgLeft] > 0){

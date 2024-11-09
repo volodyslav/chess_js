@@ -30,6 +30,7 @@ function main(){
     // Main function, calls all code
     drawSquares();
     drawFigures();
+    
 }
 
 main(); // Start the game when the page loads.

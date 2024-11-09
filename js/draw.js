@@ -32,16 +32,21 @@ function drawFigures(){
                     img.src = blackRook; 
                     img.classList.add("first-move");
                     break;
-                case 5: img.src = blackQueen; break;
+                case 5: 
+                    img.src = blackQueen; 
+                    break;
                 case 6: 
                     img.src = blackKing; 
                     img.classList.add("first-move");
+                    img.classList.add("black-king");
                     break;
                 case 11: 
                     img.src = whitePawn; 
                     img.classList.add("first-move"); // Check fisrt move class
                     break;
-                case 12: img.src = whiteKnight; break;
+                case 12: 
+                    img.src = whiteKnight; 
+                    break;
                 case 13: img.src = whiteBishop; break;
                 case 14: 
                     img.src = whiteRook; 
@@ -51,6 +56,7 @@ function drawFigures(){
                 case 16: 
                     img.src = whiteKing; 
                     img.classList.add("first-move");
+                    img.classList.add("white-king");
                     break;
                 case 0: continue; // Skip over 0 squares
                 default: break;
