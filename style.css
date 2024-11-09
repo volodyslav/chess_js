@@ -39,17 +39,10 @@ body {
 }
 
 /* Figures */
+
+
 .image-figure:hover{
     opacity: 0.9;
-}
-
-.chess-piece-animation-top{
-    transition: top 0.3s ease-in-out;
-    position: absolute;
-}
-.chess-piece-animation-left{
-    transition: left 0.3s ease-in-out;
-    position: absolute;
 }
 
 .chess-piece-animation{
@@ -75,6 +68,12 @@ body {
 .circle-enemy{
     background-color: rgba(196, 9, 9, 0.5);
     position: absolute;
+}
+
+.circle-prev-position, .circle-current-position{
+    background-color: grey;
+    position: absolute;
+    z-index: 1;
 }
 
 

@@ -18,6 +18,12 @@ function deleteCircles(){
     circleDiv.forEach(circle => circle.remove());
 }
 
+function deleteCirclesPreviousPosition(){
+    // Delete all circles on the board which were previously marked
+    circle = document.querySelectorAll(".circle-prev-position, .circle-current-position");
+    circle.forEach(circle => circle.remove());
+}
+
 function drawCirclesOnBoard(top, left, circleType){
     // Draw the circles on the board (0 - circle; 1 -enemy-circle)
     const circle = document.createElement("div");
@@ -167,10 +173,32 @@ function drawCirclesDiagonal(imgPositionTop, imgPositionLeft){
     }
 }
 
+
+function drawCirclesPrevCurrentPosition(movePositionX, movePositionY, imgPositionTop, imgPositionLeft, number){
+    // Draw the previous position circle
+    const circle = document.createElement("div");
+    if (number === 1){
+        circle.classList.add("circle-prev-position");
+        circle.style.left = imgPositionLeft * squareWidth  + 'px';
+        circle.style.top = imgPositionTop * squareHeight  + 'px'; // center the circle
+    }else{
+        circle.classList.add("circle-current-position");
+        circle.style.left = movePositionX * squareWidth  + 'px';
+        circle.style.top = movePositionY * squareHeight  + 'px'; // center the circle
+    }
+    circle.style.height = squareHeight + "px";
+    circle.style.width = squareWidth + "px";
+    circle.style.border = "4px solid gold";
+    circle.style.backgroundColor = "transparent";
+    board.appendChild(circle);
+}
+
 function movePosition(img, movePositionX, movePositionY, imgPositionTop, imgPositionLeft, colorImgNumber){
     // Move the rook, king, queen, bishow , pawn and kills its enemy
     const positionToChangePiece = colorImgNumber === 11 ? 0 : 7; // Position where a pawn changes its image
     
+    deleteCirclesPreviousPosition(); // Delete previous poition of the movement 
+
     img.classList.add("chess-piece-animation"); // Move top animation piece
     img.style.top = `${movePositionY * squareHeight}px`;  // Example offset 350 -  top = 7 - new_top = 5 = 2 * 50px = 250px 
     img.style.left = `${movePositionX * squareWidth}px`;  // Example offset 350 -  top = 7 - new_top = 5 = 2 * 50px = 250px 
@@ -184,6 +212,10 @@ function movePosition(img, movePositionX, movePositionY, imgPositionTop, imgPosi
     img.classList.remove("check-image"); // Remove the check image
     deleteCircles()
     changeCurrentMoveColor();
+
+    drawCirclesPrevCurrentPosition(movePositionX, movePositionY, imgPositionTop, imgPositionLeft, 1)
+    drawCirclesPrevCurrentPosition(movePositionX, movePositionY, imgPositionTop, imgPositionLeft, 0) // Draw curretn and prev circles postions
+
     setTimeout(() => {
         removeMoveClasses(img); 
     }, 300) 

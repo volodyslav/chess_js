@@ -1,9 +1,9 @@
-function moveKnight(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img, colorImgNumber){
+function moveKnight(imgPositionTop, imgPositionLeft, img, colorImgNumber){
     // Draw circles
     for (let i = -1; i < 2; i+=2){
         for (let j = -2; j < 3; j+=4){
-            drawCirclesKnight(i, j, imgPositionLeft, imgPositionTop, imgOffsetX, imgOffsetY);
-            drawCirclesKnight(j, i, imgPositionLeft, imgPositionTop, imgOffsetX, imgOffsetY);
+            drawCirclesKnight(i, j, imgPositionLeft, imgPositionTop);
+            drawCirclesKnight(j, i, imgPositionLeft, imgPositionTop);
         }
     }
 

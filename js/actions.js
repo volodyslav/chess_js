@@ -1,6 +1,7 @@
 function chooseFigure(img){
     // Choosing a figure with color over its background
     img.addEventListener('mousedown', (event) => {
+        deleteCircles() // Deletes circles if after choosing enemy figure or empty space (for safe reason)
         const images = document.querySelectorAll('.check-image');
         images.forEach((i) => i.classList.remove("check-image")); // Remove the check image class if exists (change the figure to be choosen later)
         const x = event.clientX; // Mouse coordinates
@@ -52,10 +53,10 @@ function moveFigure(img){
         
         switch (boardPosition[imgPositionTop][imgPositionLeft]){
             case 1:
-                movePawn(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img, 1);
+                movePawn(imgPositionTop, imgPositionLeft, img, 1);
                 break;
             case 2:
-                moveKnight(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img, 2);
+                moveKnight(imgPositionTop, imgPositionLeft, img, 2);
                 break;
             case 3:
                 moveBishop(imgPositionTop, imgPositionLeft, img, 3);
@@ -70,10 +71,10 @@ function moveFigure(img){
                 moveKing(imgPositionTop, imgPositionLeft, img, 6);
                 break;
             case 11:
-                movePawn(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img, 11) ;
+                movePawn(imgPositionTop, imgPositionLeft, img, 11) ;
                 break;
             case 12:
-                moveKnight(imgPositionTop, imgPositionLeft, imgOffsetX, imgOffsetY, img, 12);
+                moveKnight(imgPositionTop, imgPositionLeft, img, 12);
                 break;
             case 13:
                 moveBishop(imgPositionTop, imgPositionLeft, img, 13)
@@ -89,8 +90,6 @@ function moveFigure(img){
                 break;
             default:
                 break;
-        }
-        
+        } 
     }
-    
 }
