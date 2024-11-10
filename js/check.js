@@ -14,10 +14,41 @@ function checkColorCheck(){
     // Check if king can be checked
     knightKingCheck(topKingPos, leftKingPos, imgKing, kingColorCheck); // By knight
     rookKingCheck(topKingPos, leftKingPos, imgKing, kingColorCheck); // By rook and queen
-    bishopKingCheck(topKingPos, leftKingPos, imgKing, kingColorCheck) // By bishop and queen
+    bishopKingCheck(topKingPos, leftKingPos, imgKing, kingColorCheck); // By bishop and queen
+    pawnKingCheck(topKingPos, leftKingPos, imgKing, kingColorCheck)
     
     console.log(kingColorCheck)
     console.log(`King left: ${leftKingPos}, top: ${topKingPos}`);
+}
+
+
+function pawnKingCheck(topKingPos, leftKingPos, imgKing, kingColorCheck){
+    // Ckecks if the king is checked by pawn
+    const pawnColor = kingColorCheck === 1 ? 1 : 11;
+    if (kingColorCheck === 0){
+        for (let i = -1; i <= 1; i += 2){
+            const top = topKingPos + 1;
+            const left = leftKingPos + i;
+            if (top >= 0 && top < 8 && left >= 0 && left < 8){
+                if(boardPosition[top][left] === pawnColor){
+                    imgKing.classList.add("red");
+                    break;
+                }
+            }
+        }
+    }
+    else if (kingColorCheck === 1){
+        for (let i = -1; i <= 1; i += 2){
+            const top = topKingPos - 1;
+            const left = leftKingPos + i;
+            if (top >= 0 && top < 8 && left >= 0 && left < 8){
+                if(boardPosition[top][left] === pawnColor){
+                    imgKing.classList.add("red");
+                    break;
+                }
+            }
+        }
+    }
 }
 
 function checkOnBishopCheck(top, left, imgPositionTop, imgPositionLeft, color, imgKing){
