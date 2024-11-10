@@ -10,13 +10,11 @@ function moveQueen(imgPositionTop, imgPositionLeft, img, colorImgNumber){
         console.log("can move", canMoveForwardDiv)
 
         if (canMoveForwardDiv && (img.classList.contains("check-image")) && boardPosition[movePositionY][movePositionX] === 0){ // Check it between left and right side and move y --  
-            img.classList.add("chess-piece-animation"); // Move top animation piece
             movePosition(img, movePositionX, movePositionY, imgPositionTop, imgPositionLeft, colorImgNumber); // utils.js
             board.removeEventListener("mousedown", handleMouseMove); // Let do only one move
         }
         
         else if (canBeatDiv && (img.classList.contains("check-image")) && boardPosition[movePositionY][movePositionX] !== 0 && !currentColorArray.includes(boardPosition[movePositionY][movePositionX])){ // Check it between left and right side and move y --  
-            img.classList.add("chess-piece-animation"); // Move top animation piece
             deleteImage(movePositionY, movePositionX); // utils.js
             movePosition(img, movePositionX, movePositionY, imgPositionTop, imgPositionLeft, colorImgNumber); // utils.js
             board.removeEventListener("mousedown", handleMouseMove); // Let do only one move

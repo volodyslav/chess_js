@@ -9,12 +9,10 @@ function moveBishop(imgPositionTop, imgPositionLeft, img, colorImgNumber){
         console.log("can move", canMoveForwardDiv)
 
         if (canMoveForwardDiv && boardPosition[movePositionY][movePositionX] === 0 && (img.classList.contains("check-image"))){
-            img.classList.add("chess-piece-animation"); // Move left animation piece
             movePosition(img, movePositionX, movePositionY, imgPositionTop, imgPositionLeft, colorImgNumber); // utils.js
             board.removeEventListener("mousedown", handleMouseMove);    
         }
         else if (canBeatDiv && boardPosition[movePositionY][movePositionX] !== 0 && (img.classList.contains("check-image")) && !currentColorArray.includes(boardPosition[movePositionY][movePositionX])){
-            img.classList.add("chess-piece-animation"); // Move left animation piece
             deleteImage(movePositionY, movePositionX); // utils.js
             movePosition(img, movePositionX, movePositionY, imgPositionTop, imgPositionLeft, colorImgNumber); // utils.js
             board.removeEventListener("mousedown", handleMouseMove);    
