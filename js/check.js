@@ -54,9 +54,13 @@ function pawnKingCheck(topKingPos, leftKingPos, imgKing, kingColorCheck){
 function checkOnBishopCheck(top, left, imgPositionTop, imgPositionLeft, color, imgKing){
     let imgTop = imgPositionTop + 1 * top; // get left position (change it all iterations)
     let imgLeft = imgPositionLeft + 1 * left; // get right position (change it all iterations)
+    let countSameColorImage = 0; // count same color images between king and bishop enemy
     while(imgTop >= 0 && imgTop < 8 && imgTop >= 0 && imgLeft < 8){
         if (boardPosition[imgTop][imgLeft] !== 0 && boardPosition[imgTop][imgLeft] !== color){
-            break;
+            countSameColorImage++; // one same color image
+            if(countSameColorImage > 1){
+                break; // if two images -> you can move one of them
+            }
         }
         else if(boardPosition[imgTop][imgLeft] === color){
             imgKing.classList.add("red");
@@ -94,9 +98,13 @@ function rookKingCheck(topKingPos, leftKingPos, imgKing, kingColorCheck){
 
 function checkOnRookXCheck(top, left, i, imgKing, color){
     if (i === -1){
+        let countSameColorImage = 0; // Number of same color images
         for (let j = left + i; j >= 0; j--){
             if(boardPosition[top][j] !== 0 && boardPosition[top][j] !== color){
-                break;
+                countSameColorImage++;
+                if(countSameColorImage > 1){
+                    break;
+                }
             }
             else if(boardPosition[top][j] === color){
                 imgKing.classList.add("red");
@@ -105,9 +113,13 @@ function checkOnRookXCheck(top, left, i, imgKing, color){
         }
     }
     else if (i === 1){
+        let countSameColorImage = 0; // Number of same color images
         for (let j = left + i; j < 8; j++){
             if(boardPosition[top][j] !== 0 && boardPosition[top][j] !== color){
-                break;
+                countSameColorImage++;
+                if(countSameColorImage > 1){
+                    break;
+                }
             }
             else if(boardPosition[top][j] === color){
                 imgKing.classList.add("red");
@@ -119,9 +131,13 @@ function checkOnRookXCheck(top, left, i, imgKing, color){
 
 function checkOnRookYCheck(top, left, i, imgKing, color){
     if (i === -1){
+        let countSameColorImage = 0; // Number of same color images
         for (let j = top + i; j >= 0; j--){
             if(boardPosition[j][left] !== 0 && boardPosition[j][left] !== color){
-                break;
+                countSameColorImage++;
+                if(countSameColorImage > 1){
+                    break;
+                }
             }
             else if(boardPosition[j][left] === color){
                 imgKing.classList.add("red");
@@ -130,9 +146,13 @@ function checkOnRookYCheck(top, left, i, imgKing, color){
         }
     }
     else if (i === 1){
+        let countSameColorImage = 0; // Number of same color images
         for (let j = top + i; j < 8; j++){
             if(boardPosition[j][left] !== 0 && boardPosition[j][left] !== color){
-                break;
+                countSameColorImage++;
+                if(countSameColorImage > 1){
+                    break;
+                }
             }
             else if(boardPosition[j][left] === color){
                 imgKing.classList.add("red");

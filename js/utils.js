@@ -10,7 +10,7 @@ function changeCurrentMoveColor(){
     if (imgKingCircleCheck){
         imgKingCircleCheck.classList.remove("red");
     }
-    checkColorCheck()
+    checkColorCheck() // check.js
 }
 
 function removeMoveClasses(img){
