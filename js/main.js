@@ -6,6 +6,9 @@ const board = document.querySelector("#board");
 const textTurn = document.querySelector("#turn-text");
 textTurn.textContent = `White moves now`
 
+//Check text
+const checkKingText = document.querySelector("#check-text");
+
 // Buttons and div to change pawn's image
 const choosePawnDiv = document.querySelector("#choose-pawn-div");
 

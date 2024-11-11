@@ -1,5 +1,10 @@
-function checkColorCheck(){
+let positionsKingChecked = []; // Positions to protect the king and king cant move
+let kingIsChecked = false; // Check if king is ckecked
 
+
+function checkColorCheck(){
+    
+    positionsKingChecked = []; // Positions to protect the king and king cant move (clear)
     const kingColorCheck = currentColorArray === whiteFigures ? 1 : 0; // 0 - black king color; 1 - white king color
     let imgKing; // King image
     
@@ -16,7 +21,8 @@ function checkColorCheck(){
     rookKingCheck(topKingPos, leftKingPos, imgKing, kingColorCheck); // By rook and queen
     bishopKingCheck(topKingPos, leftKingPos, imgKing, kingColorCheck); // By bishop and queen
     pawnKingCheck(topKingPos, leftKingPos, imgKing, kingColorCheck)
-    
+
+    console.log("King checked pos: ", positionsKingChecked)
     console.log(kingColorCheck)
     console.log(`King left: ${leftKingPos}, top: ${topKingPos}`);
 }
@@ -32,6 +38,9 @@ function pawnKingCheck(topKingPos, leftKingPos, imgKing, kingColorCheck){
             if (top >= 0 && top < 8 && left >= 0 && left < 8){
                 if(boardPosition[top][left] === pawnColor){
                     imgKing.classList.add("red");
+                    checkKingText.textContent = `${(kingColorCheck === 0 ? "Black" : "White" )} king is checked`;
+                    positionsKingChecked.push([top, left]) // positions can other move to protect the king
+                    kingIsChecked = true; // Set the king is checked
                     break;
                 }
             }
@@ -44,6 +53,9 @@ function pawnKingCheck(topKingPos, leftKingPos, imgKing, kingColorCheck){
             if (top >= 0 && top < 8 && left >= 0 && left < 8){
                 if(boardPosition[top][left] === pawnColor){
                     imgKing.classList.add("red");
+                    checkKingText.textContent = `${(kingColorCheck === 0 ? "Black" : "White" )} king is checked`;
+                    positionsKingChecked.push([top, left]) // positions can other move to protect the king
+                    kingIsChecked = true; // Set the king is checked
                     break;
                 }
             }
@@ -51,19 +63,18 @@ function pawnKingCheck(topKingPos, leftKingPos, imgKing, kingColorCheck){
     }
 }
 
-function checkOnBishopCheck(top, left, imgPositionTop, imgPositionLeft, color, imgKing){
+function checkOnBishopCheck(top, left, imgPositionTop, imgPositionLeft, color, imgKing, kingColorCheck){
     let imgTop = imgPositionTop + 1 * top; // get left position (change it all iterations)
     let imgLeft = imgPositionLeft + 1 * left; // get right position (change it all iterations)
-    let countSameColorImage = 0; // count same color images between king and bishop enemy
     while(imgTop >= 0 && imgTop < 8 && imgTop >= 0 && imgLeft < 8){
         if (boardPosition[imgTop][imgLeft] !== 0 && boardPosition[imgTop][imgLeft] !== color){
-            countSameColorImage++; // one same color image
-            if(countSameColorImage > 1){
-                break; // if two images -> you can move one of them
-            }
+            break;
         }
         else if(boardPosition[imgTop][imgLeft] === color){
             imgKing.classList.add("red");
+            checkKingText.textContent = `${(kingColorCheck === 0 ? "Black" : "White" )} king is checked`;
+            positionsKingChecked.push([imgTop, imgLeft]) // positions can other move to protect the king
+            kingIsChecked = true; // Set the king is checked
             break;
         }
         imgLeft = imgLeft + 1 * left;
@@ -77,8 +88,8 @@ function bishopKingCheck(topKingPos, leftKingPos, imgKing, kingColorCheck){
     // Check diagonal circles up-left and down for bishop and queen
     for (let i = -1; i <= 1; i+=2){
         for (let j = -1; j <= 1; j +=2){
-            checkOnBishopCheck(j, i, topKingPos, leftKingPos, bishopColor, imgKing); // Bishop
-            checkOnBishopCheck(j, i, topKingPos, leftKingPos, queenColor, imgKing); // Queen
+            checkOnBishopCheck(j, i, topKingPos, leftKingPos, bishopColor, imgKing, kingColorCheck); // Bishop
+            checkOnBishopCheck(j, i, topKingPos, leftKingPos, queenColor, imgKing, kingColorCheck); // Queen
         }
     }
 }
@@ -88,74 +99,70 @@ function rookKingCheck(topKingPos, leftKingPos, imgKing, kingColorCheck){
     const rookColor = kingColorCheck === 1 ? 4 : 14; // Rook color based on the king checked
     const queenColor = kingColorCheck === 1 ? 5 : 15; // Queen color based on the king checked
     for (let i = -1; i <= 1; i+=2){
-        checkOnRookXCheck(topKingPos, leftKingPos, i, imgKing, rookColor);
-        checkOnRookYCheck(topKingPos, leftKingPos, i, imgKing, rookColor);
+        checkOnRookXCheck(topKingPos, leftKingPos, i, imgKing, rookColor, kingColorCheck);
+        checkOnRookYCheck(topKingPos, leftKingPos, i, imgKing, rookColor, kingColorCheck);
         // Check On X and Y Queen
-        checkOnRookXCheck(topKingPos, leftKingPos, i, imgKing, queenColor);
-        checkOnRookYCheck(topKingPos, leftKingPos, i, imgKing, queenColor);
+        checkOnRookXCheck(topKingPos, leftKingPos, i, imgKing, queenColor, kingColorCheck);
+        checkOnRookYCheck(topKingPos, leftKingPos, i, imgKing, queenColor, kingColorCheck);
     }
 }
 
-function checkOnRookXCheck(top, left, i, imgKing, color){
+function checkOnRookXCheck(top, left, i, imgKing, color, kingColorCheck){
     if (i === -1){
-        let countSameColorImage = 0; // Number of same color images
         for (let j = left + i; j >= 0; j--){
             if(boardPosition[top][j] !== 0 && boardPosition[top][j] !== color){
-                countSameColorImage++;
-                if(countSameColorImage > 1){
-                    break;
-                }
+                break;
             }
             else if(boardPosition[top][j] === color){
                 imgKing.classList.add("red");
+                checkKingText.textContent = `${(kingColorCheck === 0 ? "Black" : "White" )} king is checked`;
+                positionsKingChecked.push([top, j]) // positions can other move to protect the king
+                kingIsChecked = true; // Set the king is checked
                 break;
             }
         }
     }
     else if (i === 1){
-        let countSameColorImage = 0; // Number of same color images
         for (let j = left + i; j < 8; j++){
             if(boardPosition[top][j] !== 0 && boardPosition[top][j] !== color){
-                countSameColorImage++;
-                if(countSameColorImage > 1){
-                    break;
-                }
+                break;
             }
             else if(boardPosition[top][j] === color){
                 imgKing.classList.add("red");
+                checkKingText.textContent = `${(kingColorCheck === 0 ? "Black" : "White" )} king is checked`;
+                positionsKingChecked.push([top, j]) // positions can other move to protect the king
+                kingIsChecked = true; // Set the king is checked
                 break;
             }
         }
     }
 }
 
-function checkOnRookYCheck(top, left, i, imgKing, color){
+function checkOnRookYCheck(top, left, i, imgKing, color, kingColorCheck){
     if (i === -1){
-        let countSameColorImage = 0; // Number of same color images
         for (let j = top + i; j >= 0; j--){
             if(boardPosition[j][left] !== 0 && boardPosition[j][left] !== color){
-                countSameColorImage++;
-                if(countSameColorImage > 1){
-                    break;
-                }
+                break;
             }
             else if(boardPosition[j][left] === color){
                 imgKing.classList.add("red");
+                checkKingText.textContent = `${(kingColorCheck === 0 ? "Black" : "White" )} king is checked`;
+                positionsKingChecked.push([j, left]) // positions can other move to protect the king
+                kingIsChecked = true; // Set the king is checked
                 break;
             }
         }
     }
     else if (i === 1){
-        let countSameColorImage = 0; // Number of same color images
         for (let j = top + i; j < 8; j++){
             if(boardPosition[j][left] !== 0 && boardPosition[j][left] !== color){
-                countSameColorImage++;
-                if(countSameColorImage > 1){
-                    break;
-                }
+                break;
             }
             else if(boardPosition[j][left] === color){
                 imgKing.classList.add("red");
+                checkKingText.textContent = `${(kingColorCheck === 0 ? "Black" : "White" )} king is checked`;
+                positionsKingChecked.push([j, left]) // positions can other move to protect the king
+                kingIsChecked = true; // Set the king is checked
                 break;
             }
         }
@@ -183,6 +190,9 @@ function checkOnKnightCheck(top, left, imgKing, kingColorCheck){
     if (top >= 0 && top < 8 && left >= 0 && left < 8){
         if (boardPosition[top][left] === knightColor){
             imgKing.classList.add("red");
+            checkKingText.textContent = `${(kingColorCheck === 0 ? "Black" : "White" )} king is checked`;
+            positionsKingChecked.push([top, left]) // positions can other move to protect the king
+            kingIsChecked = true; // Set the king is checked
         }
     }
 }

@@ -3,13 +3,17 @@ function changeCurrentMoveColor(){
     currentColorArray = currentColorArray === whiteFigures ? blackFigures : whiteFigures; // Set the current color array
     // Keep and change current move color
     const currentTurn = currentColorArray === whiteFigures ? "White" : "Black";
+    checkKingText.textContent = ""; // Set the current text king checked to empty string
     textTurn.textContent = `${currentTurn} moves now` // Set the current move color
     console.log(`Color now  array ${currentColorArray}`);
+
+    kingIsChecked = false; // The king was unchecked
 
     const imgKingCircleCheck = document.querySelector(".red"); // Check if we have red circle -> king checked
     if (imgKingCircleCheck){
         imgKingCircleCheck.classList.remove("red");
     }
+
     checkColorCheck() // check.js
 }
 
@@ -30,8 +34,8 @@ function deleteCirclesPreviousPosition(){
     circle.forEach(circle => circle.remove());
 }
 
-function drawCirclesOnBoard(top, left, circleType){
-    // Draw the circles on the board (0 - circle; 1 -enemy-circle)
+function circlesCanBeDrawn(top, left, circleType){
+    // Draw circles based on condition checked or not
     const circle = document.createElement("div");
     if (circleType === 0){
         circle.classList.add("circle");
@@ -44,6 +48,22 @@ function drawCirclesOnBoard(top, left, circleType){
     circle.style.width = squareWidth + "px";
     board.appendChild(circle);
 }
+
+function drawCirclesOnBoard(top, left, circleType){
+    // Draw the circles on the board (0 - circle; 1 -enemy-circle)
+    if(kingIsChecked === false){
+        circlesCanBeDrawn(top, left, circleType); // Can draw circles if the king is not checked
+    }else if(kingIsChecked === true && checkEqualPositions(top, left)){
+        circlesCanBeDrawn(top, left, circleType); // Can draw circles if the king is  checked & position can protect the king 
+    }
+}
+
+function checkEqualPositions(top, left){
+    // Check if some two positions are equal
+    console.log("Checking positions", top, left)
+    return positionsKingChecked.some(p => p[0] === top && p[1] === left)
+}
+
 
 function drawCirclesRookX(imgPositionTop, i, color){
     // Draw the circles on the board horizontally
