@@ -49,12 +49,15 @@ function circlesCanBeDrawn(top, left, circleType){
     board.appendChild(circle);
 }
 
-function drawCirclesOnBoard(top, left, circleType){
+function drawCirclesOnBoard(top, left, circleType, king=false){
     // Draw the circles on the board (0 - circle; 1 -enemy-circle)
     if(kingIsChecked === false){
         circlesCanBeDrawn(top, left, circleType); // Can draw circles if the king is not checked
-    }else if(kingIsChecked === true && checkEqualPositions(top, left)){
+    }else if(kingIsChecked === true && checkEqualPositions(top, left) && king === false){ // Check cant protect itself
         circlesCanBeDrawn(top, left, circleType); // Can draw circles if the king is  checked & position can protect the king 
+    }
+    else if(kingIsChecked === true && !checkEqualPositions(top, left) &&  king === true){ // Check cant protect itself
+         circlesCanBeDrawn(top, left, circleType); // Can draw circles if the king is  checked & position can protect the king 
     }
 }
 
@@ -74,7 +77,6 @@ function drawCirclesRookY(imgPositionLeft, i, color){
     // Draw the circles on the board vertically
     drawCirclesOnBoard(i, imgPositionLeft, color); 
 }
-
 
 function drawCirclesKnight(top, left, imgPositionLeft, imgPositionTop){
     // Draw the circles on the board for knight
@@ -115,10 +117,10 @@ function drawCirclesKing(top, left, imgPositionTop, imgPositionLeft){
     if (0 <= imgTop && imgTop < 8 && 0 <= imgLeft && imgLeft < 8){
         if (boardPosition[imgTop][imgLeft] === 0){
             //console.log(imgLeft, imgTop)
-            drawCirclesOnBoard(imgTop, imgLeft, 0); 
+            drawCirclesOnBoard(imgTop, imgLeft, 0, king=true); 
         }
         else if (!currentColorArray.includes(boardPosition[imgTop][imgLeft]) && boardPosition[imgTop][imgLeft] > 0){
-            drawCirclesOnBoard(imgTop, imgLeft, 1); 
+            drawCirclesOnBoard(imgTop, imgLeft, 1, king=true); 
         }
     }
 }

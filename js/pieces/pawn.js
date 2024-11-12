@@ -4,8 +4,12 @@ function movePawn(imgPositionTop, imgPositionLeft, img, colorImgNumber){
     const circlesAmount = img.classList.contains("first-move") ? 3 : 2;
 
     for (let i = 1; i < circlesAmount; i++) {
-        if (boardPosition[imgPositionTop + i * directionY][imgPositionLeft] === 0 && kingIsChecked === false){
-            drawCirclesOnBoard((imgPositionTop + i *  directionY), imgPositionLeft, 0);
+        if (boardPosition[imgPositionTop + i * directionY][imgPositionLeft] === 0){
+            if (kingIsChecked === false){
+                drawCirclesOnBoard((imgPositionTop + i *  directionY), imgPositionLeft, 0);
+            }else if (kingIsChecked === true && checkEqualPositions(imgPositionTop + i * directionY, imgPositionLeft)){
+                drawCirclesOnBoard((imgPositionTop + i *  directionY), imgPositionLeft, 0);
+            }
         }
         else{
             break;
