@@ -129,6 +129,8 @@ function checkOnBishopCheck(top, left, imgPositionTop, imgPositionLeft, color, i
                 checkKingText.textContent = `${(kingColorCheck === 6 ? "Black" : "White" )} king is checked`;
                 kingIsChecked = true; // Set the king is checked
                 imgKing.classList.remove("first-move"); // If it was checked cant change postions with rooks
+            }else if(!checked){
+                positionsKingChecked.push([imgPositionTop, imgPositionLeft]) // The king cant move here and is not checked
             }
             for (value of positionCanMoveToProtect){
                 console.log(`Value ${value}`)
@@ -181,6 +183,8 @@ function checkOnRookXCheck(top, left, i, imgKing, color, kingColorCheck, checked
                     checkKingText.textContent = `${(kingColorCheck === 6 ? "Black" : "White" )} king is checked`;
                     kingIsChecked = true; // Set the king is checked
                     imgKing.classList.remove("first-move"); // If it was checked cant change postions with rooks
+                }else if(!checked){
+                    positionsKingChecked.push([top, left]) // The king cant move here and is not checked
                 }
                 for (value of positionCanMoveToProtect){
                     console.log(`Value ${value}`)
@@ -204,6 +208,8 @@ function checkOnRookXCheck(top, left, i, imgKing, color, kingColorCheck, checked
                     checkKingText.textContent = `${(kingColorCheck === 6 ? "Black" : "White" )} king is checked`;
                     kingIsChecked = true; // Set the king is checked
                     imgKing.classList.remove("first-move"); // If it was checked cant change postions with rooks
+                }else if(!checked){
+                    positionsKingChecked.push([top, left]) // The king cant move here and is not checked
                 }
                 for (value of positionCanMoveToProtect){
                     console.log(`Value ${value}`)
@@ -230,6 +236,8 @@ function checkOnRookYCheck(top, left, i, imgKing, color, kingColorCheck, checked
                     checkKingText.textContent = `${(kingColorCheck === 6 ? "Black" : "White" )} king is checked`;
                     kingIsChecked = true; // Set the king is checked
                     imgKing.classList.remove("first-move"); // If it was checked cant change postions with rooks
+                }else if(!checked){
+                    positionsKingChecked.push([top, left]) // The king cant move here and is not checked
                 }
                 for (value of positionCanMoveToProtect){
                     console.log(`Value ${value}`)
@@ -253,6 +261,8 @@ function checkOnRookYCheck(top, left, i, imgKing, color, kingColorCheck, checked
                     checkKingText.textContent = `${(kingColorCheck === 6 ? "Black" : "White" )} king is checked`;
                     kingIsChecked = true; // Set the king is checked
                     imgKing.classList.remove("first-move"); // If it was checked cant change postions with rooks
+                }else if(!checked){
+                    positionsKingChecked.push([top, left]) // The king cant move here and is not checked
                 }
                 for (value of positionCanMoveToProtect){
                     console.log(`Value ${value}`)
@@ -264,34 +274,40 @@ function checkOnRookYCheck(top, left, i, imgKing, color, kingColorCheck, checked
     }
 }
 
-
-
-function knightKingCheck(topKingPos, leftKingPos, imgKing, kingColorCheck){
+function knightKingCheck(topKingPos, leftKingPos, imgKing, kingColorCheck, checked){
     // Check if king can be checked by knight
     for (let i = -2; i <= 2; i += 4){
         for (let j = -1; j <= 1; j += 2){
-            checkOnKnightCheck(topKingPos + i, leftKingPos + j, imgKing, kingColorCheck)
+            const top = topKingPos + j;
+            const left = leftKingPos + i;
+            if (top >= 0 && top < 8 && left >= 0 && left < 8){
+                checkOnKnightCheck(top, left, imgKing, kingColorCheck, checked, topKingPos, leftKingPos)
+            }
         }
     }
     for (let i = -2; i <= 2; i += 4){
         for (let j = -1; j <= 1; j += 2){
-            checkOnKnightCheck(topKingPos + j, leftKingPos + i, imgKing, kingColorCheck)
+            const top = topKingPos + i;
+            const left = leftKingPos + j;
+            if (top >= 0 && top < 8 && left >= 0 && left < 8){
+                checkOnKnightCheck(top, left, imgKing, kingColorCheck, checked, topKingPos, leftKingPos)
+            }
         }
     }
 }
 
-function checkOnKnightCheck(top, left, imgKing, kingColorCheck, checked){
+function checkOnKnightCheck(top, left, imgKing, kingColorCheck, checked, topKingPos, leftKingPos){
     const knightColor = kingColorCheck === 16 ? 2 : 12; // Knight color based on the king checked
-    if (top >= 0 && top < 8 && left >= 0 && left < 8){
-        if (boardPosition[top][left] === knightColor){
-            if(checked){
-                imgKing.style.opacity = 0.6;
-                imgKing.style.backgroundColor = "red";
-                checkKingText.textContent = `${(kingColorCheck === 6 ? "Black" : "White" )} king is checked`;
-                kingIsChecked = true; // Set the king is checked
-                imgKing.classList.remove("first-move"); // If it was checked cant change postions with rooks
-            }
+    if (boardPosition[top][left] === knightColor){
+        if(checked){
+            imgKing.style.opacity = 0.6;
+            imgKing.style.backgroundColor = "red";
+            checkKingText.textContent = `${(kingColorCheck === 6 ? "Black" : "White" )} king is checked`;
+            kingIsChecked = true; // Set the king is checked
             positionsKingChecked.push([top, left]) // positions can other move to protect the king
+            imgKing.classList.remove("first-move"); // If it was checked cant change postions with rooks
+        }else if(!checked){
+            positionsKingChecked.push([topKingPos, leftKingPos]) // The king cant move here and is not checked
         }
     }
 }
