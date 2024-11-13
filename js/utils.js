@@ -82,7 +82,11 @@ function drawCirclesOnBoard(top, left, circleType, king=false){
             circlesCanBeDrawn(top, left, circleType); // Can draw circles if the king is  checked & position can protect the king 
         }
     }else{
-        if(kingIsChecked === true && !checkEqualPositions(top, left)){ // Check cant protect itself
+        if(kingIsChecked === false && !checkEqualPositions(top, left)){ // Check cant protect itself
+            circlesCanBeDrawnKing(top, left, circleType, false); // Can draw circles if the king is  checked & position can protect the king 
+            circlesCanBeDrawnKing(top, left, circleType, true); // Can draw circles if the king is  checked & position can protect the king 
+       }
+        else if(kingIsChecked === true && !checkEqualPositions(top, left)){ // Check cant protect itself
             circlesCanBeDrawnKing(top, left, circleType, false); // Can draw circles if the king is  checked & position can protect the king 
        }
        else if(kingIsChecked === true && checkEqualPositions(top, left)){ // Check cant protect itself
