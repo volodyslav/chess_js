@@ -59,6 +59,7 @@ function checkColorCheck(){
     }
 
     console.log("King checked pos: ", positionsKingChecked)
+    console.log("King cant move: ", positionsKingCantMove)
     console.log(kingColorCheck)
     console.log(`King left: ${leftKingPos}, top: ${topKingPos}`);
 }
@@ -131,11 +132,12 @@ function checkOnBishopCheck(top, left, imgPositionTop, imgPositionLeft, color, i
                 kingIsChecked = true; // Set the king is checked
                 imgKing.classList.remove("first-move"); // If it was checked cant change postions with rooks
             }else if(!checked){
-                positionsKingChecked.push([imgPositionTop, imgPositionLeft]) // The king cant move here and is not checked
+                //positionsKingCantMove.push([imgPositionTop, imgPositionLeft]) // The king cant move here and is not checked
             }
             for (value of positionCanMoveToProtect){
                 console.log(`Value ${value}`)
                 positionsKingChecked.push(value);
+                
             }
             break;
         }
@@ -157,144 +159,7 @@ function bishopKingCheck(topKingPos, leftKingPos, imgKing, kingColorCheck, check
 }
 
 
-function rookKingCheck(topKingPos, leftKingPos, imgKing, kingColorCheck, checked){
-    const rookColor = kingColorCheck === 16 ? 4 : 14; // Rook color based on the king checked
-    const queenColor = kingColorCheck === 16 ? 5 : 15; // Queen color based on the king checked
-    for (let i = -1; i <= 1; i+=2){
-        checkOnRookXCheck(topKingPos, leftKingPos, i, imgKing, rookColor, kingColorCheck, checked);
-        checkOnRookYCheck(topKingPos, leftKingPos, i, imgKing, rookColor, kingColorCheck, checked);
-        // Check On X and Y Queen
-        checkOnRookXCheck(topKingPos, leftKingPos, i, imgKing, queenColor, kingColorCheck, checked);
-        checkOnRookYCheck(topKingPos, leftKingPos, i, imgKing, queenColor, kingColorCheck, checked);
-    }
-}
 
-function checkOnRookXCheck(top, left, i, imgKing, color, kingColorCheck, checked){
-    const sameColorKing = kingColorCheck === 6 ? blackFigures : whiteFigures; // array of the same color image the king 
-    if (i === -1){
-        let positionCanMoveToProtect = []; // Position can move to protect the king
-        let countSameColor = 0; // Count of the same color image (opposite to the king)
-        for (let j = left + i; j >= 0; j--){
-            positionCanMoveToProtect.push([top, j]) // positions can other move to protect the king
-            if(boardPosition[top][j] !== 0 && sameColorKing.includes(boardPosition[top][j])){
-                break;
-            }
-            else if(boardPosition[top][j] !== color && sameColorKing.includes(boardPosition[top][j])){ // King cant move to beat
-                countSameColor++; // count the same color image
-            }
-            else if(boardPosition[top][j] === color){
-                if(checked){ // Only if the king is checked
-                    imgKing.style.opacity = 0.6;
-                    imgKing.style.backgroundColor = "red";
-                    checkKingText.textContent = `${(kingColorCheck === 6 ? "Black" : "White" )} king is checked`;
-                    kingIsChecked = true; // Set the king is checked
-                    imgKing.classList.remove("first-move"); // If it was checked cant change postions with rooks
-                }else if(!checked && countSameColor < 1){
-                    positionsKingChecked.push([top, left]) // The king cant move here and is not checked
-                }
-                for (value of positionCanMoveToProtect){
-                    console.log(`Value ${value}`)
-                    positionsKingChecked.push(value);
-                }
-                break;
-            }
-            ///console.log(`Same color count ${countSameColor} fot top ${top} left ${left}`)
-        }
-    }
-    else if (i === 1){
-        let positionCanMoveToProtect = []; // Position can move to protect the king
-        let countSameColor = 0; // Count of the same color image (opposite to the king)
-        for (let j = left + i; j < 8; j++){
-            positionCanMoveToProtect.push([top, j]) // positions can other move to protect the king
-            if(boardPosition[top][j] !== 0 && sameColorKing.includes(boardPosition[top][j])){
-                break;
-            }else if(boardPosition[top][j] !== color && !sameColorKing.includes(boardPosition[top][j])){ // King cant move to beat
-                countSameColor++; // count the same color image
-            }
-            else if(boardPosition[top][j] === color){
-                if (checked){
-                    imgKing.style.opacity = 0.6;
-                    imgKing.style.backgroundColor = "red";
-                    checkKingText.textContent = `${(kingColorCheck === 6 ? "Black" : "White" )} king is checked`;
-                    kingIsChecked = true; // Set the king is checked
-                    imgKing.classList.remove("first-move"); // If it was checked cant change postions with rooks
-                }else if(!checked && countSameColor < 1){
-                    positionsKingChecked.push([top, left]) // The king cant move here and is not checked
-                }
-                for (value of positionCanMoveToProtect){
-                    console.log(`Value ${value}`)
-                    positionsKingChecked.push(value);
-                }
-                break;
-            }
-            //console.log(`Same color count ${countSameColor} fot top ${top} left ${left}`)
-        }
-    }
-}
-
-function checkOnRookYCheck(top, left, i, imgKing, color, kingColorCheck, checked){
-    const sameColorKing = kingColorCheck === 6 ? blackFigures : whiteFigures; // array of the same color image the king 
-    
-    if (i === -1){
-        let positionCanMoveToProtect = []; // Position can move to protect the king
-        let countSameColor = 0; // Count of the same color image (opposite to the king)
-        for (let j = top + i; j >= 0; j--){
-            positionCanMoveToProtect.push([j, left]) // positions can other move to protect the king
-            if(boardPosition[j][left] !== 0 && sameColorKing.includes(boardPosition[j][left])){
-                break;
-            }else if(boardPosition[j][left] !== color && boardPosition[j][left] !== 0 && !sameColorKing.includes(boardPosition[j][left])){ // King cant move to beat
-                countSameColor++; // count the same color image
-            }
-            else if(boardPosition[j][left] === color){
-                if (checked){
-                    imgKing.style.opacity = 0.6;
-                    imgKing.style.backgroundColor = "red";
-                    checkKingText.textContent = `${(kingColorCheck === 6 ? "Black" : "White" )} king is checked`;
-                    kingIsChecked = true; // Set the king is checked
-                    imgKing.classList.remove("first-move"); // If it was checked cant change postions with rooks
-                }else if(!checked && countSameColor < 1){
-                    positionsKingCantMove.push([top, left]) // The king cant move here and is not checked
-                }
-                for (value of positionCanMoveToProtect){
-                    console.log(`Value ${value}`)
-                    positionsKingChecked.push(value);
-                }
-                break;
-            }
-            console.log(`Same color count ${countSameColor} fot top ${j} left ${left} up`)
-        }
-    }
-    else if (i === 1){
-        let positionCanMoveToProtect = []; // Position can move to protect the king
-        let countSameColor = 0; // Count of the same color image (opposite to the king)
-        for (let j = top + i; j < 8; j++){
-            positionCanMoveToProtect.push([j, left]) // positions can other move to protect the king
-            
-            if(boardPosition[j][left] !== 0 && sameColorKing.includes(boardPosition[j][left])){
-                break;
-            }else if(boardPosition[j][left] !== color &&  boardPosition[j][left] !== 0 && !sameColorKing.includes(boardPosition[j][left])){ // King cant move to beat
-                countSameColor++; // count the same color image
-            }
-            else if(boardPosition[j][left] === color){
-                if (checked){
-                    imgKing.style.opacity = 0.6;
-                    imgKing.style.backgroundColor = "red";
-                    checkKingText.textContent = `${(kingColorCheck === 6 ? "Black" : "White" )} king is checked`;
-                    kingIsChecked = true; // Set the king is checked
-                    imgKing.classList.remove("first-move"); // If it was checked cant change postions with rooks
-                }else if(!checked && countSameColor < 1){
-                    positionsKingCantMove.push([top, left]) // The king cant move here and is not checked
-                }
-                for (value of positionCanMoveToProtect){
-                    console.log(`Value ${value}`)
-                    positionsKingChecked.push(value);
-                }
-                break;
-            }
-            console.log(`Same color count ${countSameColor} fot top ${j} left ${left} down`)
-        }
-    }
-}
 
 function knightKingCheck(topKingPos, leftKingPos, imgKing, kingColorCheck, checked){
     // Check if king can be checked by knight
