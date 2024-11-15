@@ -10,7 +10,7 @@ function changeCurrentMoveColor(){
     kingIsChecked = false; // The king was unchecked
 
     const imgKingCircleCheckWhite = document.querySelector(".white-king"); // Check if we have red circle -> king checked
-    const imgKingCircleCheckBlack = document.querySelector(".white-king"); // Check if we have red circle -> king checked
+    const imgKingCircleCheckBlack = document.querySelector(".black-king"); // Check if we have red circle -> king checked
     if (imgKingCircleCheckWhite){
         imgKingCircleCheckWhite.style.backgroundColor = "transparent";
         imgKingCircleCheckWhite.style.opacity = 1;
@@ -78,29 +78,32 @@ function drawCirclesOnBoard(top, left, circleType, king=false){
     if (!king){
         if(kingIsChecked === false){
             circlesCanBeDrawn(top, left, circleType); // Can draw circles if the king is not checked
-        }else if(kingIsChecked === true && checkEqualPositions(top, left)){ // Check cant protect itself
+        }else if(kingIsChecked === true && checkEqualPositions(positionsKingChecked, top, left)){ // Check cant protect itself
             circlesCanBeDrawn(top, left, circleType); // Can draw circles if the king is  checked & position can protect the king 
         }
     }else{
-        if(kingIsChecked === false && !checkEqualPositions(top, left)){ // Check cant protect itself
+        if(kingIsChecked === false && !checkEqualPositions(positionsKingCantMove, top, left)){ // Check cant protect itself
             circlesCanBeDrawnKing(top, left, circleType, false); // Can draw circles if the king is  checked & position can protect the king 
             circlesCanBeDrawnKing(top, left, circleType, true); // Can draw circles if the king is  checked & position can protect the king 
-       }
-        else if(kingIsChecked === true && !checkEqualPositions(top, left)){ // Check cant protect itself
+        }
+        else if(kingIsChecked === true && !checkEqualPositions(positionsKingCantMove, top, left)){ // Check cant protect itself
             circlesCanBeDrawnKing(top, left, circleType, false); // Can draw circles if the king is  checked & position can protect the king 
-       }
-       else if(kingIsChecked === true && checkEqualPositions(top, left)){ // Check cant protect itself
+        }
+        else if(kingIsChecked === true && checkEqualPositions(positionsKingCantMove, top, left)){ // Check cant protect itself because behind it smt
+            circlesCanBeDrawnKing(top, left, circleType, false); // Can draw circles if the king is  checked & position can protect the king 
+        }
+        else if(kingIsChecked === true && checkEqualPositions(positionsKingCantMove, top, left)){ // Check cant protect itself
             circlesCanBeDrawnKing(top, left, circleType, true); // Can draw circles if the king is  checked & position can protect the king 
-       }
+        }
     }
     
     
 }
 
-function checkEqualPositions(top, left){
+function checkEqualPositions(positionsArray, top, left){
     // Check if some two positions are equal
     console.log("Checking positions", top, left)
-    return positionsKingChecked.some(p => p[0] === top && p[1] === left)
+    return positionsArray.some(p => p[0] === top && p[1] === left)
 }
 
 

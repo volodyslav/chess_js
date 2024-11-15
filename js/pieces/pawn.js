@@ -7,7 +7,7 @@ function movePawn(imgPositionTop, imgPositionLeft, img, colorImgNumber){
         if (boardPosition[imgPositionTop + i * directionY][imgPositionLeft] === 0){
             if (kingIsChecked === false){
                 drawCirclesOnBoard((imgPositionTop + i *  directionY), imgPositionLeft, 0);
-            }else if (kingIsChecked === true && checkEqualPositions(imgPositionTop + i * directionY, imgPositionLeft)){
+            }else if (kingIsChecked === true && checkEqualPositions(positionsKingChecked, imgPositionTop + i * directionY, imgPositionLeft)){
                 drawCirclesOnBoard((imgPositionTop + i *  directionY), imgPositionLeft, 0);
             }
         }
@@ -21,7 +21,7 @@ function movePawn(imgPositionTop, imgPositionLeft, img, colorImgNumber){
         if(boardPosition[imgPositionTop + 1 * directionY][imgPositionLeft + 1 * i] > 0 && !currentColorArray.includes(boardPosition[imgPositionTop + 1 * directionY][imgPositionLeft + 1 * i])){
             if (kingIsChecked === false){
                 drawCirclesOnBoard((imgPositionTop + directionY), (imgPositionLeft + i), 1);
-            }else if(kingIsChecked === true && checkEqualPositions(imgPositionTop + 1 * directionY, imgPositionLeft + 1 * i) ){
+            }else if(kingIsChecked === true && checkEqualPositions(positionsKingChecked, imgPositionTop + 1 * directionY, imgPositionLeft + 1 * i) ){
                 drawCirclesOnBoard((imgPositionTop + directionY), (imgPositionLeft + i), 1);
             }
         } 
