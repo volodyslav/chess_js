@@ -52,7 +52,17 @@ function checkColorCheck(){
             }
         }
     }
-
+    //checkCheckmate();
     console.log("King checked pos: ", positionsKingChecked)
     console.log("King cant move: ", positionsKingCantMove)
+}
+
+
+function checkCheckmate(){
+    // Check if checkmate
+    if (positionsKingCantMove.length > 0 && positionsKingChecked.length === 0){
+        canChooseNewPiece = false; // Checkmate cant choose
+        alert("Checkmate! " + (currentColorArray === whiteFigures? "Black wins" : "White wins"));
+        checkKingText.textContent = `${(currentColorArray === whiteFigures? "Black wins" : "White wins")}`
+    }
 }

@@ -24,7 +24,7 @@ function checkOnKnightCheck(top, left, imgKing, kingColorCheck, checked, topKing
     const knightColor = kingColorCheck === 16 ? 2 : 12; // Knight color based on the king checked
     if (boardPosition[top][left] === knightColor){
         if(checked){
-            kingChecked(imgKing, checkKingText, kingIsChecked, kingColorCheck);
+            kingChecked(imgKing, checkKingText,  kingColorCheck);
             positionsKingChecked.push([top, left]) // positions can other move to protect the king
         }else if(!checked){
             positionsKingCantMove.push([topKingPos, leftKingPos]) // The king cant move here and is not checked

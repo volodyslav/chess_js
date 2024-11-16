@@ -8,7 +8,8 @@ function pawnKingCheck(topKingPos, leftKingPos, imgKing, kingColorCheck, checked
             if (top >= 0 && top < 8 && left >= 0 && left < 8){
                 if(boardPosition[top][left] === pawnColor){
                     if (checked){
-                        kingChecked(imgKing, checkKingText, kingIsChecked, kingColorCheck);
+                        positionsKingChecked.push([top, left]); // Can move this positions to protect the king 
+                        kingChecked(imgKing, checkKingText, kingColorCheck);
                     }
                     else if (!checked){
                         positionsKingCantMove.push([topKingPos, leftKingPos]) // The king cant move here and not checked
@@ -24,7 +25,8 @@ function pawnKingCheck(topKingPos, leftKingPos, imgKing, kingColorCheck, checked
             if (top >= 0 && top < 8 && left >= 0 && left < 8){
                 if(boardPosition[top][left] === pawnColor){
                     if (checked){
-                        kingChecked(imgKing, checkKingText, kingIsChecked, kingColorCheck);
+                        positionsKingChecked.push([top, left]); // Can move this positions to protect the king 
+                        kingChecked(imgKing, checkKingText, kingColorCheck);
                     }
                     else if (!checked){
                         positionsKingCantMove.push([topKingPos, leftKingPos]) // The king cant move here and not checked

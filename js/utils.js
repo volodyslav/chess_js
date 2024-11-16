@@ -19,8 +19,6 @@ function changeCurrentMoveColor(){
         imgKingCircleCheckBlack.style.backgroundColor = "transparent";
         imgKingCircleCheckBlack.style.opacity = 1;
     }
-
-
     checkColorCheck() // check.js
 }
 
@@ -65,7 +63,7 @@ function drawCirclesOnBoard(top, left, circleType, king=false){
         }else if(kingIsChecked === true && checkEqualPositions(positionsKingChecked, top, left)){ // Check cant protect itself
             circlesCanBeDrawn(top, left, circleType); // Can draw circles if the king is  checked & position can protect the king 
         }
-    }else{
+    }else if(king){
         if(kingIsChecked === false && !checkEqualPositions(positionsKingCantMove, top, left)){ // Check cant protect itself
             circlesCanBeDrawn(top, left, circleType); // Can draw circles if the king is  checked & position can protect the king 
         }

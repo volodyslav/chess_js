@@ -2,15 +2,19 @@ function checkOnBishopCheck(top, left, imgPositionTop, imgPositionLeft, color, i
     let imgTop = imgPositionTop + 1 * top; // get left position (change it all iterations)
     let imgLeft = imgPositionLeft + 1 * left; // get right position (change it all iterations)
     let positionCanMoveToProtect = []; // Position can move to protect the king
-    
+    const sameColorKing = kingColorCheck === 6 ? blackFigures : whiteFigures; // array of the same color image the king 
     while(imgTop >= 0 && imgTop < 8 && imgTop >= 0 && imgLeft < 8){
-        positionCanMoveToProtect.push([imgTop, imgLeft]) // positions can other move to protect the king
-        if (boardPosition[imgTop][imgLeft] !== 0 && boardPosition[imgTop][imgLeft] !== color && boardPosition[imgTop][imgLeft] !== kingColorCheck){
+        if (boardPosition[imgTop][imgLeft] !== 0 && sameColorKing.includes(boardPosition[imgTop][imgLeft]) && boardPosition[imgTop][imgLeft] !== color && boardPosition[imgTop][imgLeft] !== kingColorCheck){
+            break;
+        }
+        else if (boardPosition[imgTop][imgLeft] !== 0 && !sameColorKing.includes(boardPosition[imgTop][imgLeft]) && boardPosition[imgTop][imgLeft] !== color && boardPosition[imgTop][imgLeft] !== kingColorCheck){ // Same color with the rook or queen
             break;
         }
         else if(boardPosition[imgTop][imgLeft] === color){
             if(checked){
-                kingChecked(imgKing, checkKingText, kingIsChecked, kingColorCheck);
+                console.log("Bishop add ", imgTop, imgLeft, color)
+                positionCanMoveToProtect.push([imgTop, imgLeft]) // positions can other move to protect the king
+                kingChecked(imgKing, checkKingText, kingColorCheck);
             }else if(!checked){
                 positionsKingCantMove.push([imgPositionTop, imgPositionLeft]) // The king cant move here and is not checked
             }
@@ -19,6 +23,7 @@ function checkOnBishopCheck(top, left, imgPositionTop, imgPositionLeft, color, i
             }
             break;
         }
+        positionCanMoveToProtect.push([imgTop, imgLeft]) // positions can other move to protect the king
         imgLeft = imgLeft + 1 * left;
         imgTop = imgTop + 1 * top;
     }
