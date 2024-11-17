@@ -12,7 +12,7 @@ function checkOnBishopCheck(top, left, imgPositionTop, imgPositionLeft, color, i
         }
         else if(boardPosition[imgTop][imgLeft] === color){
             if(checked){
-                console.log("Bishop add ", imgTop, imgLeft, color)
+                //console.log("Bishop add ", imgTop, imgLeft, color)
                 positionCanMoveToProtect.push([imgTop, imgLeft]) // positions can other move to protect the king
                 kingChecked(imgKing, checkKingText, kingColorCheck);
             }else if(!checked){

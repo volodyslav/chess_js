@@ -7,7 +7,7 @@ function changeCurrentMoveColor(){
     console.log(`Color now  array ${currentColorArray}`);
 
     kingIsChecked = false; // The king was unchecked
-    kingIsCheckmate = true; // if the king or others could move
+    kingIsCheckmate = 0; // if the king or others could move
     const kings = [
         document.querySelector(".white-king"),
         document.querySelector(".black-king")
@@ -63,10 +63,7 @@ function drawCirclesOnBoard(top, left, circleType, king=false){
         }else if(kingIsChecked === true ){ // Check cant protect itself
             if (checkEqualPositions(positionsKingChecked, top, left)){
                 circlesCanBeDrawn(top, left, circleType); // Can draw circles if the king is  checked & position can protect the king 
-            }else{
-                kingIsCheckmate = true; // Check if the king is not in checkmate
-            }
-            
+            }  
         }
     }else if(king){
         if(kingIsChecked === false){ // Check cant protect itself
@@ -84,7 +81,7 @@ function drawCirclesOnBoard(top, left, circleType, king=false){
 
 function checkEqualPositions(positionsArray, top, left){
     // Check if some two positions are equal
-    console.log("Checking positions", top, left)
+    //console.log("Checking positions", top, left)
     return positionsArray.some(p => p[0] === top && p[1] === left)
 }
 
@@ -148,7 +145,7 @@ function drawCirclesKing(top, left, imgPositionTop, imgPositionLeft){
 
 function drawCirclesKingRook(imgLeft, imgPositionTop){
     // Draw circles from king to rook
-    drawCirclesOnBoard(imgPositionTop, imgLeft, 0); 
+    drawCirclesOnBoard(imgPositionTop, imgLeft, 0, true); 
 }
 
 function deleteImage(movePositionY, movePositionX){

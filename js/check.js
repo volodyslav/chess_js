@@ -56,6 +56,9 @@ function checkColorCheck(){
     if (kingIsChecked){
         checkImageCantMove() // checkmate.js 
         checkCheckmate();
+    }else if (!kingIsChecked && positionsKingCantMove.length > 3){
+        canChooseNewPiece = false; // Checkmate cant choose a figure
+        checkKingText.textContent = `Draw!`
     }
     console.log("Checkmate ", kingIsCheckmate)
     console.log("King checked pos: ", positionsKingChecked)

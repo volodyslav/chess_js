@@ -1,7 +1,7 @@
 function moveKing(imgPositionTop, imgPositionLeft, img, colorImgNumber){
     const moveKingToRook = 2
-    const drawCirclesAmountRight = colorImgNumber === 16 ? 1 : 2;
-    const drawCirclesAmountLeft = colorImgNumber === 16 ? 2 : 1;
+    const drawCirclesAmountRight = colorImgNumber === 16 ? 2 : 1;
+    const drawCirclesAmountLeft = colorImgNumber === 16 ? 1 : 2;
 
     const colorRookMove = colorImgNumber === 16 ? 14 : 4; // To add this avalue to checking condtion when changes
     const rookColorImagePath = colorImgNumber === 16 ? whiteRook : blackRook; // Color of rook image
@@ -9,9 +9,11 @@ function moveKing(imgPositionTop, imgPositionLeft, img, colorImgNumber){
     const imageRightRook = document.querySelector(
         `#board img[style*="top: ${imgPositionTop * squareHeight}px;"][style*="left: ${(imgPositionLeft + (moveKingToRook + drawCirclesAmountRight)) * squareWidth}px;"]` // Finds coordinates of rook image on board
     );
+    console.log(imgPositionLeft + (moveKingToRook + drawCirclesAmountRight))
     const imageLeftRook = document.querySelector(
         `#board img[style*="top: ${imgPositionTop * squareHeight}px;"][style*="left: ${(imgPositionLeft - (moveKingToRook + drawCirclesAmountLeft)) * squareWidth}px;"]` // Finds coordinates of rook image on board
     );
+    console.log(imgPositionLeft - (moveKingToRook + drawCirclesAmountLeft))
     // For king rook combination
     if (img.classList.contains("first-move")){
         if (imageRightRook && imageRightRook.getAttribute("src") === rookColorImagePath && imageRightRook.classList.contains("first-move")){ // Check if scr of the rook equals to the path of a rook image
