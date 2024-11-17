@@ -13,3 +13,6 @@ let boardPosition = [
     Array.from({length: squareAmount}, () => 11),
     [14, 12, 13, 16, 15, 13, 12, 14],
 ]
+
+// Check if the king is in checkmate
+let kingIsCheckmate = 0; // For beginning it's true, but if a king can move it's false (change it in checkmate.js)

@@ -54,7 +54,7 @@ body {
 /*Choose image*/
 .check-image{
     background-color: gold;
-    border: 2px solid rgb(222, 222, 222);
+    border: 2px solid rgb(82, 73, 73);
 }
 
 
@@ -109,4 +109,9 @@ body {
 
 #check-text{
     height: 30px;
+}
+
+.check-king{
+    background-color: red;
+    opacity: 0.6;
 }

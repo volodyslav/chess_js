@@ -1,4 +1,3 @@
-
 function changeCurrentMoveColor(){
     currentColorArray = currentColorArray === whiteFigures ? blackFigures : whiteFigures; // Set the current color array
     // Keep and change current move color
@@ -8,17 +7,18 @@ function changeCurrentMoveColor(){
     console.log(`Color now  array ${currentColorArray}`);
 
     kingIsChecked = false; // The king was unchecked
-
-    const imgKingCircleCheckWhite = document.querySelector(".white-king"); // Check if we have red circle -> king checked
-    const imgKingCircleCheckBlack = document.querySelector(".black-king"); // Check if we have red circle -> king checked
-    if (imgKingCircleCheckWhite){
-        imgKingCircleCheckWhite.style.backgroundColor = "transparent";
-        imgKingCircleCheckWhite.style.opacity = 1;
-    }
-    if (imgKingCircleCheckBlack){
-        imgKingCircleCheckBlack.style.backgroundColor = "transparent";
-        imgKingCircleCheckBlack.style.opacity = 1;
-    }
+    kingIsCheckmate = true; // if the king or others could move
+    const kings = [
+        document.querySelector(".white-king"),
+        document.querySelector(".black-king")
+    ];
+    
+    kings.forEach(king => {
+        if (king) {
+            king.classList.remove("check-king");
+        }
+    });
+    
     checkColorCheck() // check.js
 }
 
@@ -60,15 +60,24 @@ function drawCirclesOnBoard(top, left, circleType, king=false){
     if (!king){
         if(kingIsChecked === false){
             circlesCanBeDrawn(top, left, circleType); // Can draw circles if the king is not checked
-        }else if(kingIsChecked === true && checkEqualPositions(positionsKingChecked, top, left)){ // Check cant protect itself
-            circlesCanBeDrawn(top, left, circleType); // Can draw circles if the king is  checked & position can protect the king 
+        }else if(kingIsChecked === true ){ // Check cant protect itself
+            if (checkEqualPositions(positionsKingChecked, top, left)){
+                circlesCanBeDrawn(top, left, circleType); // Can draw circles if the king is  checked & position can protect the king 
+            }else{
+                kingIsCheckmate = true; // Check if the king is not in checkmate
+            }
+            
         }
     }else if(king){
-        if(kingIsChecked === false && !checkEqualPositions(positionsKingCantMove, top, left)){ // Check cant protect itself
-            circlesCanBeDrawn(top, left, circleType); // Can draw circles if the king is  checked & position can protect the king 
+        if(kingIsChecked === false){ // Check cant protect itself
+            if (!checkEqualPositions(positionsKingCantMove, top, left)){
+                circlesCanBeDrawn(top, left, circleType); // Can draw circles if the king is  checked & position can protect the king 
+            }
         }
-        else if(kingIsChecked === true && !checkEqualPositions(positionsKingCantMove, top, left)){ // Check cant protect itself
-            circlesCanBeDrawn(top, left, circleType); // Can draw circles if the king is  checked & position can protect the king 
+        else if(kingIsChecked === true){ // Check cant protect itself
+            if (!checkEqualPositions(positionsKingCantMove, top, left)){
+                circlesCanBeDrawn(top, left, circleType); // Can draw circles if the king is  checked & position can protect the king 
+            }
         }
     }
 }
@@ -105,7 +114,7 @@ function drawCirclesKnight(top, left, imgPositionLeft, imgPositionTop){
 function drawCirclesBishop(top, left, imgPositionTop, imgPositionLeft){
     let imgTop = imgPositionTop + 1 * top; // get left position (change it all iterations)
     let imgLeft = imgPositionLeft + 1 * left; // get right position (change it all iterations)
-    while(imgTop >= 0 && imgTop < 8 && imgTop >= 0 && imgLeft < 8){
+    while(imgTop >= 0 && imgTop < 8 && imgLeft >= 0 && imgLeft < 8){
         //console.log(`Top = ${top}, left = ${left}; ${boardPosition[imgTop][imgLeft] === 0}`)
         //console.log(imgTop, imgLeft)
         if (boardPosition[imgTop][imgLeft] === 0){
@@ -274,8 +283,8 @@ function changeImagePawn(img, movePositionX, movePositionY, color){
     const bishopColorNumber = imgPawnBishop === whiteBishop? 13 : 3;
     const knightColorNumber = imgPawnKnight === whiteKnight? 12 : 2;
 
-    const pieces = [{ name: "Queen", src: imgPawnQueen, colorNumber: queenColorNumber}, { name: "Rook", src: imgPawnRook, colorNumber: rookColorNumber }, 
-        { name: "Bishop", src: imgPawnBishop, colorNumber: bishopColorNumber }, { name: "Knight", src: imgPawnKnight, colorNumber: knightColorNumber }];
+    const pieces = [{ src: imgPawnQueen, colorNumber: queenColorNumber}, {  src: imgPawnRook, colorNumber: rookColorNumber }, 
+        { src: imgPawnBishop, colorNumber: bishopColorNumber }, {  src: imgPawnKnight, colorNumber: knightColorNumber }];
 
     canChooseNewPiece = false; //others Can't move 
     choosePawnDiv.style.display = "flex";
@@ -286,7 +295,6 @@ function changeImagePawn(img, movePositionX, movePositionY, color){
         const button = document.createElement("button");
         const imgPawn = document.createElement("img");
         imgPawn.src = piece.src;
-        imgPawn.alt = piece.name;
         button.classList.add("img-piece-pawn");
 
         button.append(imgPawn);
