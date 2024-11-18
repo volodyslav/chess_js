@@ -5,7 +5,8 @@ function movePawn(imgPositionTop, imgPositionLeft, img, colorImgNumber){
 
     for (let i = 1; i < circlesAmount; i++) {
         if (boardPosition[imgPositionTop + i * directionY][imgPositionLeft] === 0){
-            if (kingIsChecked === false){
+            console.log("Protect the king ", )
+            if (kingIsChecked === false && !checkEqualPositions(positionsSameColorKing, imgPositionTop, imgPositionLeft)){ // Check if the image between same king and the enemy
                 drawCirclesOnBoard((imgPositionTop + i *  directionY), imgPositionLeft, 0);
             }else if (kingIsChecked === true && checkEqualPositions(positionsKingChecked, imgPositionTop + i * directionY, imgPositionLeft)){
                 drawCirclesOnBoard((imgPositionTop + i *  directionY), imgPositionLeft, 0);
@@ -19,7 +20,7 @@ function movePawn(imgPositionTop, imgPositionLeft, img, colorImgNumber){
     // Check if there is an enemy piece on the right and left sides
     for (let i = -1; i < 2; i+=2) {
         if(boardPosition[imgPositionTop + 1 * directionY][imgPositionLeft + 1 * i] > 0 && !currentColorArray.includes(boardPosition[imgPositionTop + 1 * directionY][imgPositionLeft + 1 * i])){
-            if (kingIsChecked === false){
+            if (kingIsChecked === false && !checkEqualPositions(positionsSameColorKing, imgPositionTop, imgPositionLeft)){
                 drawCirclesOnBoard((imgPositionTop + directionY), (imgPositionLeft + i), 1);
             }else if(kingIsChecked === true && checkEqualPositions(positionsKingChecked, imgPositionTop + 1 * directionY, imgPositionLeft + 1 * i) ){
                 drawCirclesOnBoard((imgPositionTop + directionY), (imgPositionLeft + i), 1);

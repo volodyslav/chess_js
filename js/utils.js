@@ -60,7 +60,7 @@ function drawCirclesOnBoard(top, left, circleType, king=false){
     if (!king){
         if(kingIsChecked === false){
             circlesCanBeDrawn(top, left, circleType); // Can draw circles if the king is not checked
-        }else if(kingIsChecked === true ){ // Check cant protect itself
+        }else if(kingIsChecked === true){ // Check cant protect itself
             if (checkEqualPositions(positionsKingChecked, top, left)){
                 circlesCanBeDrawn(top, left, circleType); // Can draw circles if the king is  checked & position can protect the king 
             }  
@@ -98,7 +98,7 @@ function drawCirclesRookY(imgPositionLeft, i, color){
 
 function drawCirclesKnight(top, left, imgPositionLeft, imgPositionTop){
     // Draw the circles on the board for knight
-    const conditionBoardSize = (imgPositionTop + top >= 0 && imgPositionTop + top < 8) && (imgPositionLeft + left >= 0 && imgPositionLeft + left < 8); // 0 < x < 8
+    const conditionBoardSize = (imgPositionTop + top >= 0 && imgPositionTop + top < 8) && (imgPositionLeft + left >= 0 && imgPositionLeft + left < 8) && !checkEqualPositions(positionsSameColorKing, imgPositionTop, imgPositionLeft); // 0 < x < 8 && not between king and the enemy
     if (conditionBoardSize && boardPosition[imgPositionTop + top][imgPositionLeft + left] === 0){
         //console.log(imgPositionLeft + left)
         drawCirclesOnBoard((imgPositionTop + 1 * top), (imgPositionLeft + 1 * left), 0); 
@@ -161,62 +161,68 @@ function deleteImage(movePositionY, movePositionX){
 
 function drawCirclesLine(imgPositionTop, imgPositionLeft){
     // Check vertical circles up
-    for (let i = imgPositionTop + 1; i < 8; i++) {
-        if (boardPosition[i][imgPositionLeft] === 0){
-            drawCirclesRookY(imgPositionLeft, i, 0)
-        }else if(!currentColorArray.includes(boardPosition[i][imgPositionLeft]) && boardPosition[i][imgPositionLeft] > 0){
-            drawCirclesRookY(imgPositionLeft, i, 1) // 0 - draw movement circlel; 1 - enemy
-            break;
+    if (!checkEqualPositions(positionsSameColorKing, imgPositionTop, imgPositionLeft)){ // Check if not between same king and the enemy
+        for (let i = imgPositionTop + 1; i < 8; i++) {
+            if (boardPosition[i][imgPositionLeft] === 0){
+                drawCirclesRookY(imgPositionLeft, i, 0)
+            }else if(!currentColorArray.includes(boardPosition[i][imgPositionLeft]) && boardPosition[i][imgPositionLeft] > 0){
+                drawCirclesRookY(imgPositionLeft, i, 1) // 0 - draw movement circlel; 1 - enemy
+                break;
+            }
+            else{
+                break;
+            }
         }
-        else{
-            break;
+        // Check vertical circles down
+        for (let i = imgPositionTop - 1; i >= 0; i--) {
+            if (boardPosition[i][imgPositionLeft] === 0){
+                drawCirclesRookY(imgPositionLeft, i, 0) // 0 - draw movement circlel; 1 - enemy
+            }else if(!currentColorArray.includes(boardPosition[i][imgPositionLeft]) && boardPosition[i][imgPositionLeft] > 0){
+                drawCirclesRookY(imgPositionLeft, i, 1) // 0 - draw movement circlel; 1 - enemy
+                break;
+            }
+            else{
+                break;
+            }
+        }
+        // Check horizontal circles left
+        for (let i = imgPositionLeft - 1; i >= 0; i--) {
+            if (boardPosition[imgPositionTop][i] === 0){
+                drawCirclesRookX(imgPositionTop, i, 0)
+            }else if(!currentColorArray.includes(boardPosition[imgPositionTop][i]) && boardPosition[imgPositionTop][i] > 0){
+                drawCirclesRookX(imgPositionTop, i, 1) // 0 - draw movement circlel; 1 - enemy
+                break;
+            }
+            else{
+                break;
+            }
+        }
+        // Check horizontal circles right
+        for (let i = imgPositionLeft + 1; i < 8; i++) {
+            if (boardPosition[imgPositionTop][i] === 0){
+                drawCirclesRookX(imgPositionTop, i, 0)
+            }else if(!currentColorArray.includes(boardPosition[imgPositionTop][i]) && boardPosition[imgPositionTop][i] > 0){
+                drawCirclesRookX(imgPositionTop, i, 1) // 0 - draw movement circlel; 1 - enemy
+                break;
+            }
+            else{
+                break;
+            }
         }
     }
-    // Check vertical circles down
-    for (let i = imgPositionTop - 1; i >= 0; i--) {
-        if (boardPosition[i][imgPositionLeft] === 0){
-            drawCirclesRookY(imgPositionLeft, i, 0) // 0 - draw movement circlel; 1 - enemy
-        }else if(!currentColorArray.includes(boardPosition[i][imgPositionLeft]) && boardPosition[i][imgPositionLeft] > 0){
-            drawCirclesRookY(imgPositionLeft, i, 1) // 0 - draw movement circlel; 1 - enemy
-            break;
-        }
-        else{
-            break;
-        }
-    }
-    // Check horizontal circles left
-    for (let i = imgPositionLeft - 1; i >= 0; i--) {
-        if (boardPosition[imgPositionTop][i] === 0){
-            drawCirclesRookX(imgPositionTop, i, 0)
-        }else if(!currentColorArray.includes(boardPosition[imgPositionTop][i]) && boardPosition[imgPositionTop][i] > 0){
-            drawCirclesRookX(imgPositionTop, i, 1) // 0 - draw movement circlel; 1 - enemy
-            break;
-        }
-        else{
-            break;
-        }
-    }
-    // Check horizontal circles right
-    for (let i = imgPositionLeft + 1; i < 8; i++) {
-        if (boardPosition[imgPositionTop][i] === 0){
-            drawCirclesRookX(imgPositionTop, i, 0)
-        }else if(!currentColorArray.includes(boardPosition[imgPositionTop][i]) && boardPosition[imgPositionTop][i] > 0){
-            drawCirclesRookX(imgPositionTop, i, 1) // 0 - draw movement circlel; 1 - enemy
-            break;
-        }
-        else{
-            break;
-        }
-    }
+    
 }
 
 function drawCirclesDiagonal(imgPositionTop, imgPositionLeft){
     // Check diagonal circles up-left and down for bishop and queen
-    for (let i = -1; i <= 1; i+=2){
-        for (let j = -1; j <= 1; j +=2){
-            drawCirclesBishop(j, i, imgPositionTop, imgPositionLeft)
+    if(!checkEqualPositions(positionsSameColorKing, imgPositionTop, imgPositionLeft)){
+        for (let i = -1; i <= 1; i+=2){
+            for (let j = -1; j <= 1; j +=2){
+                drawCirclesBishop(j, i, imgPositionTop, imgPositionLeft)
+            }
         }
     }
+    
 }
 
 

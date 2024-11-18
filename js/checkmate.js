@@ -2,7 +2,7 @@
 
 //Iter over white and black figures , then check left and top in checkedKing
 function checkImageCantMove(){
-    const colorCheck = currentColorArray === whiteFigures? "white" : "black"; // check current figure color
+    const colorCheck = currentColorArray === whiteFigures ? "white" : "black"; // check current figure color
     checkPawnCanMove(colorCheck); // pawn
     checkKnightCanMove(colorCheck); // knight
     checkRookCanMove(colorCheck); // rook
