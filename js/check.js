@@ -3,6 +3,14 @@ let positionsKingCantMove = []; // Posiitions that king cant move
 let positionsSameColorKing = []; // Positions that same color images cant move because the king can be checked
 let kingIsChecked = false; // Check if king is ckecked
 
+// Positions horizontal and vertical cant move
+let topSame = 0; // change checkUtils.js
+let leftSame = 0; // change checkUtils.js
+let potentiallyChecked = false; // checkUtils.js
+let potentiallyCheckedByBishop = false; // checkUtils.js
+// Position to move diagonal when the king is potentially can be checked (stand)
+let positionsStandingCanMoveDiagonal = []; // Positions checkUtils.js
+
 function kingMovementCheck(topKingPos, leftKingPos, imgKing, kingColorCheck, checked){ // checled - ccheck if the king can be checked
     // prevents king's movements if it is ckecked or can be check 
     knightKingCheck(topKingPos, leftKingPos, imgKing, kingColorCheck, checked); // By knight
@@ -17,6 +25,12 @@ function checkColorCheck(){
     positionsSameColorKing = []; 
     kingIsChecked = false; // Check if king is ckecked
 
+    topSame = 0; // change checkUtils.js
+    leftSame = 0; // change checkUtils.js
+    potentiallyChecked = false;
+    potentiallyCheckedByBishop = false;
+    positionsStandingCanMoveDiagonal = [];
+
     const kingColorCheck = currentColorArray === whiteFigures ? 16 : 6; // 0 - black king color; 1 - white king color
     let imgKing; // King image
     
@@ -30,7 +44,8 @@ function checkColorCheck(){
     const topKingPos = parseInt(imgKing.style.top) / squareHeight; // top-left positions  on the board
     
     // Check if figure cant move because it's protecting the king
-    protectKingByStanding(topKingPos, leftKingPos, kingColorCheck, true);
+    protectKingByStandingRook(topKingPos, leftKingPos, kingColorCheck, true, 0);
+    protectKingByStandingBishop(topKingPos, leftKingPos, kingColorCheck, true, 0);
 
     // Check if king can be checked
     kingMovementCheck(topKingPos, leftKingPos, imgKing, kingColorCheck, true);
@@ -71,6 +86,7 @@ function checkColorCheck(){
     console.log("King checked pos: ", positionsKingChecked);
     console.log("King cant move: ", positionsKingCantMove);
     console.log("Images with the same color cant move: ", positionsSameColorKing);
+    console.log("Bishop can moveprotecting the king: ", positionsStandingCanMoveDiagonal);
 }
 
 

@@ -112,8 +112,6 @@ function drawCirclesBishop(top, left, imgPositionTop, imgPositionLeft){
     let imgTop = imgPositionTop + 1 * top; // get left position (change it all iterations)
     let imgLeft = imgPositionLeft + 1 * left; // get right position (change it all iterations)
     while(imgTop >= 0 && imgTop < 8 && imgLeft >= 0 && imgLeft < 8){
-        //console.log(`Top = ${top}, left = ${left}; ${boardPosition[imgTop][imgLeft] === 0}`)
-        //console.log(imgTop, imgLeft)
         if (boardPosition[imgTop][imgLeft] === 0){
             drawCirclesOnBoard(imgTop, imgLeft, 0); 
         }else if (!currentColorArray.includes(boardPosition[imgTop][imgLeft]) && boardPosition[imgTop][imgLeft] > 0){
@@ -126,6 +124,18 @@ function drawCirclesBishop(top, left, imgPositionTop, imgPositionLeft){
         imgLeft = imgLeft + 1 * left;
         imgTop = imgTop + 1 * top;
     }
+}
+
+function drawCirclesDiagonal(imgPositionTop, imgPositionLeft){
+    // Check diagonal circles up-left and down for bishop and queen
+    if((!checkEqualPositions(positionsSameColorKing, imgPositionTop, imgPositionLeft) && !potentiallyCheckedByBishop) || (checkEqualPositions(positionsStandingCanMoveDiagonal, imgPositionTop, imgPositionLeft) && potentiallyCheckedByBishop)){
+        for (let i = -1; i <= 1; i+=2){
+            for (let j = -1; j <= 1; j +=2){
+                drawCirclesBishop(j, i, imgPositionTop, imgPositionLeft)
+            }
+        }
+    }
+    
 }
 
 function drawCirclesKing(top, left, imgPositionTop, imgPositionLeft){
@@ -161,7 +171,7 @@ function deleteImage(movePositionY, movePositionX){
 
 function drawCirclesLine(imgPositionTop, imgPositionLeft){
     // Check vertical circles up
-    if (!checkEqualPositions(positionsSameColorKing, imgPositionTop, imgPositionLeft)){ // Check if not between same king and the enemy
+    if ((topSame !== imgPositionTop && potentiallyChecked) || !potentiallyChecked){ // Check if not between same king and the enemy
         for (let i = imgPositionTop + 1; i < 8; i++) {
             if (boardPosition[i][imgPositionLeft] === 0){
                 drawCirclesRookY(imgPositionLeft, i, 0)
@@ -185,6 +195,9 @@ function drawCirclesLine(imgPositionTop, imgPositionLeft){
                 break;
             }
         }
+    
+    }
+    if ((leftSame !== imgPositionLeft && potentiallyChecked) || !potentiallyChecked){
         // Check horizontal circles left
         for (let i = imgPositionLeft - 1; i >= 0; i--) {
             if (boardPosition[imgPositionTop][i] === 0){
@@ -210,19 +223,6 @@ function drawCirclesLine(imgPositionTop, imgPositionLeft){
             }
         }
     }
-    
-}
-
-function drawCirclesDiagonal(imgPositionTop, imgPositionLeft){
-    // Check diagonal circles up-left and down for bishop and queen
-    if(!checkEqualPositions(positionsSameColorKing, imgPositionTop, imgPositionLeft)){
-        for (let i = -1; i <= 1; i+=2){
-            for (let j = -1; j <= 1; j +=2){
-                drawCirclesBishop(j, i, imgPositionTop, imgPositionLeft)
-            }
-        }
-    }
-    
 }
 
 
