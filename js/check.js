@@ -83,7 +83,7 @@ function checkColorCheck(){
     }
     // else if (!kingIsChecked && kingIsCheckmate === 0){
     //     canChooseNewPiece = false; // Checkmate cant choose a figure
-    //     checkKingText.textContent = `Draw!`
+    //      checkKingText.textContent = `Draw!`
     // }
     //console.log("Checkmate ", kingIsCheckmate);
     //console.log("King checked pos: ", positionsKingChecked);
@@ -96,7 +96,6 @@ function checkCheckmate(){
     // Check if checkmate
     if (kingIsCheckmate === 0){
         canChooseNewPiece = false; // Checkmate cant choose a figure
-        //alert("Checkmate! " + (currentColorArray === whiteFigures? "Black wins" : "White wins"));
         checkKingText.textContent = `Checkmate! ${(currentColorArray === whiteFigures? "Black" : "White")} wins`
     }
     

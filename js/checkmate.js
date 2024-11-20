@@ -32,10 +32,10 @@ function checkerKing(i, j, topKing, leftKing){
     const imgTop = topKing + 1 * i;
     const imgLeft = leftKing + 1 * j; // get right position (change it all iterations)
     if (0 <= imgTop && imgTop < 8 && 0 <= imgLeft && imgLeft < 8){
-        if (boardPosition[imgTop][imgLeft] === 0){
+        if (boardPosition[imgTop][imgLeft] === 0 && !checkEqualPositions(positionsKingChecked, imgTop, imgLeft)){
             kingIsCheckmate++;
         }
-        else if (!currentColorArray.includes(boardPosition[imgTop][imgLeft]) && boardPosition[imgTop][imgLeft] > 0){
+        else if (!currentColorArray.includes(boardPosition[imgTop][imgLeft]) && boardPosition[imgTop][imgLeft] > 0 && !checkEqualPositions(positionsKingChecked, imgTop, imgLeft)){
             kingIsCheckmate++; 
         }
     }

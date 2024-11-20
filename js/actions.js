@@ -38,19 +38,12 @@ function moveFigure(img){
     const canMove = canMoveCheck(img);
     if ((img.classList.contains("check-image")) && canMove && canChooseNewPiece){
         deleteCircles()
-        
         // Check if this figure is checked
         const imgOffsetX = img.offsetLeft; // Get the position Offset of the figure 
         const imgOffsetY = img.offsetTop; // Get the position Offset of the figure
-        //console.log("Left board", board.offsetLeft, "Top board", board.offsetTop)
-        //console.log(`Image left: ${imgLeft} top: ${imgTop}`)
         const imgPositionLeft = imgOffsetX / squareWidth; // Get the position of the figure in array structure (0, 0) or (1, 4)
         const imgPositionTop = imgOffsetY / squareHeight;
-        //console.log(`Image position: ${imgPositionLeft} ${imgPositionTop} `);
-        //console.log(`Figure ${boardPosition[imgPositionTop][imgPositionLeft]}`)
-        console.log("Left offset img", imgOffsetX, "Top img", imgOffsetY)
-        //const rect = img.getBoundingClientRect();
-        
+
         switch (boardPosition[imgPositionTop][imgPositionLeft]){
             case 1:
                 movePawn(imgPositionTop, imgPositionLeft, img, 1);

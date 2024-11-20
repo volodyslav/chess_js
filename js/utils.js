@@ -159,7 +159,6 @@ function deleteImage(movePositionY, movePositionX){
     const image = document.querySelector(
         `#board img[style*="top: ${movePositionY * squareHeight}px;"][style*="left: ${movePositionX * squareWidth}px;"]` // Finds coordinates of the image on div
     );
-    console.log(image)
     if (image) {
         image.remove(); // remove image when it's on meat postion
     }
@@ -255,7 +254,7 @@ function movePosition(img, movePositionX, movePositionY, imgPositionTop, imgPosi
     if ((colorImgNumber === 11 || colorImgNumber === 1) && positionToChangePiece === movePositionY){ // If pawn reached the end of the board
         changeImagePawn(img, movePositionX, movePositionY, colorImgNumber);
     }
-    console.log(boardPosition);
+    //console.log(boardPosition);
     img.classList.remove("first-move"); // Remove the first move (i made a fisrt move)
     img.classList.remove("check-image"); // Remove the check image
     deleteCircles()
