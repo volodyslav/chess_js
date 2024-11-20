@@ -9,7 +9,9 @@ let leftSame = 0; // change checkUtils.js
 let potentiallyChecked = false; // checkUtils.js
 let potentiallyCheckedByBishop = false; // checkUtils.js
 // Position to move diagonal when the king is potentially can be checked (stand)
-let positionsStandingCanMoveDiagonal = []; // Positions checkUtils.js
+// Positions which the bishop can move by stdning-protecting the king 
+let directionBishopLeft = 0;
+let directionBishopTop = 0;
 
 function kingMovementCheck(topKingPos, leftKingPos, imgKing, kingColorCheck, checked){ // checled - ccheck if the king can be checked
     // prevents king's movements if it is ckecked or can be check 
@@ -27,6 +29,8 @@ function checkColorCheck(){
 
     topSame = 0; // change checkUtils.js
     leftSame = 0; // change checkUtils.js
+    directionBishopLeft = 0;
+    directionBishopTop = 0;
     potentiallyChecked = false;
     potentiallyCheckedByBishop = false;
     positionsStandingCanMoveDiagonal = [];

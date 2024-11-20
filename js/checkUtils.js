@@ -144,9 +144,8 @@ function checkOnBishopSameColor(top, left, imgPositionTop, imgPositionLeft, colo
     let imgLeft = imgPositionLeft + 1 * left; // get right position (change it all iterations)
     const sameColorKing = kingColorCheck === 6 ? blackFigures : whiteFigures; // array of the same color image the king 
     while(imgTop >= 0 && imgTop < 8 && imgTop >= 0 && imgLeft < 8){
-        console.log("with ", top ,left, imgTop, imgLeft)
+        //console.log("with ", top ,left, imgTop, imgLeft)
         if (boardPosition[imgTop][imgLeft] === 0){
-            positionsStandingCanMoveDiagonal.push([imgTop, imgLeft]); // Can move to protect position for bishop and queen
             imgLeft = imgLeft + 1 * left;
             imgTop = imgTop + 1 * top;
             continue;
@@ -158,6 +157,8 @@ function checkOnBishopSameColor(top, left, imgPositionTop, imgPositionLeft, colo
         else if(boardPosition[imgTop][imgLeft] === color){
             positionsSameColorKing.push([imgPositionTop, imgPositionLeft]); // add the same color cant move
             potentiallyCheckedByBishop = true;
+            directionBishopLeft = left; // Just direction where bishop can move to protect the king
+            directionBishopTop = top;
             break;
         }
         else if (boardPosition[imgTop][imgLeft] !== color && boardPosition[imgTop][imgLeft] > 0){ // Same color with the rook or queen

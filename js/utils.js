@@ -85,7 +85,6 @@ function checkEqualPositions(positionsArray, top, left){
     return positionsArray.some(p => p[0] === top && p[1] === left)
 }
 
-
 function drawCirclesRookX(imgPositionTop, i, color){
     // Draw the circles on the board horizontally
     drawCirclesOnBoard(imgPositionTop, i, color); 
@@ -112,9 +111,10 @@ function drawCirclesBishop(top, left, imgPositionTop, imgPositionLeft){
     let imgTop = imgPositionTop + 1 * top; // get left position (change it all iterations)
     let imgLeft = imgPositionLeft + 1 * left; // get right position (change it all iterations)
     while(imgTop >= 0 && imgTop < 8 && imgLeft >= 0 && imgLeft < 8){
-        if (boardPosition[imgTop][imgLeft] === 0){
+        const conditionProtecton = ((((left === directionBishopLeft && top === directionBishopTop) || (left === directionBishopLeft * -1 && top  === directionBishopTop * -1)) && potentiallyCheckedByBishop) || !potentiallyCheckedByBishop)
+        if (boardPosition[imgTop][imgLeft] === 0 && conditionProtecton){
             drawCirclesOnBoard(imgTop, imgLeft, 0); 
-        }else if (!currentColorArray.includes(boardPosition[imgTop][imgLeft]) && boardPosition[imgTop][imgLeft] > 0){
+        }else if (!currentColorArray.includes(boardPosition[imgTop][imgLeft]) && boardPosition[imgTop][imgLeft] > 0 && conditionProtecton){
             drawCirclesOnBoard(imgTop, imgLeft, 1); 
             break;
         }
@@ -128,14 +128,11 @@ function drawCirclesBishop(top, left, imgPositionTop, imgPositionLeft){
 
 function drawCirclesDiagonal(imgPositionTop, imgPositionLeft){
     // Check diagonal circles up-left and down for bishop and queen
-    if((!checkEqualPositions(positionsSameColorKing, imgPositionTop, imgPositionLeft) && !potentiallyCheckedByBishop) || (checkEqualPositions(positionsStandingCanMoveDiagonal, imgPositionTop, imgPositionLeft) && potentiallyCheckedByBishop)){
-        for (let i = -1; i <= 1; i+=2){
-            for (let j = -1; j <= 1; j +=2){
-                drawCirclesBishop(j, i, imgPositionTop, imgPositionLeft)
-            }
+    for (let i = -1; i <= 1; i+=2){
+        for (let j = -1; j <= 1; j +=2){
+            drawCirclesBishop(j, i, imgPositionTop, imgPositionLeft)
         }
     }
-    
 }
 
 function drawCirclesKing(top, left, imgPositionTop, imgPositionLeft){
