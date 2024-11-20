@@ -4,7 +4,6 @@ function changeCurrentMoveColor(){
     const currentTurn = currentColorArray === whiteFigures ? "White" : "Black";
     checkKingText.textContent = ""; // Set the current text king checked to empty string
     textTurn.textContent = `${currentTurn} moves now` // Set the current move color
-    console.log(`Color now  array ${currentColorArray}`);
 
     kingIsChecked = false; // The king was unchecked
     kingIsCheckmate = 0; // if the king or others could move
@@ -111,10 +110,11 @@ function drawCirclesBishop(top, left, imgPositionTop, imgPositionLeft){
     let imgTop = imgPositionTop + 1 * top; // get left position (change it all iterations)
     let imgLeft = imgPositionLeft + 1 * left; // get right position (change it all iterations)
     while(imgTop >= 0 && imgTop < 8 && imgLeft >= 0 && imgLeft < 8){
-        const conditionProtecton = ((((left === directionBishopLeft && top === directionBishopTop) || (left === directionBishopLeft * -1 && top  === directionBishopTop * -1)) && potentiallyCheckedByBishop) || !potentiallyCheckedByBishop)
+        const conditionProtecton = (((((left === directionBishopLeft && top === directionBishopTop) || (left === directionBishopLeft * -1 && top  === directionBishopTop * -1)) && potentiallyCheckedByBishop && !kingIsChecked && checkEqualPositions(positionsSameColorKing, imgPositionTop, imgPositionLeft)) || (!potentiallyChecked && !potentiallyCheckedByBishop))) ;
         if (boardPosition[imgTop][imgLeft] === 0 && conditionProtecton){
             drawCirclesOnBoard(imgTop, imgLeft, 0); 
-        }else if (!currentColorArray.includes(boardPosition[imgTop][imgLeft]) && boardPosition[imgTop][imgLeft] > 0 && conditionProtecton){
+        }
+        else if (!currentColorArray.includes(boardPosition[imgTop][imgLeft]) && boardPosition[imgTop][imgLeft] > 0 && conditionProtecton){
             drawCirclesOnBoard(imgTop, imgLeft, 1); 
             break;
         }
@@ -141,7 +141,6 @@ function drawCirclesKing(top, left, imgPositionTop, imgPositionLeft){
     
     if (0 <= imgTop && imgTop < 8 && 0 <= imgLeft && imgLeft < 8){
         if (boardPosition[imgTop][imgLeft] === 0){
-            //console.log(imgLeft, imgTop)
             drawCirclesOnBoard(imgTop, imgLeft, 0, king=true); 
         }
         else if (!currentColorArray.includes(boardPosition[imgTop][imgLeft]) && boardPosition[imgTop][imgLeft] > 0){
@@ -168,7 +167,7 @@ function deleteImage(movePositionY, movePositionX){
 
 function drawCirclesLine(imgPositionTop, imgPositionLeft){
     // Check vertical circles up
-    if ((topSame !== imgPositionTop && potentiallyChecked) || !potentiallyChecked){ // Check if not between same king and the enemy
+    if (((topSame !== imgPositionTop && potentiallyChecked && !kingIsChecked) || (!potentiallyChecked && !potentiallyCheckedByBishop)) ){ // Check if not between same king and the enemy
         for (let i = imgPositionTop + 1; i < 8; i++) {
             if (boardPosition[i][imgPositionLeft] === 0){
                 drawCirclesRookY(imgPositionLeft, i, 0)
@@ -194,7 +193,7 @@ function drawCirclesLine(imgPositionTop, imgPositionLeft){
         }
     
     }
-    if ((leftSame !== imgPositionLeft && potentiallyChecked) || !potentiallyChecked){
+    if (((leftSame !== imgPositionLeft && potentiallyChecked && !kingIsChecked) || (!potentiallyChecked && !potentiallyCheckedByBishop)) ){
         // Check horizontal circles left
         for (let i = imgPositionLeft - 1; i >= 0; i--) {
             if (boardPosition[imgPositionTop][i] === 0){

@@ -5,6 +5,7 @@ function moveKing(imgPositionTop, imgPositionLeft, img, colorImgNumber){
 
     const colorRookMove = colorImgNumber === 16 ? 14 : 4; // To add this avalue to checking condtion when changes
     const rookColorImagePath = colorImgNumber === 16 ? whiteRook : blackRook; // Color of rook image
+    const rookNumber = colorImgNumber === 16 ? "white" : "black"; // Rook number
 
     const imageRightRook = document.querySelector(
         `#board img[style*="top: ${imgPositionTop * squareHeight}px;"][style*="left: ${(imgPositionLeft + (moveKingToRook + drawCirclesAmountRight)) * squareWidth}px;"]` // Finds coordinates of rook image on board
@@ -13,15 +14,13 @@ function moveKing(imgPositionTop, imgPositionLeft, img, colorImgNumber){
     const imageLeftRook = document.querySelector(
         `#board img[style*="top: ${imgPositionTop * squareHeight}px;"][style*="left: ${(imgPositionLeft - (moveKingToRook + drawCirclesAmountLeft)) * squareWidth}px;"]` // Finds coordinates of rook image on board
     );
-    console.log(imgPositionLeft - (moveKingToRook + drawCirclesAmountLeft))
     // For king rook combination
     if (img.classList.contains("first-move")){
-        if (imageRightRook && imageRightRook.getAttribute("src") === rookColorImagePath && imageRightRook.classList.contains("first-move")){ // Check if scr of the rook equals to the path of a rook image
+        if (imageRightRook && imageRightRook.getAttribute("src") === rookColorImagePath && imageRightRook.classList.contains("first-move") && imageRightRook.classList.contains(`${rookNumber}-rook`)){ // Check if scr of the rook equals to the path of a rook image
             for (let i = 1; i <= moveKingToRook; i++) {
                 const imgLeft = imgPositionLeft + i;
                 if (0 <= imgLeft && imgLeft < 8){
                     if (boardPosition[imgPositionTop][imgLeft] === 0){
-                        console.log(imgLeft, imgPositionTop)
                         drawCirclesKingRook(imgLeft, imgPositionTop); // utils.js
                     }else if (boardPosition[imgPositionTop][imgLeft] > 0){
                         break;
@@ -32,7 +31,7 @@ function moveKing(imgPositionTop, imgPositionLeft, img, colorImgNumber){
             } 
         }
 
-        if (imageLeftRook && imageLeftRook.getAttribute("src") === rookColorImagePath && imageLeftRook.classList.contains("first-move")){
+        if (imageLeftRook && imageLeftRook.getAttribute("src") === rookColorImagePath && imageLeftRook.classList.contains("first-move") && imageLeftRook.classList.contains(`${rookNumber}-rook`)){
             for (let i = 1; i <= moveKingToRook; i++) { // Left from king 
                 const imgLeft = imgPositionLeft - i;
                 if (0 <= imgLeft && imgLeft < 8){

@@ -10,7 +10,7 @@ function protectKingByStandingRook(top, left, kingColorCheck, king=false, side=0
     rookKingSameColor(top, left, kingColorCheck, king, side);
 }
 
-function protectKingByStandingBishop(top, left, kingColorCheck, king=false, side=0){
+function protectKingByStandingBishop(top, left, kingColorCheck, king=false){
     bishopKingSameColor(top, left, kingColorCheck, king);
 }
 
@@ -33,7 +33,7 @@ function checkOnRookXSameColor(top, left, i, color, kingColorCheck, king, side){
             if (j >= 0 && j < 8 && top >= 0 && top < 8){
                 if(boardPosition[top][j] === 0){
                     continue;
-                }else if(boardPosition[top][j] !== color && sameColorKing.includes(boardPosition[top][j]) && king === true){
+                }else if(boardPosition[top][j] !== color && boardPosition[top][j] !== kingColorCheck && sameColorKing.includes(boardPosition[top][j]) && king === true){
                     protectKingByStandingRook(top, j, kingColorCheck, false, -1)
                     break;
                 }
@@ -42,7 +42,7 @@ function checkOnRookXSameColor(top, left, i, color, kingColorCheck, king, side){
                     topSame = top; // positions can move to protect the king
                     potentiallyChecked = true; // cant move beacause of the potential check
                     break;
-                }else if(boardPosition[top][j] !== color && boardPosition[top][j] > 0){
+                }else if(boardPosition[top][j] !== color && boardPosition[top][j] > 0 && boardPosition[top][j] !== kingColorCheck){
                     break;
                 }
                 else{
@@ -56,7 +56,7 @@ function checkOnRookXSameColor(top, left, i, color, kingColorCheck, king, side){
             if (j >= 0 && j < 8 && top >= 0 && top < 8){
                 if(boardPosition[top][j] === 0){
                     continue;
-                }else if(boardPosition[top][j] !== color && sameColorKing.includes(boardPosition[top][j]) && king === true){
+                }else if(boardPosition[top][j] !== color && boardPosition[top][j] !== kingColorCheck &&  sameColorKing.includes(boardPosition[top][j]) && king === true){
                     protectKingByStandingRook(top, j, kingColorCheck, false, 1)
                     break;
                 }
@@ -65,7 +65,7 @@ function checkOnRookXSameColor(top, left, i, color, kingColorCheck, king, side){
                     topSame = top; // positions can move to protect the king
                     potentiallyChecked = true; // cant move beacause of the potential check
                     break;
-                }else if(boardPosition[top][j] !== color && boardPosition[top][j] > 0){
+                }else if(boardPosition[top][j] !== color && boardPosition[top][j] > 0 && boardPosition[top][j] !== kingColorCheck){
                     break;
                 }
                 else{
@@ -83,7 +83,7 @@ function checkOnRookYSameColor(top, left, i, color, kingColorCheck, king, side){
             if (j >= 0 && j < 8 && left >= 0 && left < 8){
                 if(boardPosition[j][left] === 0){
                     continue;
-                }else if(boardPosition[j][left] !== color && sameColorKing.includes(boardPosition[j][left]) && king === true){
+                }else if(boardPosition[j][left] !== color && boardPosition[j][top] !== kingColorCheck && sameColorKing.includes(boardPosition[j][left]) && king === true){
                     protectKingByStandingRook(j, left, kingColorCheck, false, -1)
                     break;
                 }
@@ -92,7 +92,7 @@ function checkOnRookYSameColor(top, left, i, color, kingColorCheck, king, side){
                     leftSame = left; 
                     potentiallyChecked = true; // cant move beacause of the potential check
                     break;
-                }else if(boardPosition[j][left] !== color && boardPosition[j][left] > 0){
+                }else if(boardPosition[j][left] !== color && boardPosition[j][left] > 0 && boardPosition[j][top] !== kingColorCheck){
                     break;
                 }
                 else{
@@ -106,7 +106,7 @@ function checkOnRookYSameColor(top, left, i, color, kingColorCheck, king, side){
             if (j >= 0 && j < 8 && left >= 0 && left < 8){
                 if(boardPosition[j][left] === 0){
                     continue;
-                }else if(boardPosition[j][left] !== color && sameColorKing.includes(boardPosition[j][left]) && king === true){
+                }else if(boardPosition[j][left] !== color && boardPosition[j][top] !== kingColorCheck && sameColorKing.includes(boardPosition[j][left]) && king === true){
                     protectKingByStandingRook(j, left, kingColorCheck, false, 1);
                     break;
                 }
@@ -115,7 +115,7 @@ function checkOnRookYSameColor(top, left, i, color, kingColorCheck, king, side){
                     leftSame = left;
                     potentiallyChecked = true; // cant move beacause of the potential check
                     break;
-                }else if(boardPosition[j][left] !== color && boardPosition[j][left] > 0){
+                }else if(boardPosition[j][left] !== color && boardPosition[j][left] > 0 && boardPosition[j][top] !== kingColorCheck){
                     break;
                 }
                 else{
@@ -130,7 +130,6 @@ function bishopKingSameColor(topPos, leftPos, kingColorCheck, king){
     const bishopColor = kingColorCheck === 16 ? 3 : 13; // Bishop color based on the king checked
     const queenColor = kingColorCheck === 16 ? 5 : 15; // Queen color based on the king checked
     // Check diagonal circles up-left and down for bishop and queen
-    console.log(topPos, leftPos)
     for (let i = -1; i <= 1; i+=2){
         for (let j = -1; j <= 1; j +=2){
             checkOnBishopSameColor(j, i, topPos, leftPos, bishopColor, kingColorCheck, king); // Bishop
@@ -144,7 +143,6 @@ function checkOnBishopSameColor(top, left, imgPositionTop, imgPositionLeft, colo
     let imgLeft = imgPositionLeft + 1 * left; // get right position (change it all iterations)
     const sameColorKing = kingColorCheck === 6 ? blackFigures : whiteFigures; // array of the same color image the king 
     while(imgTop >= 0 && imgTop < 8 && imgTop >= 0 && imgLeft < 8){
-        //console.log("with ", top ,left, imgTop, imgLeft)
         if (boardPosition[imgTop][imgLeft] === 0){
             imgLeft = imgLeft + 1 * left;
             imgTop = imgTop + 1 * top;
@@ -154,7 +152,7 @@ function checkOnBishopSameColor(top, left, imgPositionTop, imgPositionLeft, colo
             protectKingByStandingBishop(imgTop, imgLeft, kingColorCheck, false);
             break;
         }
-        else if(boardPosition[imgTop][imgLeft] === color){
+        else if(boardPosition[imgTop][imgLeft] === color && boardPosition[imgPositionTop][imgPositionLeft] !== kingColorCheck){
             positionsSameColorKing.push([imgPositionTop, imgPositionLeft]); // add the same color cant move
             potentiallyCheckedByBishop = true;
             directionBishopLeft = left; // Just direction where bishop can move to protect the king

@@ -23,7 +23,7 @@ board.style.height = boardHeight + "px";
 
 const boardLength = boardPosition.length; // Get length of the board
 
-console.log(boardPosition)
+//console.log(boardPosition)
 
 function actions(img){
     chooseFigure(img);
