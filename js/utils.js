@@ -103,6 +103,8 @@ function drawCirclesKnight(top, left, imgPositionLeft, imgPositionTop){
     }else if(conditionBoardSize && !currentColorArray.includes( boardPosition[imgPositionTop + top][imgPositionLeft + left]) && boardPosition[imgPositionTop + top][imgPositionLeft + left] > 0){
         //console.log(imgPositionLeft + left)
         drawCirclesOnBoard((imgPositionTop + 1 * top), (imgPositionLeft + 1 * left), 1); 
+    }else{
+        cantBeDraw++; // Can potentially be a draw
     }
 }
 
@@ -110,7 +112,7 @@ function drawCirclesBishop(top, left, imgPositionTop, imgPositionLeft){
     let imgTop = imgPositionTop + 1 * top; // get left position (change it all iterations)
     let imgLeft = imgPositionLeft + 1 * left; // get right position (change it all iterations)
     while(imgTop >= 0 && imgTop < 8 && imgLeft >= 0 && imgLeft < 8){
-        const conditionProtecton = (((((left === directionBishopLeft && top === directionBishopTop) || (left === directionBishopLeft * -1 && top  === directionBishopTop * -1)) && potentiallyCheckedByBishop && !kingIsChecked && checkEqualPositions(positionsSameColorKing, imgPositionTop, imgPositionLeft)) || (!potentiallyChecked && !potentiallyCheckedByBishop))) ;
+        const conditionProtecton = (((((left === directionBishopLeft && top === directionBishopTop) || (left === directionBishopLeft * -1 && top  === directionBishopTop * -1)) && potentiallyCheckedByBishop && !kingIsChecked && checkEqualPositions(positionsSameColorKing, imgPositionTop, imgPositionLeft)) || (!potentiallyChecked && !potentiallyCheckedByBishop) || !checkEqualPositions(positionsSameColorKing, imgPositionTop, imgPositionLeft))) ;
         if (boardPosition[imgTop][imgLeft] === 0 && conditionProtecton){
             drawCirclesOnBoard(imgTop, imgLeft, 0); 
         }
@@ -119,6 +121,7 @@ function drawCirclesBishop(top, left, imgPositionTop, imgPositionLeft){
             break;
         }
         else{
+            cantBeDraw++; // Can potentially be a draw
             break;
         }
         imgLeft = imgLeft + 1 * left;
@@ -145,6 +148,8 @@ function drawCirclesKing(top, left, imgPositionTop, imgPositionLeft){
         }
         else if (!currentColorArray.includes(boardPosition[imgTop][imgLeft]) && boardPosition[imgTop][imgLeft] > 0){
             drawCirclesOnBoard(imgTop, imgLeft, 1, king=true); 
+        }else{
+            cantBeDraw++; // Can potentially be a draw
         }
     }
 }
@@ -166,7 +171,7 @@ function deleteImage(movePositionY, movePositionX){
 
 function drawCirclesLine(imgPositionTop, imgPositionLeft){
     // Check vertical circles up
-    if (((topSame !== imgPositionTop && potentiallyChecked && !kingIsChecked) || (!potentiallyChecked && !potentiallyCheckedByBishop)) ){ // Check if not between same king and the enemy
+    if (((topSame !== imgPositionTop && potentiallyChecked && !kingIsChecked) || (!potentiallyChecked && !potentiallyCheckedByBishop) || !checkEqualPositions(positionsSameColorKing, imgPositionTop, imgPositionLeft)) ){ // Check if not between same king and the enemy
         for (let i = imgPositionTop + 1; i < 8; i++) {
             if (boardPosition[i][imgPositionLeft] === 0){
                 drawCirclesRookY(imgPositionLeft, i, 0)
@@ -175,6 +180,7 @@ function drawCirclesLine(imgPositionTop, imgPositionLeft){
                 break;
             }
             else{
+                cantBeDraw++; // Can potentially be a draw
                 break;
             }
         }
@@ -187,12 +193,13 @@ function drawCirclesLine(imgPositionTop, imgPositionLeft){
                 break;
             }
             else{
+                cantBeDraw++; // Can potentially be a draw
                 break;
             }
         }
     
     }
-    if (((leftSame !== imgPositionLeft && potentiallyChecked && !kingIsChecked) || (!potentiallyChecked && !potentiallyCheckedByBishop)) ){
+    if (((leftSame !== imgPositionLeft && potentiallyChecked && !kingIsChecked) || (!potentiallyChecked && !potentiallyCheckedByBishop) || !checkEqualPositions(positionsSameColorKing, imgPositionTop, imgPositionLeft)) ){
         // Check horizontal circles left
         for (let i = imgPositionLeft - 1; i >= 0; i--) {
             if (boardPosition[imgPositionTop][i] === 0){
@@ -202,6 +209,7 @@ function drawCirclesLine(imgPositionTop, imgPositionLeft){
                 break;
             }
             else{
+                cantBeDraw++; // Can potentially be a draw
                 break;
             }
         }
@@ -214,6 +222,7 @@ function drawCirclesLine(imgPositionTop, imgPositionLeft){
                 break;
             }
             else{
+                cantBeDraw++; // Can potentially be a draw
                 break;
             }
         }

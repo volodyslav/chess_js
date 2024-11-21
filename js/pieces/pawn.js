@@ -5,13 +5,14 @@ function movePawn(imgPositionTop, imgPositionLeft, img, colorImgNumber){
 
     for (let i = 1; i < circlesAmount; i++) {
         if (boardPosition[imgPositionTop + i * directionY][imgPositionLeft] === 0){
-            if (kingIsChecked === false && !checkEqualPositions(positionsSameColorKing, imgPositionTop, imgPositionLeft)){ // Check if the image between same king and the enemy
+            if (kingIsChecked === false && (!checkEqualPositions(positionsSameColorKing, imgPositionTop, imgPositionLeft) || leftSame === imgPositionLeft)){ // Check if the image between same king and the enemy
                 drawCirclesOnBoard((imgPositionTop + i *  directionY), imgPositionLeft, 0);
             }else if (kingIsChecked === true && checkEqualPositions(positionsKingChecked, imgPositionTop + i * directionY, imgPositionLeft)){
                 drawCirclesOnBoard((imgPositionTop + i *  directionY), imgPositionLeft, 0);
             }
         }
         else{
+            cantBeDraw++; // Can potentially be a draw
             break;
         }
     }
@@ -22,6 +23,8 @@ function movePawn(imgPositionTop, imgPositionLeft, img, colorImgNumber){
                 drawCirclesOnBoard((imgPositionTop + directionY), (imgPositionLeft + i), 1);
             }else if(kingIsChecked === true && checkEqualPositions(positionsKingChecked, imgPositionTop + 1 * directionY, imgPositionLeft + 1 * i) ){
                 drawCirclesOnBoard((imgPositionTop + directionY), (imgPositionLeft + i), 1);
+            }else{
+                cantBeDraw++; // Can potentially be a draw
             }
         } 
     }

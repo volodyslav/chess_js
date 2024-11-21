@@ -20,13 +20,10 @@ function canMoveCheck(img){
     // Check if the figure can move or be checked
     const imgLeft = parseInt(img.style.left);
     const imgTop = parseInt(img.style.top);
-    //console.log(`Image left: ${imgLeft} top: ${imgTop}`)
     const imgPositionLeft = imgLeft / squareWidth; // Get the position of the figure in array structure (0, 0) or (1, 4)
     const imgPositionTop = imgTop / squareHeight;
-    //console.log(`Image position: ${imgPositionLeft} ${imgPositionTop} `);
     // Check if the figure can move or be checked
     if (currentColorArray.includes(boardPosition[imgPositionTop][imgPositionLeft])){
-        //console.log(`Figure ${boardPosition[imgPositionTop][imgPositionLeft]}`)
         return true;
     }else {
         return false;

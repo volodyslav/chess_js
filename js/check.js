@@ -13,6 +13,9 @@ let potentiallyCheckedByBishop = false; // checkUtils.js
 let directionBishopLeft = 0;
 let directionBishopTop = 0;
 
+// Draw condition 
+let cantBeDraw = 0; // Increase if can be utils.js and pawn.js
+
 function kingMovementCheck(topKingPos, leftKingPos, imgKing, kingColorCheck, checked){ // checled - ccheck if the king can be checked
     // prevents king's movements if it is ckecked or can be check 
     knightKingCheck(topKingPos, leftKingPos, imgKing, kingColorCheck, checked); // By knight
@@ -33,6 +36,7 @@ function checkColorCheck(){
     directionBishopTop = 0;
     potentiallyChecked = false;
     potentiallyCheckedByBishop = false;
+    cantBeDraw = 0;
 
     const kingColorCheck = currentColorArray === whiteFigures ? 16 : 6; // 0 - black king color; 1 - white king color
     let imgKing; // King image
@@ -77,18 +81,20 @@ function checkColorCheck(){
         }
     }
 
-     if (kingIsChecked){
+    if (kingIsChecked){
          checkImageCantMove() // checkmate.js 
          checkCheckmate();
     }
-    // else if (!kingIsChecked && kingIsCheckmate === 0){
-    //     canChooseNewPiece = false; // Checkmate cant choose a figure
-    //      checkKingText.textContent = `Draw!`
-    // }
-    //console.log("Checkmate ", kingIsCheckmate);
-    //console.log("King checked pos: ", positionsKingChecked);
-    //console.log("King cant move: ", positionsKingCantMove);
-    //console.log("Images with the same color cant move: ", positionsSameColorKing);
+    else if (!kingIsChecked && cantBeDraw > 0){
+        canChooseNewPiece = false; // Checkmate cant choose a figure
+         checkKingText.textContent = `Draw!`
+    }
+    console.log("Checkmate ", kingIsCheckmate);
+    console.log("King checked pos: ", positionsKingChecked);
+    console.log("King cant move: ", positionsKingCantMove);
+    console.log("Images with the same color cant move: ", positionsSameColorKing);
+    console.log("Board: ", boardPosition);
+    console.log("Draw: ", cantBeDraw);
 }
 
 
